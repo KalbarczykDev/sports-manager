@@ -18,7 +18,9 @@ import mas.domain.model.gala.Gala;
 import mas.domain.model.person.Name;
 import mas.domain.model.person.Surname;
 import mas.domain.model.shared.Address;
+import mas.domain.model.shared.Compensation;
 import mas.domain.model.sponsor.Sponsor;
+import mas.domain.model.sponsorship.Sponsorship;
 
 public class Main {
 
@@ -191,14 +193,26 @@ public class Main {
     System.out.println("---Bag---");
     Sponsor s1 = (Sponsor) uc1;
 
-    s1.addSponsoredFighter(fc);
-    s1.addSponsoredFighter(fc);
-    s1.addSponsoredFighter(fc);
+    Sponsorship spon1 = new Sponsorship(fighter1, s1, Compensation.of(1000.0));
+  Sponsorship spon2 =  new Sponsorship(fighter1, s1, Compensation.of(2000.0));
+   Sponsorship spon3 = new Sponsorship(fighter1, s1, Compensation.of(3000.0));
+    Sponsorship spon4 =new Sponsorship(fighter1, s1, Compensation.of(4000.0));
 
-    System.out.println("Fighters sponsored by " + s1.getCompanyName() + ":");
+
+       System.out.println("\""  + s1.getCompanyName() + "\" Sponsors:");
     s1.getSponsoredFighters().stream()
-        .map(f -> f.getName() + " " + f.getSurname())
+        .map(f -> f.getFighter().getName() + " " + f.getFighter().getSurname() + " for: " + f.getCompensation())
         .forEach(System.out::println);
+
+
+    fighter1.removeSponsorship(spon1);
+    s1.removeSponsorship(spon2);
+     System.out.println("\""  + s1.getCompanyName() + "\" Sponsors:");
+    s1.getSponsoredFighters().stream()
+        .map(f -> f.getFighter().getName() + " " + f.getFighter().getSurname() + " for: " + f.getCompensation())
+        .forEach(System.out::println);
+
+
 
     // XOR
     System.out.println("---XOR---");
@@ -212,7 +226,7 @@ public class Main {
 
     // Własne
     System.out.println("---Własne---");
-    for (int i = 0; i < 20; i++) {
+    for (int i = 0; i < 11; i++) {
       Gala gala =
           new Gala(EventName.of("Ksw" + i), EventDateTime.of(LocalDateTime.now().plusDays(10 + i)));
       Fight fight = new Fight();

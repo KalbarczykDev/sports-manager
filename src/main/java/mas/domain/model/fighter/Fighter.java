@@ -13,7 +13,7 @@ import mas.domain.model.person.Person;
 import mas.domain.model.person.Surname;
 import mas.domain.model.shared.Address;
 import mas.domain.model.shared.Salary;
-import mas.domain.model.sponsor.Sponsor;
+import mas.domain.model.sponsorship.Sponsorship;
 import mas.infrastructure.repository.ObjectExtent;
 import mas.util.Util;
 
@@ -22,7 +22,7 @@ public class Fighter extends Person {
   private static Salary basicSalary = Salary.of(1000.0);
 
   private final Map<Specialization, Coach> coaches = new HashMap<>();
-  private final List<Sponsor> sponsors = new ArrayList<>();
+  private final List<Sponsorship> sponsorships = new ArrayList<>();
   private final List<Conference> conferences = new ArrayList<>();
   private final List<Contract> contracts = new ArrayList<>();
   private final List<FightParticipation> fightParticipations = new ArrayList<>();
@@ -174,20 +174,18 @@ public class Fighter extends Person {
     }
   }
 
-  public void addSponsor(Sponsor sponsor) {
-    Util.require(sponsor != null, "Sponsor cannot be null");
-    sponsors.add(sponsor);
-    sponsor.addSponsoredFighterOneWay(this);
+  public void addSponsorship(Sponsorship sponsorship) {
+    Util.require(sponsorship != null, "Sponsor cannot be null");
+    if (!sponsorships.contains(sponsorship)) {
+      sponsorships.add(sponsorship);
+      sponsorship.setFighter(this);
+    }
   }
 
-  public void addSponsorOneWay(Sponsor sponsor) {
-    sponsors.add(sponsor);
-  }
-
-  public void removeSponsor(Sponsor sponsor) {
-    if (sponsors.contains(sponsor)) {
-      sponsors.remove(sponsor);
-      sponsor.removeSponsoredFighter(this);
+  public void removeSponsorship(Sponsorship sponsorship) {
+    if (sponsorships.contains(sponsorship)) {
+      sponsorships.remove(sponsorship);
+      sponsorship.removeFromExtent();
     }
   }
 
@@ -212,7 +210,7 @@ public class Fighter extends Person {
             .filter(year -> year == fightYear)
             .count();
 
-    if (fightsThisYear > 10) {
+    if (fightsThisYear >= 10) {
       throw new IllegalStateException(
           "Fighter cannot participate in more than 10 fights in a year");
     }
@@ -241,8 +239,8 @@ public class Fighter extends Person {
     return Collections.unmodifiableList(contracts);
   }
 
-  public List<Sponsor> getSponsors() {
-    return Collections.unmodifiableList(sponsors);
+  public List<Sponsorship> getSponsorships() {
+    return Collections.unmodifiableList(sponsorships);
   }
 
   public Person getFormerSelf() {
@@ -281,7 +279,7 @@ public class Fighter extends Person {
                         + entry.getValue().getSurname())
             .toList()
         + ", sponsors="
-        + sponsors.stream().map(Sponsor::getCompanyName).toList()
+        + sponsorships.stream().map(Sponsorship::getSponsor).toList()
         + ", dateOfJoining="
         + dateOfJoining
         + '}';
@@ -291,7 +289,7 @@ public class Fighter extends Person {
   public void removeFromExtent() {
     removeContracts();
     deleteParticipations();
-    removeFromSponsors();
+    removeSponsorships();
     removeFromCoaches();
     super.removeFromExtent();
   }
@@ -315,10 +313,10 @@ public class Fighter extends Person {
     coaches.clear();
   }
 
-  private void removeFromSponsors() {
-    for (Sponsor sponsor : sponsors) {
-      sponsor.removeSponsoredFighter(this);
+  private void removeSponsorships() {
+    for (Sponsorship sponsorship : sponsorships) {
+      sponsorship.removeFromExtent();
     }
-    sponsors.clear();
+    sponsorships.clear();
   }
 }

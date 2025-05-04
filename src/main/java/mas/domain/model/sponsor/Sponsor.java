@@ -8,13 +8,13 @@ import mas.domain.model.company.Company;
 import mas.domain.model.company.CompanyName;
 import mas.domain.model.company.Email;
 import mas.domain.model.company.PhoneNumber;
-import mas.domain.model.fighter.Fighter;
 import mas.domain.model.shared.Address;
+import mas.domain.model.sponsorship.Sponsorship;
 import mas.util.Util;
 
 public class Sponsor extends Company {
 
-  private final List<Fighter> sponsoredFighters = new ArrayList<>();
+  private final List<Sponsorship> sponsoredFighters = new ArrayList<>();
 
   public Sponsor(
       CompanyName companyName,
@@ -34,24 +34,19 @@ public class Sponsor extends Company {
     }
   }
 
-  public void addSponsoredFighter(Fighter fighter) {
-    Util.require(fighter != null, "Fighter cannot be null");
-    sponsoredFighters.add(fighter);
-    fighter.addSponsorOneWay(this);
+  public void addSponsorship(Sponsorship sponsorship) {
+    Util.require(sponsorship != null, "Sponsorship cannot be null");
+    sponsoredFighters.add(sponsorship);
   }
 
-  public void addSponsoredFighterOneWay(Fighter fighter) {
-    sponsoredFighters.add(fighter);
-  }
-
-  public void removeSponsoredFighter(Fighter fighter) {
-    Util.require(fighter != null, "Fighter cannot be null");
-    if (sponsoredFighters.remove(fighter)) {
-      fighter.removeSponsor(this);
+  public void removeSponsorship(Sponsorship sponsorship) {
+    Util.require(sponsorship != null, "Sponsorship cannot be null");
+    if (sponsoredFighters.remove(sponsorship)) {
+      sponsorship.removeFromExtent();
     }
   }
 
-  public List<Fighter> getSponsoredFighters() {
+  public List<Sponsorship> getSponsoredFighters() {
     return Collections.unmodifiableList(sponsoredFighters);
   }
 
@@ -70,19 +65,19 @@ public class Sponsor extends Company {
         + ", address="
         + getAddress()
         + ", sponsoredFighters="
-        + sponsoredFighters.stream().map(f -> f.getName() + " " + f.getSurname())
+        + sponsoredFighters.stream().map(f -> f.getFighter().getName() + " " + f.getFighter().getSurname())
         + '}';
   }
 
   @Override
   protected void removeFromExtent() {
-    removeFromFighters();
+    removeSponsorships();
     super.removeFromExtent();
   }
 
-  private void removeFromFighters() {
-    for (Fighter fighter : new ArrayList<>(sponsoredFighters)) {
-      removeSponsoredFighter(fighter);
+  private void removeSponsorships() {
+    for (Sponsorship sponsorship : new ArrayList<>(sponsoredFighters)) {
+      sponsorship.removeFromExtent();
     }
   }
 }
