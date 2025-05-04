@@ -71,6 +71,6 @@ public class Gala extends Event {
 
   @Override
   public String toString() {
-    return "Gala{" + "date=}" + getDate() + '}';
+    return "Gala{" + "date=" + (getDate() != null ? getDate() : "N/A") + '}';
   }
 }

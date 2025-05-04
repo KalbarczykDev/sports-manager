@@ -134,7 +134,7 @@ public class Main {
     Fight f1 = new Fight();
     f1.addFighter(fighter1);
     f1.addFighter(fighter2);
-    f1.setWinner(fighter1);
+
     Fight f2 = new Fight();
     f2.addFighter(fighter3);
     f2.addFighter(fighter4);
@@ -211,6 +211,14 @@ public class Main {
     System.out.println(c1);
 
     // Własne
-
+    System.out.println("---Własne---");
+    for (int i = 0; i < 20; i++) {
+      Gala gala =
+          new Gala(EventName.of("Ksw" + i), EventDateTime.of(LocalDateTime.now().plusDays(10 + i)));
+      Fight fight = new Fight();
+      gala.addFight(fight, i);
+      fighter2.addFight(fight);
+      System.out.println("Added fight=" + fight);
+    }
   }
 }

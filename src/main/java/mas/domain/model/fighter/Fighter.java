@@ -197,8 +197,24 @@ public class Fighter extends Person {
 
   public void addParticipation(FightParticipation fightParticipation) {
     Util.require(fightParticipation != null, "Fight participation cannot be null");
+    validateYearlyFightLimit(
+        fightParticipation.getFight().getGala().getDate().getValue().getYear());
     if (!fightParticipations.contains(fightParticipation)) {
       fightParticipations.add(fightParticipation);
+    }
+  }
+
+  public void validateYearlyFightLimit(int fightYear) {
+
+    long fightsThisYear =
+        fightParticipations.stream()
+            .map(fp -> fp.getFight().getGala().getDate().getValue().getYear())
+            .filter(year -> year == fightYear)
+            .count();
+
+    if (fightsThisYear > 10) {
+      throw new IllegalStateException(
+          "Fighter cannot participate in more than 10 fights in a year");
     }
   }
 
