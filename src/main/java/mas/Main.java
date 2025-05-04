@@ -1,7 +1,17 @@
 package mas;
 
+import java.time.LocalDateTime;
 import mas.domain.model.company.*;
 import mas.domain.model.company.PhoneNumber;
+import mas.domain.model.conference.Conference;
+import mas.domain.model.event.*;
+import mas.domain.model.event.EventDateTime;
+import mas.domain.model.event.EventName;
+import mas.domain.model.fight.Fight;
+import mas.domain.model.fighter.Fighter;
+import mas.domain.model.gala.Gala;
+import mas.domain.model.person.Name;
+import mas.domain.model.person.Surname;
 import mas.domain.model.shared.Address;
 import mas.domain.model.sponsor.Sponsor;
 
@@ -11,7 +21,7 @@ public class Main {
 
     // unique
 
-    System.out.println("----UNIQUE---");
+    System.out.println("---UNIQUE---");
 
     Company uc1 =
         new Sponsor(
@@ -31,10 +41,113 @@ public class Main {
             );
 
     // Atrybutu
-    // Subset
+
+    System.out.println("---Atrybutu---");
+
+    try {
+      Event ea1 =
+          new Conference(
+              EventName.of("event 1"),
+              EventDateTime.of(
+                  LocalDateTime.now().minusYears(2))); // nie stworzy się event w przeszłości
+      // nazwa
+
+    } catch (IllegalArgumentException e) {
+      System.out.println(e.getMessage());
+    }
+    try {
+      Event ea2 =
+          new Conference(
+              EventName.of("event 2"),
+              EventDateTime.of(
+                  LocalDateTime.now()
+                      .plusYears(3))); // nie stworzy się event za daleko w przyszłośc
+    } catch (IllegalArgumentException e) {
+      System.out.println(e.getMessage());
+    }
+
     // Ordered
-    // Bag
-    // Xor
-    // Ograniczenie własne
+    System.out.println("---Ordered---");
+    Gala gala1 =
+        new Gala(EventName.of("KSW 2025"), EventDateTime.of(LocalDateTime.now().plusMonths(3)));
+
+    Fighter fighter1 =
+        new Fighter(
+            Name.of("Jan"),
+            Surname.of("Kowalski"),
+            Address.of(5, "Mickiewicza", "Warszawa", "Mazowieckie", "00-001"));
+
+    Fighter fighter2 =
+        new Fighter(
+            Name.of("Adam"),
+            Surname.of("Nowak"),
+            Address.of(10, "Piekna", "Kraków", "Małopolskie", "30-003"));
+
+    Fighter fighter3 =
+        new Fighter(
+            Name.of("Ewa"),
+            Surname.of("Wiśniewska"),
+            Address.of(8, "Słoneczna", "Gdańsk", "Pomorskie", "80-001"));
+
+    Fighter fighter4 =
+        new Fighter(
+            Name.of("Tomasz"),
+            Surname.of("Zieliński"),
+            Address.of(12, "Leśna", "Poznań", "Wielkopolskie", "60-002"));
+
+    Fighter fighter5 =
+        new Fighter(
+            Name.of("Anna"),
+            Surname.of("Mazur"),
+            Address.of(3, "Polna", "Lublin", "Lubelskie", "20-004"));
+    Fighter fighter6 =
+        new Fighter(
+            Name.of("Ola"),
+            Surname.of("Szymańska"),
+            Address.of(6, "Fajterska", "Łódź", "Łódzkie", "90-001"));
+    Fighter fighter7 =
+        new Fighter(
+            Name.of("Piotr"),
+            Surname.of("Czarny"),
+            Address.of(7, "Walkowa", "Wrocław", "Dolnośląskie", "50-001"));
+    Fighter fighter8 =
+        new Fighter(
+            Name.of("Karol"),
+            Surname.of("Biały"),
+            Address.of(8, "Mocna", "Szczecin", "Zachodniopomorskie", "70-001"));
+    Fighter fighter9 =
+        new Fighter(
+            Name.of("Zuzanna"),
+            Surname.of("Zielona"),
+            Address.of(9, "Szybka", "Rzeszów", "Podkarpackie", "35-001"));
+    Fighter fighter10 =
+        new Fighter(
+            Name.of("Bartek"),
+            Surname.of("Czerwony"),
+            Address.of(10, "Ringowa", "Katowice", "Śląskie", "40-001"));
+
+    Fight f1 = new Fight();
+    f1.addFighter(fighter1);
+    f1.addFighter(fighter2);
+    Fight f2 = new Fight();
+    f2.addFighter(fighter3);
+    f2.addFighter(fighter4);
+    Fight f3 = new Fight();
+    f3.addFighter(fighter5);
+    f3.addFighter(fighter6);
+    Fight f4 = new Fight();
+    f4.addFighter(fighter7);
+    f4.addFighter(fighter8);
+    Fight f5 = new Fight();
+    f5.addFighter(fighter9);
+    f5.addFighter(fighter10);
+
+    gala1.addFight(f1, 1);
+    gala1.addFight(f2, 2);
+    gala1.addFight(f3, 3);
+    gala1.addFight(f4, 4);
+    gala1.addFight(f5, 5);
+
+    gala1.printFightOrder();
   }
 }
