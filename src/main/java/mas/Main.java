@@ -11,6 +11,8 @@ public class Main {
 
     // unique
 
+    System.out.println("----UNIQUE---");
+
     Company uc1 =
         new Sponsor(
             CompanyName.of("Unique Company Name"),
@@ -27,5 +29,12 @@ public class Main {
             Address.of(22, "Second Avenue", "Krakow", "Malopolskie", "30-002"),
             NIP.of("1234") // nie zostanie stworzony
             );
+
+    // Atrybutu
+    // Subset
+    // Ordered
+    // Bag
+    // Xor
+    // Ograniczenie własne
   }
 }
