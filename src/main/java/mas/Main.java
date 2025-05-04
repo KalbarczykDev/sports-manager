@@ -1,6 +1,8 @@
 package mas;
 
 import java.time.LocalDateTime;
+import mas.domain.model.coach.Coach;
+import mas.domain.model.coach.Specialization;
 import mas.domain.model.company.*;
 import mas.domain.model.company.PhoneNumber;
 import mas.domain.model.conference.Conference;
@@ -149,5 +151,40 @@ public class Main {
     gala1.addFight(f5, 5);
 
     gala1.printFightOrder();
+
+    // Subset
+    System.out.println("---subset---");
+
+    Coach coach = new Coach(Name.of("Karol"), Surname.of("Nowak"), Specialization.STRIKING);
+
+    Fighter fc =
+        new Fighter(
+            Name.of("Jan"),
+            Surname.of("Kowalski"),
+            Address.of(1, "Ringowa", "Warszawa", "Mazowieckie", "00-001"));
+    Fighter fi =
+        new Fighter(
+            Name.of("Ewa"),
+            Surname.of("Wiśniewska"),
+            Address.of(2, "Sportowa", "Warszawa", "Mazowieckie", "00-002"));
+
+    coach.addClubFighter(fc);
+    coach.addClubFighter(fi);
+
+    coach.addIndividualFighter(fi);
+
+    System.out.println("Zawodnicy Klubowi:");
+    coach.getClubFighters().stream()
+        .map(f -> "\t" + f.getName() + " " + f.getSurname())
+        .forEach(System.out::println);
+
+    System.out.println("Zawodnicy Indywidualni:");
+    coach.getIndividualFighters().stream()
+        .map(f -> "\t" + f.getName() + " " + f.getSurname())
+        .forEach(System.out::println);
+    // XOR
+    // Bag
+    // Własne
+
   }
 }

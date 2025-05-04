@@ -15,7 +15,8 @@ public class Coach extends Person {
 
   private Person formerFighter;
 
-  private final List<Fighter> fighters = new ArrayList<>(); // asocjacja z kwalifikowana
+  private final List<Fighter> individualFighters = new ArrayList<>();
+  private final List<Fighter> clubFighters = new ArrayList<>();
 
   public Coach(Name name, Surname surname, Specialization specialization) {
     try {
@@ -51,22 +52,45 @@ public class Coach extends Person {
     this.formerFighter = formerSelf;
   }
 
-  public List<Fighter> getFighters() {
-    return Collections.unmodifiableList(fighters);
+  public List<Fighter> getClubFighters() {
+    return Collections.unmodifiableList(clubFighters);
   }
 
-  public void addFighter(Fighter fighter) {
+  public List<Fighter> getIndividualFighters() {
+    return Collections.unmodifiableList(individualFighters);
+  }
+
+  public void addClubFighter(Fighter fighter) {
     Util.require(fighter != null, "Fighter cannot be null");
-    if (!fighters.contains(fighter)) {
-      fighters.add(fighter);
+    if (!clubFighters.contains(fighter)) {
+      clubFighters.add(fighter);
       fighter.addCoach(this);
     }
   }
 
+  public void addIndividualFighter(Fighter fighter) {
+    Util.require(fighter != null, "Fighter cannot be null");
+
+    if (!clubFighters.contains(fighter)) {
+      throw new IllegalStateException("Fighter must be in club before becoming individual trainee");
+    }
+
+    if (individualFighters.contains(fighter)) {
+      throw new IllegalStateException(
+          "This figher is already an individual fighter assigned to coach");
+    }
+
+    individualFighters.add(fighter);
+    fighter.addCoach(this);
+  }
+
   public void removeFighter(Fighter fighter) {
-    if (fighters.contains(fighter)) {
-      fighters.remove(fighter);
+    if (clubFighters.contains(fighter)) {
+      clubFighters.remove(fighter);
       fighter.removeCoach(this);
+    }
+    if (individualFighters.contains(fighter)) {
+      individualFighters.remove(fighter);
     }
   }
 
@@ -90,7 +114,7 @@ public class Coach extends Person {
         + ", specialization="
         + specialization.getSpecialization()
         + ", fighters="
-        + fighters.stream().map(f -> f.getName() + " " + f.getSurname()).toList()
+        + individualFighters.stream().map(f -> f.getName() + " " + f.getSurname()).toList()
         + '}';
   }
 
@@ -101,9 +125,10 @@ public class Coach extends Person {
   }
 
   private void removeFromFighters() {
-    for (Fighter fighter : fighters) {
+    for (Fighter fighter : clubFighters) {
       fighter.removeCoach(this);
     }
-    fighters.clear();
+    clubFighters.clear();
+    individualFighters.clear();
   }
 }
