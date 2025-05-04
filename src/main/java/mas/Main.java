@@ -6,6 +6,9 @@ import mas.domain.model.coach.Specialization;
 import mas.domain.model.company.*;
 import mas.domain.model.company.PhoneNumber;
 import mas.domain.model.conference.Conference;
+import mas.domain.model.contract.Contract;
+import mas.domain.model.contract.ExpirationDate;
+import mas.domain.model.contract.SigningDate;
 import mas.domain.model.event.*;
 import mas.domain.model.event.EventDateTime;
 import mas.domain.model.event.EventName;
@@ -131,6 +134,7 @@ public class Main {
     Fight f1 = new Fight();
     f1.addFighter(fighter1);
     f1.addFighter(fighter2);
+    f1.setWinner(fighter1);
     Fight f2 = new Fight();
     f2.addFighter(fighter3);
     f2.addFighter(fighter4);
@@ -153,7 +157,7 @@ public class Main {
     gala1.printFightOrder();
 
     // Subset
-    System.out.println("---subset---");
+    System.out.println("---Subset---");
 
     Coach coach = new Coach(Name.of("Karol"), Surname.of("Nowak"), Specialization.STRIKING);
 
@@ -184,7 +188,7 @@ public class Main {
         .forEach(System.out::println);
 
     // Bag
-
+    System.out.println("---Bag---");
     Sponsor s1 = (Sponsor) uc1;
 
     s1.addSponsoredFighter(fc);
@@ -197,6 +201,15 @@ public class Main {
         .forEach(System.out::println);
 
     // XOR
+    System.out.println("---XOR---");
+
+    Contract c1 = Contract.createContact(fighter1, SigningDate.of(LocalDateTime.now()));
+
+    c1.setExpiresAt(ExpirationDate.of(LocalDateTime.now().plusYears(2)));
+    // c1.setIsPernament(true); //exception
+
+    System.out.println(c1);
+
     // Własne
 
   }
