@@ -176,10 +176,12 @@ public class Fighter extends Person {
 
   public void addSponsor(Sponsor sponsor) {
     Util.require(sponsor != null, "Sponsor cannot be null");
-    if (!sponsors.contains(sponsor)) {
-      sponsors.add(sponsor);
-      sponsor.addSponsoredFighter(this);
-    }
+    sponsors.add(sponsor);
+    sponsor.addSponsoredFighterOneWay(this);
+  }
+
+  public void addSponsorOneWay(Sponsor sponsor) {
+    sponsors.add(sponsor);
   }
 
   public void removeSponsor(Sponsor sponsor) {

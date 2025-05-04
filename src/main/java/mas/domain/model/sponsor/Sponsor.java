@@ -36,10 +36,12 @@ public class Sponsor extends Company {
 
   public void addSponsoredFighter(Fighter fighter) {
     Util.require(fighter != null, "Fighter cannot be null");
-    if (!sponsoredFighters.contains(fighter)) {
-      sponsoredFighters.add(fighter);
-      fighter.addSponsor(this);
-    }
+    sponsoredFighters.add(fighter);
+    fighter.addSponsorOneWay(this);
+  }
+
+  public void addSponsoredFighterOneWay(Fighter fighter) {
+    sponsoredFighters.add(fighter);
   }
 
   public void removeSponsoredFighter(Fighter fighter) {

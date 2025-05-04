@@ -182,8 +182,21 @@ public class Main {
     coach.getIndividualFighters().stream()
         .map(f -> "\t" + f.getName() + " " + f.getSurname())
         .forEach(System.out::println);
-    // XOR
+
     // Bag
+
+    Sponsor s1 = (Sponsor) uc1;
+
+    s1.addSponsoredFighter(fc);
+    s1.addSponsoredFighter(fc);
+    s1.addSponsoredFighter(fc);
+
+    System.out.println("Fighters sponsored by " + s1.getCompanyName() + ":");
+    s1.getSponsoredFighters().stream()
+        .map(f -> f.getName() + " " + f.getSurname())
+        .forEach(System.out::println);
+
+    // XOR
     // Własne
 
   }
