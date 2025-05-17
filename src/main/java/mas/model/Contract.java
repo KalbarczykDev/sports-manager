@@ -3,7 +3,6 @@ package mas.model;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
-
 import mas.model.data.ObjectExtent;
 
 public class Contract extends ObjectExtent {
@@ -14,10 +13,14 @@ public class Contract extends ObjectExtent {
   private LocalDateTime expiresAt;
   private LocalDateTime signedAt;
 
-  private Contract(Fighter fighter, LocalDateTime signedAt) {
+  private Contract(
+      Fighter fighter, LocalDateTime signedAt, LocalDateTime expiresAt, boolean isPernament) {
     try {
+
       setFighter(fighter);
       setSignedAt(signedAt);
+      setPermanent(isPernament);
+      setExpiresAt(expiresAt);
 
     } catch (Exception e) {
       removeFromExtent();
@@ -25,52 +28,57 @@ public class Contract extends ObjectExtent {
     }
   }
 
-  public void setExpiresAt(LocalDateTime expiresAt) {
+  public static Contract createContract(
+      Fighter fighter, LocalDateTime signedAt, boolean isPermanent, LocalDateTime expiresAt) {
+    validateXOR(expiresAt, isPermanent);
+    return new Contract(fighter, signedAt, expiresAt, isPermanent);
+  }
 
-    if (isPermanent) {
-      throw new IllegalStateException("Contract is already set to pernament.");
+  private static void validateXOR(LocalDateTime expiresAt, boolean isPermanent) {
+    if (isPermanent && expiresAt != null) {
+      throw new IllegalArgumentException("Contract cannot be both permanent and expiring.");
     }
+    if (!isPermanent && expiresAt == null) {
+      throw new IllegalArgumentException(
+          "Contract must be either permanent or have an expiration date.");
+    }
+  }
 
-    if(expiresAt == null) {
+  private void setExpiresAt(LocalDateTime expiresAt) {
+
+    if (expiresAt == null) {
       throw new IllegalArgumentException("expiresAt cannot be null.");
     }
 
-    if(expiresAt.isBefore(LocalDateTime.now())) {
+    if (expiresAt.isBefore(LocalDateTime.now())) {
       throw new IllegalArgumentException("expiresAt cannot be in the past.");
     }
-
-
 
     this.expiresAt = expiresAt;
   }
 
-  public void setIsPernament(boolean isPernament) {
-
-    if (expiresAt != null) {
-      throw new IllegalStateException("Contract Expiration date is already set");
-    }
-
-    this.isPermanent = isPernament;
+  public LocalDateTime getExpiresAt() {
+    return expiresAt;
   }
 
-  public static Contract createContact(Fighter fighter, LocalDateTime signedAt) {
-    return new Contract(fighter, signedAt);
+  private void setPermanent(boolean isPermanent) {
+    this.isPermanent = isPermanent;
+  }
+
+  public boolean isPermanent() {
+    return isPermanent;
   }
 
   public LocalDateTime getSignedAt() {
     return signedAt;
   }
 
-  public void setSignedAt(LocalDateTime signedAt) {
-    if(signedAt == null) {
+  private void setSignedAt(LocalDateTime signedAt) {
+    if (signedAt == null) {
       throw new IllegalArgumentException("signedAt cannot be null.");
     }
 
     this.signedAt = signedAt;
-  }
-
-  public LocalDateTime getExpiresAt() {
-    return expiresAt;
   }
 
   public Fighter getFighter() {
@@ -78,10 +86,9 @@ public class Contract extends ObjectExtent {
   }
 
   private void setFighter(Fighter fighter) {
-    if(fighter == null) {
+    if (fighter == null) {
       throw new IllegalArgumentException("fighter cannot be null.");
     }
-
 
     List<Contract> contracts = fighter.getContracts();
 
