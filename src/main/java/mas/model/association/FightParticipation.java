@@ -1,5 +1,6 @@
 package mas.model.association;
 
+import java.util.Optional;
 import mas.model.Fight;
 import mas.model.Fighter;
 import mas.model.data.ObjectExtent;
@@ -11,8 +12,19 @@ public class FightParticipation extends ObjectExtent {
 
   public FightParticipation(Fighter fighter, Fight fight) {
     try {
+
+      Optional<FightParticipation> existing =
+          ObjectExtent.getExtent(FightParticipation.class).stream()
+              .filter(f -> f.getFighter().equals(fighter) && f.getFight().equals(fight))
+              .findFirst();
+
+      if (existing.isPresent()) {
+        throw new IllegalStateException("Figher already participates in this fight");
+      }
+
       setFight(fight);
       setFighter(fighter);
+
     } catch (Exception e) {
       removeFromExtent();
       System.out.println("FightParticipation not created: " + e.getMessage());
@@ -24,7 +36,7 @@ public class FightParticipation extends ObjectExtent {
   }
 
   public void setPoints(int points) {
-    if(points < 0){
+    if (points < 0) {
       throw new IllegalArgumentException("Points cannot be negative");
     }
     this.points = points;
