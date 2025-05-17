@@ -3,9 +3,10 @@ package mas.model.attribute;
 
 
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Address {
+public class Address implements Serializable {
 
     private final int streetNumber;
     private final String streetName;

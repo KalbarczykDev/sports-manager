@@ -1,9 +1,9 @@
 package mas.model.attribute;
 
 
+import java.io.Serializable;
 
-
-public final class Title {
+public final class Title implements Serializable {
 
     private final String name;
     private final String description;

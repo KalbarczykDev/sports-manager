@@ -1,10 +1,37 @@
 package mas;
 
+import mas.model.Fighter;
+import mas.model.attribute.Address;
+import mas.ui.view.MainScreen;
+
+import javax.swing.*;
 
 
 public class Main {
 
-  public static void main(String[] args) {
+    public static void main(String[] args) {
 
-  }
+        Fighter f1 = new Fighter(
+                "test",
+                "testowy",
+                Address.of(
+                        1,
+                        "testowa",
+                        "testowo",
+                        "testow",
+                        "21-37"
+                ));
+        Fighter f2 = new Fighter(
+                "testoniusz",
+                "testowski",
+                Address.of(
+                        2,
+                        "testowa",
+                        "testowo",
+                        "testow",
+                        "21-37"
+                ));
+
+        SwingUtilities.invokeLater(MainScreen::new);
+    }
 }

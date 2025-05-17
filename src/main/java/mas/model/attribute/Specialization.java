@@ -1,6 +1,8 @@
 package mas.model.attribute;
 
-public  enum Specialization  {
+import java.io.Serializable;
+
+public  enum Specialization implements Serializable {
     STRIKING("striking"),
     GRAPPLING("grappling"),
     ENDURANCE("endurance");
