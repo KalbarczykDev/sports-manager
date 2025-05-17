@@ -6,7 +6,7 @@ import java.util.List;
 
 import mas.model.association.FightParticipation;
 import mas.model.data.ObjectExtent;
-import mas.util.Util;
+
 
 public class Fight extends ObjectExtent {
   private Fighter winner;
@@ -32,7 +32,10 @@ public class Fight extends ObjectExtent {
   }
 
   public void addParticipant(FightParticipation fightParticipation) {
-    Util.require(fightParticipation != null, "FightParticipation cannot be null");
+    if(fightParticipation == null) {
+      throw new IllegalArgumentException("fightParticipation cannot be null");
+    }
+
     if (!participants.contains(fightParticipation)) {
       participants.add(fightParticipation);
     }
@@ -47,7 +50,10 @@ public class Fight extends ObjectExtent {
   }
 
   public void addCommentator(Commentator commentator) {
-    Util.require(commentator != null, "Commentator cannot be null");
+    if(commentator == null) {
+      throw new IllegalArgumentException("commentator cannot be null");
+    }
+
     if (!commentators.contains(commentator)) {
       commentators.add(commentator);
       commentator.addFight(this);
@@ -62,7 +68,12 @@ public class Fight extends ObjectExtent {
   }
 
   public void setGala(Gala gala) {
-    Util.require(gala != null, "Gala cannot be null");
+
+    if(gala == null) {
+      throw new IllegalArgumentException("gala cannot be null");
+    }
+
+
 
     if (this.gala != null) {
       this.gala.removeFight(this);

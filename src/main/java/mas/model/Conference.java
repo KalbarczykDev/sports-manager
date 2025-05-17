@@ -1,6 +1,7 @@
 package mas.model;
 
-import mas.util.Util;
+import mas.model.abstraction.Event;
+
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -24,7 +25,10 @@ public class Conference extends Event {
     }
 
     public void addFighter(Fighter fighter) {
-        Util.require(fighter != null, "Fighter cannot be null");
+        if(fighter == null) {
+        throw new IllegalArgumentException("fighter is null");
+        }
+
         if (!fighters.contains(fighter)) {
             fighters.add(fighter);
             fighter.addConference(this);

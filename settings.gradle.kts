@@ -1,1 +1,1 @@
-rootProject.name = "MAS_MP4"
+rootProject.name = "MAS_PROJEKT"

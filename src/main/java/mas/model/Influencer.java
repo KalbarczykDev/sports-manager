@@ -1,7 +1,7 @@
 package mas.model;
 
 import mas.model.data.ObjectExtent;
-import mas.util.Util;
+
 
 public class Influencer extends ObjectExtent {
 
@@ -28,7 +28,10 @@ public class Influencer extends ObjectExtent {
     }
 
     public void setContractor(Contractor contractor) {
-        Util.require(contractor != null, "Contractor cannot be null");
+        if(contractor == null){
+            throw new IllegalArgumentException("Contractor cannot be null");
+        }
+
 
         if (contractor.getInfluencerRole().isPresent()) {
             contractor.getInfluencerRole().get().removeFromExtent();
@@ -48,8 +51,12 @@ public class Influencer extends ObjectExtent {
     }
 
     public void setSocialMediaHandle(String socialMediaHandle) {
-        Util.require(socialMediaHandle != null, "SocialMediaHandle cannot be null");
-        Util.require(!socialMediaHandle.isEmpty(), "SocialMediaHandle cannot be empty");
+
+        if(socialMediaHandle == null || socialMediaHandle.isEmpty()){
+            throw new IllegalArgumentException("Social Media Handle cannot be null or empty");
+        }
+
+
         this.socialMediaHandle = socialMediaHandle;
     }
 

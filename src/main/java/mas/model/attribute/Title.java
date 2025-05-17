@@ -1,7 +1,7 @@
 package mas.model.attribute;
 
 
-import mas.util.Util;
+
 
 public final class Title {
 
@@ -28,10 +28,13 @@ public final class Title {
     }
 
     private static void validate(String name, String description) {
-        Util.require(name != null, "Name cannot be null");
-        Util.require(description != null, "Description cannot be null");
-        Util.require(!name.isEmpty(), "Name cannot be empty");
-        Util.require(!description.isEmpty(), "Description cannot be empty");
+        if(name == null || name.isEmpty()){
+            throw new IllegalArgumentException("Name cannot be empty");
+        }
+
+        if(description == null || description.isEmpty()){
+            throw new IllegalArgumentException("Description cannot be empty");
+        }
     }
 
 

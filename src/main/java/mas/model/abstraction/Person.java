@@ -1,7 +1,7 @@
-package mas.model;
+package mas.model.abstraction;
 
 import mas.model.attribute.Address;
-import mas.util.Util;
+
 import mas.model.data.ObjectExtent;
 
 import java.util.Objects;
@@ -18,10 +18,9 @@ public abstract class Person extends ObjectExtent implements IPerson {
 
     @Override
     public void setName(String name) {
-        Util.require(name != null, "Name cannot be null");
-
-        Util.require(!name.isEmpty(), "Name is empty");
-
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("Name cannot be null or blank");
+        }
         this.name = name;
     }
 
@@ -32,8 +31,9 @@ public abstract class Person extends ObjectExtent implements IPerson {
 
     @Override
     public void setSurname(String surname) {
-        Util.require(surname != null, "Surname cannot be null");
-        Util.require(!surname.isEmpty(), "Surname is empty");
+        if (surname == null || surname.isBlank()) {
+            throw new IllegalArgumentException("Surname cannot be null or blank");
+        }
         this.surname = surname;
     }
 
@@ -44,7 +44,12 @@ public abstract class Person extends ObjectExtent implements IPerson {
 
     @Override
     public void setAddress(Address address) {
-        Util.require(address != null, "Address cannot be null");
+
+
+        if (address == null) {
+            throw new IllegalArgumentException("Address cannot be null");
+        }
+
         this.address = address;
     }
 

@@ -1,7 +1,7 @@
 package mas.model;
 
 import mas.model.data.ObjectExtent;
-import mas.util.Util;
+
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,7 +29,9 @@ public class Commentator extends ObjectExtent {
     }
 
     public void setContractor(Contractor contractor) {
-        Util.require(contractor != null, "Contractor cannot be null");
+        if (contractor == null) {
+            throw new IllegalArgumentException("Contractor cannot be null");
+        }
         this.contractor = contractor;
     }
 
@@ -44,7 +46,9 @@ public class Commentator extends ObjectExtent {
     }
 
     public void addFight(Fight fight) {
-        Util.require(fight != null, "Fight cannot be null");
+        if(fight == null) {
+            throw new IllegalArgumentException("Fight cannot be null");
+        }
         if (!fights.contains(fight)) {
             fights.add(fight);
             fight.addCommentator(this);
@@ -63,7 +67,7 @@ public class Commentator extends ObjectExtent {
     }
 
     public void setLanguage(String language) {
-         if (language == null || language.isEmpty()) {
+        if (language == null || language.isEmpty()) {
             throw new IllegalArgumentException("Language cannot be null or empty");
         }
         this.language = language;

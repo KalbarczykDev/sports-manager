@@ -2,7 +2,8 @@ package mas.model;
 
 import java.time.LocalDateTime;
 
-import mas.util.Util;
+import mas.model.abstraction.Person;
+
 
 public class RetiredFighter extends Person {
   private Person formerSelf;
@@ -28,7 +29,10 @@ public class RetiredFighter extends Person {
   }
 
   public void setPension(double pension) {
-    Util.require(pension > 0, "pension must be greater than 0");
+    if(pension < 0){
+      throw new IllegalArgumentException("pension must be greater than 0");
+    }
+
     this.pension = pension;
   }
 
@@ -37,14 +41,26 @@ public class RetiredFighter extends Person {
   }
 
   private void setFormerSelf(Person formerSelf) {
-    Util.require(formerSelf != null, "formerSelf cannot be null");
+
+    if(formerSelf == null){
+      throw new IllegalArgumentException("formerSelf must not be null");
+    }
+
+
     formerSelf.removeFromExtent();
     this.formerSelf = formerSelf;
   }
 
   private void setRetirementDate(LocalDateTime retirementDate) {
-    Util.require(retirementDate != null, "retirementDate cannot be null");
-     Util.require(!retirementDate.isBefore(LocalDateTime.now()), "Expiration date cannot be in the future");
+
+    if(retirementDate == null){
+      throw new IllegalArgumentException("retirementDate must not be null");
+    }
+
+    if(retirementDate.isAfter(LocalDateTime.now())){
+      throw new IllegalArgumentException("retirementDate must be after now");
+    }
+
     this.retirementDate = retirementDate;
   }
 

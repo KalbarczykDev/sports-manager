@@ -2,8 +2,10 @@ package mas.model;
 
 import java.util.Optional;
 
+import mas.model.abstraction.Company;
+import mas.model.abstraction.IPerson;
 import mas.model.attribute.Address;
-import mas.util.Util;
+
 
 public class Contractor extends Company implements IPerson {
 
@@ -121,7 +123,9 @@ public class Contractor extends Company implements IPerson {
 
   @Override
   public void setName(String name) {
-    Util.require(name != null, "Name cannot be null");
+    if(name == null || name.isEmpty()) {
+      throw new IllegalArgumentException("Contractor name is null or empty");
+    }
     this.name = name;
   }
 
@@ -132,7 +136,10 @@ public class Contractor extends Company implements IPerson {
 
   @Override
   public void setSurname(String surname) {
-    Util.require(surname != null, "Surname cannot be null");
+    if(surname == null || surname.isEmpty()) {
+      throw new IllegalArgumentException("Contractor surname is null or empty");
+    }
+
     this.surname = surname;
   }
 
@@ -143,7 +150,10 @@ public class Contractor extends Company implements IPerson {
 
   @Override
   public void setAddress(Address address) {
-    Util.require(address != null, "Address cannot be null");
+    if(address == null) {
+      throw new IllegalArgumentException("Contractor address is null");
+    }
+
     super.setAddress(address);
   }
 

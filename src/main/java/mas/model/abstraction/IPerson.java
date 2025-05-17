@@ -1,4 +1,4 @@
-package mas.model;
+package mas.model.abstraction;
 
 import mas.model.attribute.Address;
 

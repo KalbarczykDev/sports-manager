@@ -3,7 +3,7 @@ package mas.model.association;
 import mas.model.Fighter;
 import mas.model.Sponsor;
 import mas.model.data.ObjectExtent;
-import mas.util.Util;
+
 
 public class Sponsorship extends ObjectExtent {
   private Fighter fighter;
@@ -48,7 +48,9 @@ public class Sponsorship extends ObjectExtent {
   }
 
   public void setCompensation(double compensation) {
-    Util.require(compensation > 0, "Compensation cannot be more than zero");
+    if(compensation < 0){
+     throw new IllegalArgumentException( "Compensation cannot be more than zero");
+    }
     this.compensation = compensation;
   }
 

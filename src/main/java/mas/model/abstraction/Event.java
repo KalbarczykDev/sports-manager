@@ -1,7 +1,7 @@
-package mas.model;
+package mas.model.abstraction;
 
 import mas.model.data.ObjectExtent;
-import mas.util.Util;
+
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -36,8 +36,12 @@ public abstract class Event extends ObjectExtent {
     }
 
     public void setEventName(String eventName) {
-        Util.require(eventName != null, "Event name cannot be null");
-        Util.require(!eventName.isEmpty(), "Event name cannot be empty");
+        if(eventName == null) {
+            throw new IllegalArgumentException("Event name cannot be null");
+        }
+        if(eventName.isEmpty()) {
+            throw new IllegalArgumentException("Event name cannot be empty");
+        }
         this.eventName = eventName;
     }
 

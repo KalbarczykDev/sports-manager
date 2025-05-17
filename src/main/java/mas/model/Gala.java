@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.Set;
 import java.util.TreeSet;
 
+import mas.model.abstraction.Event;
 import mas.model.association.FightParticipation;
 
 public class Gala extends Event {

@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Objects;
 
 import mas.model.data.ObjectExtent;
-import mas.util.Util;
 
 public class Contract extends ObjectExtent {
 
@@ -32,9 +31,15 @@ public class Contract extends ObjectExtent {
       throw new IllegalStateException("Contract is already set to pernament.");
     }
 
-    Util.require(expiresAt != null, "Expiration date cannot be null");
+    if(expiresAt == null) {
+      throw new IllegalArgumentException("expiresAt cannot be null.");
+    }
 
-    Util.require(expiresAt.isAfter(LocalDateTime.now()), "Expiration date cannot be in the past");
+    if(expiresAt.isBefore(LocalDateTime.now())) {
+      throw new IllegalArgumentException("expiresAt cannot be in the past.");
+    }
+
+
 
     this.expiresAt = expiresAt;
   }
@@ -57,8 +62,10 @@ public class Contract extends ObjectExtent {
   }
 
   public void setSignedAt(LocalDateTime signedAt) {
-    Util.require(signedAt != null, "Signed date cannot be null");
-     Util.require(signedAt.isBefore(LocalDateTime.now()), "Signed date cannot be in the future");
+    if(signedAt == null) {
+      throw new IllegalArgumentException("signedAt cannot be null.");
+    }
+
     this.signedAt = signedAt;
   }
 
@@ -71,7 +78,10 @@ public class Contract extends ObjectExtent {
   }
 
   private void setFighter(Fighter fighter) {
-    Util.require(fighter != null, "Fighter cannot be null");
+    if(fighter == null) {
+      throw new IllegalArgumentException("fighter cannot be null.");
+    }
+
 
     List<Contract> contracts = fighter.getContracts();
 

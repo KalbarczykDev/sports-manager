@@ -3,13 +3,14 @@ package mas.model;
 import java.time.LocalDateTime;
 import java.util.*;
 
+import mas.model.abstraction.Person;
 import mas.model.association.FightParticipation;
 import mas.model.attribute.Specialization;
 import mas.model.attribute.Title;
 import mas.model.attribute.Address;
 import mas.model.association.Sponsorship;
 import mas.model.data.ObjectExtent;
-import mas.util.Util;
+
 
 public class Fighter extends Person {
 
@@ -74,8 +75,15 @@ public class Fighter extends Person {
   }
 
   public void setDateOfJoining(LocalDateTime dateOfJoining) {
-    Util.require(dateOfJoining != null, "Date of joining cannot be null");
-    Util.require(dateOfJoining.isBefore(LocalDateTime.now()), "Joined Date cannot be in the future");
+
+    if(dateOfJoining == null) {
+      throw new NullPointerException("dateOfJoining is null");
+    }
+
+    if(dateOfJoining.isAfter(LocalDateTime.now())) {
+      throw new IllegalArgumentException("dateOfJoining is in the future");
+    }
+
     this.dateOfJoining = dateOfJoining;
   }
 
@@ -84,7 +92,10 @@ public class Fighter extends Person {
   }
 
   public static void setBasicSalary(double basicSalary) {
-    Util.require(basicSalary > 0, "Basic salary must be more than zero");
+    if(basicSalary < 0){
+      throw new IllegalArgumentException("Basic salary must be greater than zero");
+    }
+
     Fighter.basicSalary = basicSalary;
   }
 
@@ -107,7 +118,12 @@ public class Fighter extends Person {
   }
 
   public void addCoach(Coach coach) {
-    Util.require(coach != null, "Coach cannot be null");
+
+
+    if(coach == null){
+      throw new NullPointerException("Coach cannot be null");
+    }
+
 
     Specialization specialization = coach.getSpecialization();
 
@@ -153,7 +169,11 @@ public class Fighter extends Person {
   }
 
   public void addConference(Conference conference) {
-    Util.require(conference != null, "Conference cannot be null");
+
+    if(conference == null){
+      throw new NullPointerException("Conference cannot be null");
+    }
+
     if (!conferences.contains(conference)) {
       conferences.add(conference);
       conference.addFighter(this);
@@ -168,7 +188,12 @@ public class Fighter extends Person {
   }
 
   public void addSponsorship(Sponsorship sponsorship) {
-    Util.require(sponsorship != null, "Sponsor cannot be null");
+
+
+    if(sponsorship == null){
+      throw new NullPointerException("Sponsorship cannot be null");
+    }
+
     if (!sponsorships.contains(sponsorship)) {
       sponsorships.add(sponsorship);
       sponsorship.setFighter(this);
@@ -187,7 +212,11 @@ public class Fighter extends Person {
   }
 
   public void addParticipation(FightParticipation fightParticipation) {
-    Util.require(fightParticipation != null, "Fight participation cannot be null");
+
+    if(fightParticipation == null){
+      throw new NullPointerException("Fight participation cannot be null");
+    }
+
     validateYearlyFightLimit(
         fightParticipation.getFight().getGala().getDate().getYear());
     if (!fightParticipations.contains(fightParticipation)) {
@@ -241,7 +270,9 @@ public class Fighter extends Person {
   }
 
   public void setFormerSelf(Person formerSelf) {
-    Util.require(formerSelf != null, "formerSelf cannot be null");
+    if(formerSelf == null){
+      throw new NullPointerException("formerSelf cannot be null");
+    }
     this.formerSelf.removeFromExtent();
     this.formerSelf = formerSelf;
   }

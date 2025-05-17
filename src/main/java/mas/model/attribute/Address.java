@@ -1,7 +1,7 @@
 package mas.model.attribute;
 
 
-import mas.util.Util;
+
 
 import java.util.Objects;
 
@@ -34,11 +34,28 @@ public class Address {
     }
 
     private static void validate(int streetNumber, String streetName, String city, String state, String zip) {
-        Util.require(streetNumber > 0, "Street number must be positive");
-        Util.require(streetName != null && !streetName.isEmpty(), "Street name cannot be null or empty");
-        Util.require(city != null && !city.isEmpty(), "City cannot be null or empty");
-        Util.require(state != null && !state.isEmpty(), "State cannot be null or empty");
-        Util.require(zip != null && !zip.isEmpty(), "Zip cannot be null or empty");
+
+        if(streetNumber < 0){
+            throw new IllegalArgumentException("streetName cannot be negative");
+        }
+
+        if(streetName == null || streetName.isEmpty()){
+            throw new IllegalArgumentException("streetName cannot be empty");
+        }
+
+        if(city == null || city.isEmpty()){
+            throw new IllegalArgumentException("city cannot be empty");
+        }
+
+        if(state == null || state.isEmpty()){
+            throw new IllegalArgumentException("state cannot be empty");
+        }
+
+        if(zip == null || zip.isEmpty()){
+            throw new IllegalArgumentException("zip cannot be empty");
+        }
+
+
     }
 
 
