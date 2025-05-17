@@ -3,13 +3,12 @@ package mas;
 import javax.swing.*;
 import mas.model.Fighter;
 import mas.model.attribute.Address;
-import mas.ui.view.MainScreen;
 
 public class Main {
 
   public static void main(String[] args) {
-
-    SwingUtilities.invokeLater(MainScreen::new);
+    seed();
+    // SwingUtilities.invokeLater(MainScreen::new);
   }
 
   public static void seed() {
