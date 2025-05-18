@@ -3,7 +3,7 @@ package mas;
 import javax.swing.*;
 import mas.model.Fighter;
 import mas.model.attribute.Address;
-import mas.ui.view.MainScreen;
+import mas.ui.view.layout.MainScreen;
 
 public class Main {
 

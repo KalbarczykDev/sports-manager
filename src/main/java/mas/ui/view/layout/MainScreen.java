@@ -1,7 +1,8 @@
-package mas.ui.view;
+package mas.ui.view.layout;
 
 import java.awt.*;
 import javax.swing.*;
+import mas.ui.view.component.MenuPanel;
 
 public class MainScreen extends JFrame {
 
