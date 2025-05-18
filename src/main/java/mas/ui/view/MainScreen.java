@@ -2,54 +2,28 @@ package mas.ui.view;
 
 import java.awt.*;
 import javax.swing.*;
-import mas.ui.view.util.FighterTableModel;
 
 public class MainScreen extends JFrame {
-  private JPanel mainPanel;
-  private JTable fightersTable;
-  private JScrollPane fightersScrollPane;
+
+  private MenuPanel menuPanel;
 
   public MainScreen() {
 
-    // Inicjalizacja UI
-    mainPanel = new JPanel(new BorderLayout());
-    fightersTable = new JTable();
-    fightersScrollPane = new JScrollPane(fightersTable);
+    // Init UI
+    menuPanel = new MenuPanel();
 
-    fightersTable.setTableHeader(null);
+    // Layout
+    setLayout(new BorderLayout());
 
-    FighterTableModel tableModel = new FighterTableModel();
-    fightersTable.setModel(tableModel);
-
-    mainPanel.add(fightersScrollPane, BorderLayout.CENTER);
+    // Add Components
+    add(menuPanel, BorderLayout.WEST);
 
     // Setup JFrame
-    setContentPane(mainPanel);
+
+    setBackground(Color.BLACK);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setSize(800, 600);
     setLocationRelativeTo(null);
     setVisible(true);
-
-    // addFighterButton.addActionListener(_ -> {
-    // try {
-    // new Fighter(
-    // "testoniusz",
-    // "testowski",
-    // Address.of(
-    // 2,
-    // "testowa",
-    // "testowo",
-    // "testow",
-    // "21-37"
-    // ));
-    //
-    // repaint();
-    // revalidate();
-    //
-    // } catch (Exception ex) {
-    // JOptionPane.showMessageDialog(null, ex.getMessage(), "Error",
-    // JOptionPane.ERROR_MESSAGE);
-    // }
-    // });
   }
 }
