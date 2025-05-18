@@ -8,22 +8,20 @@ public class MainScreen extends JFrame {
   private MenuPanel menuPanel;
 
   public MainScreen() {
-
-    // Init UI
-    menuPanel = new MenuPanel();
-
     // Layout
     setLayout(new BorderLayout());
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    setSize(800, 600);
+    setLocationRelativeTo(null);
+
+    // Init UI
+
+    menuPanel = new MenuPanel();
 
     // Add Components
     add(menuPanel, BorderLayout.WEST);
 
-    // Setup JFrame
-
-    setBackground(Color.BLACK);
-    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    setSize(800, 600);
-    setLocationRelativeTo(null);
+    // Set Visible
     setVisible(true);
   }
 }

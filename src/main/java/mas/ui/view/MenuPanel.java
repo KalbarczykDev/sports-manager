@@ -1,8 +1,8 @@
 package mas.ui.view;
 
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
+import java.awt.FlowLayout;
+import java.awt.event.ActionListener;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -12,51 +12,117 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import mas.ui.theme.Colors;
+import mas.ui.theme.Fonts;
 import mas.ui.view.util.IconLoader;
 
 public class MenuPanel extends JPanel {
 
   AppLogoPanel appLogoPanel;
+  NavigationMenu navigationMenu;
 
   public MenuPanel() {
-
     setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-    setBorder(new EmptyBorder(8, 8, 8, 8));
-    setBackground(Color.WHITE);
+    setBorder(new EmptyBorder(16, 16, 16, 16));
+    setBackground(Colors.BACKGROUND);
 
-    // Init UI
+    // Init panels
     appLogoPanel = new AppLogoPanel();
     appLogoPanel.setAlignmentX(CENTER_ALIGNMENT);
+    navigationMenu = new NavigationMenu();
+    navigationMenu.setAlignmentX(CENTER_ALIGNMENT);
 
     // Separator
     JSeparator separator = new JSeparator(SwingConstants.HORIZONTAL);
+    separator.setAlignmentX(CENTER_ALIGNMENT);
+
     separator.setMaximumSize(new Dimension(Integer.MAX_VALUE, 10));
-    separator.setForeground(Color.GRAY);
+    separator.setForeground(Colors.BORDER);
 
-    // Init navigation buttons
-    ImageIcon menuIcon = IconLoader.load("/icons/icon.png", 24, 24);
-    JButton goToFightersViewButton = new JButton("Manage Fighters", menuIcon);
-    goToFightersViewButton.setAlignmentX(CENTER_ALIGNMENT);
-
+    // Add components
     add(appLogoPanel);
-    add(Box.createVerticalStrut(8));
+    add(Box.createVerticalStrut(12));
     add(separator);
-    add(Box.createVerticalStrut(8));
-    add(goToFightersViewButton);
+    add(Box.createVerticalStrut(12));
+    add(navigationMenu);
+  }
+
+  class NavigationMenu extends JPanel {
+    public NavigationMenu() {
+      setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+      setBackground(Colors.BACKGROUND);
+
+      add(
+          new MenuButton(
+              "Manage Fighters",
+              "/icons/fighters-menu.png",
+              _ -> {
+                System.out.println("Manage fighters button");
+              }));
+
+      add(
+          new MenuButton(
+              "Manage Events",
+              "/icons/event-menu.png",
+              _ -> {
+                System.out.println("Manage events button");
+              }));
+
+      add(
+          new MenuButton(
+              "Manage Fights",
+              "/icons/fight-menu.png",
+              _ -> {
+                System.out.println("Manage fights button");
+              }));
+    }
+  }
+
+  class MenuButton extends JButton {
+    public MenuButton(String title, String iconPath, ActionListener actionListener) {
+      super(title, IconLoader.load(iconPath, 24, 24, Colors.BUTTON_TEXT));
+
+      setAlignmentX(LEFT_ALIGNMENT);
+      setBorder(new EmptyBorder(10, 16, 10, 16));
+
+      setForeground(Colors.BUTTON_TEXT);
+      setBackground(Colors.BACKGROUND);
+      setFont(Fonts.BUTTON);
+      setFocusPainted(false);
+      setOpaque(true);
+      setContentAreaFilled(true);
+
+      setMaximumSize(new Dimension(Integer.MAX_VALUE, getPreferredSize().height));
+
+      addActionListener(actionListener);
+
+      addMouseListener(
+          new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+              setBackground(Colors.BUTTON_HOVER);
+            }
+
+            @Override
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+              setBackground(Colors.BUTTON_BG);
+            }
+          });
+    }
   }
 
   class AppLogoPanel extends JPanel {
     public AppLogoPanel() {
-      setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-      setBackground(Color.WHITE);
+      setLayout(new FlowLayout(FlowLayout.CENTER, 8, 8));
+      setBackground(Colors.BACKGROUND);
 
       ImageIcon logo = IconLoader.load("/icons/app-logo.png", 50, 50);
-
       JLabel logoLabel = new JLabel(logo);
+
       JLabel appName = new JLabel("FEDMAN 2000");
-      appName.setBorder(new EmptyBorder(8, 8, 8, 8));
-      appName.setFont(new Font("Arial", Font.BOLD, 16));
-      appName.setForeground(Color.DARK_GRAY);
+      appName.setBorder(new EmptyBorder(8, 0, 8, 8));
+      appName.setFont(Fonts.TITLE);
+      appName.setForeground(Colors.TITLE);
 
       add(logoLabel);
       add(appName);
