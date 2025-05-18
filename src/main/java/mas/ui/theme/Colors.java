@@ -11,16 +11,17 @@ public class Colors {
   public static final Color TITLE = Color.decode("#000000");
   public static final Color TEXT = Color.decode("#424242");
 
-  // Cards, Panels
-  public static final Color SHADOW = Color.decode("#000000");
-  public static final Color CARD_BACKGROUND = BACKGROUND;
-  public static final Color BORDER = Color.decode("#000000");
-
   // Buttons
   public static final Color BUTTON_BG = BACKGROUND;
   public static final Color BUTTON_TEXT = TEXT;
   public static final Color BUTTON_HOVER = Color.decode("#E0E0E0");
   public static final Color BUTTON_SELECTED = Color.decode("#E0E0E0");
+
+  // Cards, Panels
+  public static final Color SHADOW = Color.decode("#000000");
+  public static final Color CARD_BACKGROUND = BACKGROUND;
+  public static final Color PANEL_BACKGROUND = BUTTON_HOVER;
+  public static final Color BORDER = Color.decode("#000000");
 
   // Status Colors
   public static final Color SUCCESS = Color.decode("#4CAF50");

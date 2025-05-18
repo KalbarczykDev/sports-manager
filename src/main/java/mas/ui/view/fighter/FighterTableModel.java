@@ -1,4 +1,4 @@
-package mas.ui.view.table;
+package mas.ui.view.fighter;
 
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
