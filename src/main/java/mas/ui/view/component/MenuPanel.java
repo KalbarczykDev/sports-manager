@@ -1,5 +1,6 @@
 package mas.ui.view.component;
 
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
@@ -93,6 +94,8 @@ public class MenuPanel extends JPanel {
       setContentAreaFilled(true);
 
       setMaximumSize(new Dimension(Integer.MAX_VALUE, getPreferredSize().height));
+
+      setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
       addActionListener(actionListener);
 

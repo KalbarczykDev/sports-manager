@@ -1,5 +1,6 @@
 package mas.ui.view.fighter;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 import mas.model.Fighter;
@@ -8,7 +9,11 @@ import mas.model.data.ObjectExtent;
 public class FighterTableModel extends AbstractTableModel {
 
   private List<Fighter> fighters;
-  private String[] columnNames = {"Name", "Surname"};
+  private String[] columnNames = {
+    "#", "Name", "Surname", "Joined", "Titles", "Salary",
+  };
+
+  public static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd MMM yyyy");
 
   public FighterTableModel() {
     this.fighters = ObjectExtent.getExtent(Fighter.class);
@@ -42,9 +47,13 @@ public class FighterTableModel extends AbstractTableModel {
   public Object getValueAt(int rowIndex, int columnIndex) {
     Fighter fighter = fighters.get(rowIndex);
 
-    return switch (columnIndex) {
-      case 0 -> fighter.getName();
-      case 1 -> fighter.getSurname();
+    return switch (columnNames[columnIndex]) {
+      case "#" -> rowIndex + 1;
+      case "Name" -> fighter.getName();
+      case "Surname" -> fighter.getSurname();
+      case "Joined" -> fighter.getDateOfJoining().format(DATE_FORMATTER);
+      case "Titles" -> fighter.getTitles().size();
+      case "Salary" -> fighter.getSalary();
       default -> null;
     };
   }

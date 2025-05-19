@@ -2,7 +2,8 @@ package mas.ui.view.fighter;
 
 import java.awt.*;
 import javax.swing.*;
-import javax.swing.table.JTableHeader;
+import javax.swing.table.TableCellRenderer;
+import mas.model.Fighter;
 import mas.ui.theme.Colors;
 import mas.ui.theme.Fonts;
 
@@ -21,20 +22,9 @@ public class FighterPanel extends JPanel {
     title.setForeground(Colors.TITLE);
     title.setBorder(BorderFactory.createEmptyBorder(16, 16, 8, 16));
 
-    // Table setup
+    // Init Ui
     tableModel = new FighterTableModel();
-    fighterTable = new JTable(tableModel);
-    fighterTable.setFillsViewportHeight(true);
-    fighterTable.setFont(Fonts.BODY);
-    fighterTable.setRowHeight(24);
-    fighterTable.setShowGrid(false);
-    fighterTable.setSelectionBackground(Colors.BUTTON_HOVER);
-    fighterTable.setSelectionForeground(Colors.BUTTON_TEXT);
-
-    JTableHeader header = fighterTable.getTableHeader();
-    header.setFont(Fonts.SECTION);
-    header.setBackground(Colors.PANEL_BACKGROUND);
-    header.setForeground(Colors.TEXT);
+    fighterTable = new FighterTable(tableModel);
 
     JScrollPane scrollPane = new JScrollPane(fighterTable);
     scrollPane.setBorder(BorderFactory.createEmptyBorder(0, 16, 16, 16));
@@ -42,6 +32,67 @@ public class FighterPanel extends JPanel {
     // Add to layout
     add(title, BorderLayout.NORTH);
     add(scrollPane, BorderLayout.CENTER);
+  }
+
+  class FighterTable extends JTable {
+    public FighterTable(FighterTableModel tableModel) {
+      super(tableModel);
+
+      addMouseListener(
+          new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent e) {
+              int row = fighterTable.rowAtPoint(e.getPoint());
+
+              if (e.getClickCount() == 2 && row != -1) {
+                Fighter fighter = tableModel.getFighter(row);
+                showFighterDetails(fighter);
+              }
+            }
+          });
+
+      setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
+      setFillsViewportHeight(true);
+      setFont(Fonts.BODY);
+      setRowHeight(28);
+      setShowGrid(false);
+      setIntercellSpacing(new Dimension(0, 0));
+    }
+
+    @Override
+    public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
+      Component c = super.prepareRenderer(renderer, row, column);
+      if (!isRowSelected(row)) {
+        c.setBackground(row % 2 == 0 ? Color.WHITE : Colors.BUTTON_HOVER);
+      } else {
+        c.setBackground(Colors.BUTTON_SELECTED);
+      }
+      c.setForeground(Colors.TEXT);
+      return c;
+    }
+  }
+
+  private void showFighterDetails(Fighter fighter) {
+    JOptionPane.showMessageDialog(
+        this,
+        "Fighter Details:\n"
+            + "Name: "
+            + fighter.getName()
+            + "\n"
+            + "Surname: "
+            + fighter.getSurname()
+            + "\n"
+            + "Joined: "
+            + fighter.getDateOfJoining().format(FighterTableModel.DATE_FORMATTER)
+            + "\n"
+            + "Titles: "
+            + fighter.getTitles().size()
+            + "\n"
+            + "Salary: "
+            + fighter.getSalary(),
+        "Fighter Info",
+        JOptionPane.INFORMATION_MESSAGE);
   }
 
   public void refreshTable() {
