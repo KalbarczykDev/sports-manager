@@ -3,6 +3,7 @@ package mas.ui.view.fighter;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableRowSorter;
 import mas.model.Fighter;
 import mas.ui.theme.Colors;
 import mas.ui.theme.Fonts;
@@ -50,6 +51,8 @@ public class FighterPanel extends JPanel {
               }
             }
           });
+
+      setRowSorter(new TableRowSorter<FighterTableModel>(tableModel));
 
       setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 

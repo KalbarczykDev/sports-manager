@@ -10,7 +10,7 @@ public class FighterTableModel extends AbstractTableModel {
 
   private List<Fighter> fighters;
   private String[] columnNames = {
-    "#", "Name", "Surname", "Joined", "Titles", "Salary",
+    "Name", "Surname", "Joined", "Titles", "Salary",
   };
 
   public static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd MMM yyyy");
@@ -48,7 +48,6 @@ public class FighterTableModel extends AbstractTableModel {
     Fighter fighter = fighters.get(rowIndex);
 
     return switch (columnNames[columnIndex]) {
-      case "#" -> rowIndex + 1;
       case "Name" -> fighter.getName();
       case "Surname" -> fighter.getSurname();
       case "Joined" -> fighter.getDateOfJoining().format(DATE_FORMATTER);
