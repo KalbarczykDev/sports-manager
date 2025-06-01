@@ -1,6 +1,7 @@
 plugins {
     id("java")
     id("application")
+    id("java-library")
 }
 
 group = "mas"
@@ -16,13 +17,12 @@ dependencies {
 }
 
 java {
-    toolchain.languageVersion.set(JavaLanguageVersion.of(24)) // Java 24
+    toolchain.languageVersion.set(JavaLanguageVersion.of(24))
 }
-
 
 tasks.test {
     useJUnitPlatform()
-    jvmArgs = listOf("--enable-preview")
+   
 }
 
 application {
