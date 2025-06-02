@@ -7,7 +7,7 @@ import mas.ui.view.layout.MainScreen;
 public class Main {
 
   public static void main(String[] args) {
-    Seeder.run(100);
+    Seeder.run();
     SwingUtilities.invokeLater(MainScreen::new);
   }
 }

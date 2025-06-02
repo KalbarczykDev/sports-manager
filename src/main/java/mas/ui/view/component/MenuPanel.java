@@ -4,6 +4,7 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
+import java.util.function.Consumer;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -22,7 +23,7 @@ public class MenuPanel extends JPanel {
   AppLogoPanel appLogoPanel;
   NavigationMenu navigationMenu;
 
-  public MenuPanel() {
+  public MenuPanel(Consumer<String> switchView) {
     setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     setBorder(new EmptyBorder(16, 16, 16, 16));
     setBackground(Colors.BACKGROUND);
@@ -30,7 +31,7 @@ public class MenuPanel extends JPanel {
     // Init panels
     appLogoPanel = new AppLogoPanel();
     appLogoPanel.setAlignmentX(CENTER_ALIGNMENT);
-    navigationMenu = new NavigationMenu();
+    navigationMenu = new NavigationMenu(switchView);
     navigationMenu.setAlignmentX(CENTER_ALIGNMENT);
 
     // Separator
@@ -49,33 +50,19 @@ public class MenuPanel extends JPanel {
   }
 
   class NavigationMenu extends JPanel {
-    public NavigationMenu() {
+    public NavigationMenu(Consumer<String> switchView) {
       setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
       setBackground(Colors.BACKGROUND);
 
       add(
           new MenuButton(
-              "Manage Fighters",
-              "/icons/fighters-menu.png",
-              _ -> {
-                System.out.println("Manage fighters button");
-              }));
-
+              "Manage Fighters", "/icons/fighters-menu.png", e -> switchView.accept("fighters")));
       add(
           new MenuButton(
-              "Manage Events",
-              "/icons/event-menu.png",
-              _ -> {
-                System.out.println("Manage events button");
-              }));
-
+              "Manage Events", "/icons/event-menu.png", e -> switchView.accept("events")));
       add(
           new MenuButton(
-              "Manage Fights",
-              "/icons/fight-menu.png",
-              _ -> {
-                System.out.println("Manage fights button");
-              }));
+              "Manage Fights", "/icons/fight-menu.png", e -> switchView.accept("fights")));
     }
   }
 

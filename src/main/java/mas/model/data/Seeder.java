@@ -3,6 +3,7 @@ package mas.model.data;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.concurrent.ThreadLocalRandom;
+import mas.model.Fight;
 import mas.model.Fighter;
 import mas.model.attribute.Address;
 import mas.model.attribute.Title;
@@ -57,7 +58,12 @@ public class Seeder {
     "Rookie of the Year", "Undefeated Fighter", "Knockout Specialist"
   };
 
-  public static void run(int count) {
+  public static void run() {
+    seedFighters(30);
+    seedFights(5);
+  }
+
+  private static void seedFighters(int count) {
     for (int i = 0; i < count; i++) {
       String name = random(FIRST_NAMES);
       String surname = random(LAST_NAMES);
@@ -79,6 +85,12 @@ public class Seeder {
       }
 
       fighter.setDateOfJoining(randomJoinDate());
+    }
+  }
+
+  private static void seedFights(int count) {
+    for (int i = 0; i < count; i++) {
+      Fight fight = new Fight();
     }
   }
 

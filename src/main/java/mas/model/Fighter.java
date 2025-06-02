@@ -2,15 +2,13 @@ package mas.model;
 
 import java.time.LocalDateTime;
 import java.util.*;
-
 import mas.model.abstraction.Person;
 import mas.model.association.FightParticipation;
+import mas.model.association.Sponsorship;
+import mas.model.attribute.Address;
 import mas.model.attribute.Specialization;
 import mas.model.attribute.Title;
-import mas.model.attribute.Address;
-import mas.model.association.Sponsorship;
 import mas.model.data.ObjectExtent;
-
 
 public class Fighter extends Person {
 
@@ -76,11 +74,11 @@ public class Fighter extends Person {
 
   public void setDateOfJoining(LocalDateTime dateOfJoining) {
 
-    if(dateOfJoining == null) {
+    if (dateOfJoining == null) {
       throw new NullPointerException("dateOfJoining is null");
     }
 
-    if(dateOfJoining.isAfter(LocalDateTime.now())) {
+    if (dateOfJoining.isAfter(LocalDateTime.now())) {
       throw new IllegalArgumentException("dateOfJoining is in the future");
     }
 
@@ -92,7 +90,7 @@ public class Fighter extends Person {
   }
 
   public static void setBasicSalary(double basicSalary) {
-    if(basicSalary < 0){
+    if (basicSalary < 0) {
       throw new IllegalArgumentException("Basic salary must be greater than zero");
     }
 
@@ -101,9 +99,8 @@ public class Fighter extends Person {
 
   public double getSalary() {
 
-      return (basicSalary  * (titles.size() + 1))
-          + (basicSalary
-              * (LocalDateTime.now().getYear() - dateOfJoining.getYear()));
+    return (basicSalary * (titles.size() + 1))
+        + (basicSalary * (LocalDateTime.now().getYear() - dateOfJoining.getYear()));
   }
 
   public void setTitles(List<Title> titles) {
@@ -119,11 +116,9 @@ public class Fighter extends Person {
 
   public void addCoach(Coach coach) {
 
-
-    if(coach == null){
+    if (coach == null) {
       throw new NullPointerException("Coach cannot be null");
     }
-
 
     Specialization specialization = coach.getSpecialization();
 
@@ -170,7 +165,7 @@ public class Fighter extends Person {
 
   public void addConference(Conference conference) {
 
-    if(conference == null){
+    if (conference == null) {
       throw new NullPointerException("Conference cannot be null");
     }
 
@@ -189,8 +184,7 @@ public class Fighter extends Person {
 
   public void addSponsorship(Sponsorship sponsorship) {
 
-
-    if(sponsorship == null){
+    if (sponsorship == null) {
       throw new NullPointerException("Sponsorship cannot be null");
     }
 
@@ -213,29 +207,37 @@ public class Fighter extends Person {
 
   public void addParticipation(FightParticipation fightParticipation) {
 
-    if(fightParticipation == null){
+    if (fightParticipation == null) {
       throw new NullPointerException("Fight participation cannot be null");
     }
 
-    validateYearlyFightLimit(
-        fightParticipation.getFight().getGala().getDate().getYear());
+    validateYearlyFightLimit(fightParticipation.getFight().getGala().getDate().getYear());
     if (!fightParticipations.contains(fightParticipation)) {
       fightParticipations.add(fightParticipation);
     }
   }
 
   public void validateYearlyFightLimit(int fightYear) {
-
     long fightsThisYear =
         fightParticipations.stream()
-            .map(fp -> fp.getFight().getGala().getDate().getYear())
-            .filter(year -> year == fightYear)
+            .map(this::extractFightYear)
+            .filter(year -> year != null && year == fightYear)
             .count();
-
     if (fightsThisYear >= 10) {
       throw new IllegalStateException(
           "Fighter cannot participate in more than 10 fights in a year");
     }
+  }
+
+  private Integer extractFightYear(FightParticipation fp) {
+    if (fp == null) return null;
+    Fight fight = fp.getFight();
+    if (fight == null) return null;
+    Gala gala = fight.getGala();
+    if (gala == null) return null;
+    LocalDateTime date = gala.getDate();
+    if (date == null) return null;
+    return date.getYear();
   }
 
   public void removeParticipation(FightParticipation fightParticipation) {
@@ -270,7 +272,7 @@ public class Fighter extends Person {
   }
 
   public void setFormerSelf(Person formerSelf) {
-    if(formerSelf == null){
+    if (formerSelf == null) {
       throw new NullPointerException("formerSelf cannot be null");
     }
     this.formerSelf.removeFromExtent();

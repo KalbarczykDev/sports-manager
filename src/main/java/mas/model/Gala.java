@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Set;
 import java.util.TreeSet;
-
 import mas.model.abstraction.Event;
 import mas.model.association.FightParticipation;
 
@@ -51,18 +50,11 @@ public class Gala extends Event {
         Fighter fighter = fightParticipation.getFighter();
         double salary = fighter.getSalary();
 
-        double compensation = salary  * COMPENSATION_RATE;
+        double compensation = salary * COMPENSATION_RATE;
         total += compensation;
       }
     }
     return total;
-  }
-
-  public void printFightOrder() {
-    int i = 1;
-    for (Fight fight : fights) {
-      System.out.println("Fight #" + (i++) + ": " + fight);
-    }
   }
 
   @Override
