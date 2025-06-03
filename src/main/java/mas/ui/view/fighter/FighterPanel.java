@@ -7,6 +7,7 @@ import javax.swing.table.TableRowSorter;
 import mas.model.Fighter;
 import mas.ui.theme.Colors;
 import mas.ui.theme.Fonts;
+import mas.ui.view.util.Dialogs;
 
 public class FighterPanel extends JPanel {
 
@@ -77,8 +78,7 @@ public class FighterPanel extends JPanel {
   }
 
   private void showFighterDetails(Fighter fighter) {
-    JOptionPane.showMessageDialog(
-        this,
+    Dialogs.showInfoDialog(
         "Fighter Details:\n"
             + "Name: "
             + fighter.getName()
@@ -93,9 +93,7 @@ public class FighterPanel extends JPanel {
             + fighter.getTitles().size()
             + "\n"
             + "Salary: "
-            + fighter.getSalary(),
-        "Fighter Info",
-        JOptionPane.INFORMATION_MESSAGE);
+            + fighter.getSalary());
   }
 
   public void refreshTable() {

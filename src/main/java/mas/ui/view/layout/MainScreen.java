@@ -7,7 +7,7 @@ import mas.ui.view.component.MenuPanel;
 import mas.ui.view.fight.AddFightPanel;
 import mas.ui.view.fight.FightPanel;
 import mas.ui.view.fighter.FighterPanel;
-import mas.ui.viewmodel.ManageFightsViewModel;
+import mas.ui.view.util.Dialogs;
 
 /**
  * MainScreen is the main application window that contains a menu and a card layout for different
@@ -51,11 +51,7 @@ public class MainScreen extends JFrame {
               // Save the current state of the application
               ObjectExtent.saveExtent();
             } catch (Exception e) {
-              JOptionPane.showMessageDialog(
-                  MainScreen.this,
-                  "An error occurred while saving the application state: " + e.getMessage(),
-                  "Error",
-                  JOptionPane.ERROR_MESSAGE);
+              Dialogs.showWarning("Error saving data: " + e.getMessage());
             }
             System.exit(0);
           }
@@ -69,7 +65,6 @@ public class MainScreen extends JFrame {
 
     // Create Views
     AddFightPanel addFightPanel = new AddFightPanel(this::switchView);
-    addFightPanel.setViewModel(new ManageFightsViewModel());
     JPanel fighterPanel = new FighterPanel();
     JPanel fightPanel = new FightPanel();
     cardPanel.add(addFightPanel, "addFight");

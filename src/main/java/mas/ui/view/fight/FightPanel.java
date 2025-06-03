@@ -8,6 +8,7 @@ import mas.model.Fight;
 import mas.model.Fighter;
 import mas.ui.theme.Colors;
 import mas.ui.theme.Fonts;
+import mas.ui.view.util.Dialogs;
 
 public class FightPanel extends JPanel {
 
@@ -92,8 +93,7 @@ public class FightPanel extends JPanel {
             .reduce((a, b) -> a + ", " + b)
             .orElse("No Participants");
 
-    JOptionPane.showMessageDialog(
-        this,
+    Dialogs.showInfoDialog(
         "Fight Details:\n" + "Winner: " + winnerName + "\n" + "Participants: " + participants);
   }
 

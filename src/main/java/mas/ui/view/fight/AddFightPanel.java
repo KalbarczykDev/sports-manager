@@ -13,13 +13,12 @@ import mas.model.data.ObjectExtent;
 import mas.ui.theme.Colors;
 import mas.ui.theme.Fonts;
 import mas.ui.view.layout.MainScreen;
-import mas.ui.viewmodel.ManageFightsViewModel;
+import mas.ui.view.util.Dialogs;
 
 public class AddFightPanel extends JPanel {
 
   private JList<Fighter> fighterList;
   private JList<Fighter> selectedFighterList;
-  private ManageFightsViewModel viewModel;
 
   public AddFightPanel(Consumer<String> switchView) {
 
@@ -105,7 +104,6 @@ public class AddFightPanel extends JPanel {
             "➕ Add",
             _ -> {
               try {
-                System.out.println("Adding fighter");
                 List<Fighter> selectedFighters = fighterList.getSelectedValuesList();
                 if (selectedFighters.isEmpty()) {
                   JOptionPane.showMessageDialog(
@@ -126,23 +124,25 @@ public class AddFightPanel extends JPanel {
                     try {
                       fighter.validateYearlyFightLimit();
                     } catch (Exception e) {
-                      JOptionPane.showMessageDialog(
-                          this, e.getMessage(), "Warning", JOptionPane.WARNING_MESSAGE);
-                      return;
+                      Dialogs.showWarning(
+                          "Fighter "
+                              + fighter.getName()
+                              + " "
+                              + fighter.getSurname()
+                              + " cannot be added: "
+                              + e.getMessage());
+                      continue;
                     }
 
                     slectedModel.addElement(fighter);
                     avaiableModel.removeElement(fighter);
                   } else {
-                    JOptionPane.showMessageDialog(
-                        this,
+                    Dialogs.showWarning(
                         "Fighter "
                             + fighter.getName()
                             + " "
                             + fighter.getSurname()
-                            + " is already added.",
-                        "Warning",
-                        JOptionPane.WARNING_MESSAGE);
+                            + " is already added to the fight.");
                   }
                 }
 
@@ -155,14 +155,9 @@ public class AddFightPanel extends JPanel {
         createButton(
             "➖ Remove",
             _ -> {
-              System.out.println("Removing selected fighters");
               List<Fighter> selectedFighters = selectedFighterList.getSelectedValuesList();
               if (selectedFighters.isEmpty()) {
-                JOptionPane.showMessageDialog(
-                    this,
-                    "Please select at least one fighter to remove.",
-                    "Warning",
-                    JOptionPane.WARNING_MESSAGE);
+                Dialogs.showWarning("Please select at least one fighter to remove.");
                 return;
               }
 
@@ -176,7 +171,19 @@ public class AddFightPanel extends JPanel {
               }
             });
 
-    JButton confirmButton = createButton("✅ Confirm", _ -> {});
+    JButton confirmButton =
+        createButton(
+            "✅ Confirm",
+            _ -> {
+              List<Fighter> selectedFighters = selectedFighterList.getSelectedValuesList();
+              if (selectedFighters.isEmpty()) {
+                Dialogs.showWarning("Please add at least one fighter to the fight.");
+                return;
+              }
+
+              MainScreen.getInstance().toggleEditing();
+              switchView.accept("fights");
+            });
 
     JPanel buttonPanel = new JPanel();
     buttonPanel.setBackground(Color.WHITE);
@@ -198,9 +205,5 @@ public class AddFightPanel extends JPanel {
     button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     button.addActionListener(actionListener);
     return button;
-  }
-
-  public void setViewModel(ManageFightsViewModel viewModel) {
-    this.viewModel = viewModel;
   }
 }

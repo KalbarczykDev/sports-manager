@@ -10,7 +10,6 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
@@ -18,6 +17,7 @@ import javax.swing.border.EmptyBorder;
 import mas.ui.theme.Colors;
 import mas.ui.theme.Fonts;
 import mas.ui.view.layout.MainScreen;
+import mas.ui.view.util.Dialogs;
 import mas.ui.view.util.IconLoader;
 
 public class MenuPanel extends JPanel {
@@ -60,9 +60,9 @@ public class MenuPanel extends JPanel {
           new MenuButton(
               "Manage Fighters",
               "/icons/fighters-menu.png",
-              e -> {
+              _ -> {
                 if (MainScreen.getInstance().isEditing()) {
-                  showWarning("Save current progress before switching views.");
+                  Dialogs.showWarning("Save current progress before switching views.");
                   return;
                 }
                 switchView.accept("fighters");
@@ -71,25 +71,21 @@ public class MenuPanel extends JPanel {
           new MenuButton(
               "Manage Events",
               "/icons/event-menu.png",
-              e -> {
+              _ -> {
                 if (MainScreen.getInstance().isEditing()) {
-                  showWarning("Save current progress before switching views.");
+                  Dialogs.showWarning("Save current progress before switching views.");
                   return;
                 }
-                JOptionPane.showMessageDialog(
-                    null,
-                    "Feature not available in demo version.",
-                    "Warning",
-                    JOptionPane.WARNING_MESSAGE);
+                Dialogs.showWarning("Feature not avaiable in demo version.");
               }));
 
       add(
           new MenuButton(
               "Manage Fights",
               "/icons/fight-menu.png",
-              e -> {
+              _ -> {
                 if (MainScreen.getInstance().isEditing()) {
-                  showWarning("Save current progress before switching views.");
+                  Dialogs.showWarning("Save current progress before switching views.");
                   return;
                 }
                 switchView.accept("fights");
@@ -153,9 +149,5 @@ public class MenuPanel extends JPanel {
     public Dimension getMaximumSize() {
       return getPreferredSize();
     }
-  }
-
-  private void showWarning(String message) {
-    JOptionPane.showMessageDialog(this, message, "Warning", JOptionPane.WARNING_MESSAGE);
   }
 }
