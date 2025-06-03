@@ -1,14 +1,13 @@
-package mas.model.data;
+package mas.model.data.seeder;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.concurrent.ThreadLocalRandom;
-import mas.model.Fight;
 import mas.model.Fighter;
 import mas.model.attribute.Address;
 import mas.model.attribute.Title;
 
-public class Seeder {
+public class FighterSeeder implements ISeeder {
 
   private static final String[] FIRST_NAMES = {
     "Alex", "John", "Mia", "Liam", "Sara", "Emma", "Ola", "Tom", "Nina", "Mark", "Zoe", "Adam",
@@ -58,12 +57,8 @@ public class Seeder {
     "Rookie of the Year", "Undefeated Fighter", "Knockout Specialist"
   };
 
-  public static void run() {
-    seedFighters(30);
-    seedFights(5);
-  }
-
-  private static void seedFighters(int count) {
+  public void run() {
+    int count = 10;
     for (int i = 0; i < count; i++) {
       String name = random(FIRST_NAMES);
       String surname = random(LAST_NAMES);
@@ -88,20 +83,6 @@ public class Seeder {
     }
   }
 
-  private static void seedFights(int count) {
-    for (int i = 0; i < count; i++) {
-      Fight fight = new Fight();
-    }
-  }
-
-  private static String random(String[] array) {
-    return array[ThreadLocalRandom.current().nextInt(array.length)];
-  }
-
-  private static int random(int min, int max) {
-    return ThreadLocalRandom.current().nextInt(min, max);
-  }
-
   private static LocalDateTime randomJoinDate() {
 
     long daysBack =
@@ -110,5 +91,13 @@ public class Seeder {
                 0,
                 ChronoUnit.DAYS.between(LocalDateTime.now().minusYears(10), LocalDateTime.now()));
     return LocalDateTime.now().minusDays(daysBack);
+  }
+
+  private static String random(String[] array) {
+    return array[ThreadLocalRandom.current().nextInt(array.length)];
+  }
+
+  private static int random(int min, int max) {
+    return ThreadLocalRandom.current().nextInt(min, max);
   }
 }

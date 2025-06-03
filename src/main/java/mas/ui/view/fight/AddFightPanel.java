@@ -79,7 +79,7 @@ public class AddFightPanel extends JPanel {
     add(listsPanel, BorderLayout.CENTER);
 
     // Button
-    addButton = new JButton("➕ Add Selected Participants");
+    addButton = new JButton("➕ Add");
     addButton.setFont(Fonts.BUTTON);
     addButton.setFocusPainted(false);
     addButton.setBackground(new Color(59, 89, 152));

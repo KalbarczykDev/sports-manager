@@ -10,6 +10,7 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
@@ -59,7 +60,16 @@ public class MenuPanel extends JPanel {
               "Manage Fighters", "/icons/fighters-menu.png", e -> switchView.accept("fighters")));
       add(
           new MenuButton(
-              "Manage Events", "/icons/event-menu.png", e -> switchView.accept("events")));
+              "Manage Events",
+              "/icons/event-menu.png",
+              e -> {
+                JOptionPane.showMessageDialog(
+                    null,
+                    "Feature not available in demo version.",
+                    "Warning",
+                    JOptionPane.WARNING_MESSAGE);
+              }));
+
       add(
           new MenuButton(
               "Manage Fights", "/icons/fight-menu.png", e -> switchView.accept("fights")));

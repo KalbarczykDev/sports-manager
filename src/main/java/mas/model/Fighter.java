@@ -211,33 +211,17 @@ public class Fighter extends Person {
       throw new NullPointerException("Fight participation cannot be null");
     }
 
-    validateYearlyFightLimit(fightParticipation.getFight().getGala().getDate().getYear());
+    validateYearlyFightLimit();
     if (!fightParticipations.contains(fightParticipation)) {
       fightParticipations.add(fightParticipation);
     }
   }
 
-  public void validateYearlyFightLimit(int fightYear) {
-    long fightsThisYear =
-        fightParticipations.stream()
-            .map(this::extractFightYear)
-            .filter(year -> year != null && year == fightYear)
-            .count();
-    if (fightsThisYear >= 10) {
+  public void validateYearlyFightLimit() {
+    if (fightParticipations.size() >= 10) {
       throw new IllegalStateException(
           "Fighter cannot participate in more than 10 fights in a year");
     }
-  }
-
-  private Integer extractFightYear(FightParticipation fp) {
-    if (fp == null) return null;
-    Fight fight = fp.getFight();
-    if (fight == null) return null;
-    Gala gala = fight.getGala();
-    if (gala == null) return null;
-    LocalDateTime date = gala.getDate();
-    if (date == null) return null;
-    return date.getYear();
   }
 
   public void removeParticipation(FightParticipation fightParticipation) {
@@ -309,7 +293,12 @@ public class Fighter extends Person {
     //     + ", dateOfJoining="
     //     + dateOfJoining
     //     + '}';
-    return this.getName() + " " + this.getSurname() + " (" + this.getTitles().size() + " titles)";
+    return this.getName()
+        + " "
+        + this.getSurname()
+        + " ("
+        + this.fightParticipations.size()
+        + " planed fights)";
   }
 
   @Override
