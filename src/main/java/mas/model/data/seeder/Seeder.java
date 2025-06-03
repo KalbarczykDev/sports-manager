@@ -8,6 +8,10 @@ import java.util.List;
  * implement the run method to define how it seeds the data.
  */
 interface ISeeder {
+  /**
+   * Runs the seeder to populate the data model with initial data. This method should be implemented
+   * by each seeder to define the specific data it seeds.
+   */
   void run();
 }
 
@@ -32,6 +36,10 @@ public class Seeder {
     seeders.forEach(ISeeder::run);
   }
 
+  /**
+   * Initializes the default seeders that are included with the application. This method is called
+   * when no seeders have been registered yet.
+   */
   private static void initDefaultSeeders() {
     registerSeeder(new FighterSeeder());
     registerSeeder(new EventsSeeder());

@@ -7,6 +7,11 @@ import mas.model.Fighter;
 import mas.model.attribute.Address;
 import mas.model.attribute.Title;
 
+/**
+ * The FighterSeeder class implements the ISeeder interface to populate the data model with initial
+ * fighter data. It generates random fighters with names, addresses, and titles. This class is used
+ * to seed the "database" with sample fighter data for testing and development.
+ */
 public class FighterSeeder implements ISeeder {
 
   private static final String[] FIRST_NAMES = {

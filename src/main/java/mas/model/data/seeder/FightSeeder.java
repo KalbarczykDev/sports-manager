@@ -7,6 +7,11 @@ import mas.model.Gala;
 import mas.model.association.FightParticipation;
 import mas.model.data.ObjectExtent;
 
+/**
+ * The FightSeeder class is responsible for seeding the fight data in the system. It creates a
+ * predefined number of fights, each involving a fighter and a gala, and associates them with
+ * existing fighters.
+ */
 public class FightSeeder implements ISeeder {
 
   @Override

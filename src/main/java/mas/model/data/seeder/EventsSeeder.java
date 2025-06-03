@@ -3,6 +3,10 @@ package mas.model.data.seeder;
 import java.time.LocalDateTime;
 import mas.model.Gala;
 
+/**
+ * Seeder class for populating the "database" with initial event data. This class implements the
+ * ISeeder interface and provides a method to run the seeding process.
+ */
 public class EventsSeeder implements ISeeder {
 
   public void run() {

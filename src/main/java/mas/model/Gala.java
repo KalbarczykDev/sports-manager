@@ -8,10 +8,21 @@ import java.util.TreeSet;
 import mas.model.abstraction.Event;
 import mas.model.association.FightParticipation;
 
+/**
+ * Represents a gala event in the system, extending the Event class. A gala can have multiple fights
+ * associated with it, and it calculates the total compensation cost based on the fighters involved
+ * in those fights.
+ */
 public class Gala extends Event {
   private final Set<Fight> fights = new TreeSet<>(Comparator.comparingInt(Fight::getFightPriority));
   private static final Double COMPENSATION_RATE = 0.1;
 
+  /**
+   * Constructs a Gala with the specified event name and date.
+   *
+   * @param eventName the name of the gala
+   * @param date the date and time of the gala
+   */
   public Gala(String eventName, LocalDateTime date) {
     try {
       setEventName(eventName);
@@ -22,6 +33,11 @@ public class Gala extends Event {
     }
   }
 
+  /**
+   * Constructs a Gala with the specified date.
+   *
+   * @param date the date and time of the gala
+   */
   public void addFight(Fight fight, int priority) {
     if (!fights.contains(fight)) {
       fight.setFightPriority(priority);
@@ -30,6 +46,11 @@ public class Gala extends Event {
     }
   }
 
+  /**
+   * Removes a fight from the gala.
+   *
+   * @param fight the fight to remove
+   */
   public void removeFight(Fight fight) {
     if (fights.contains(fight)) {
       fights.remove(fight);
@@ -37,6 +58,11 @@ public class Gala extends Event {
     }
   }
 
+  /**
+   * Returns an unmodifiable set of fights associated with the gala.
+   *
+   * @return an unmodifiable set of fights
+   */
   public Set<Fight> getFights() {
     return Collections.unmodifiableSet(fights);
   }
