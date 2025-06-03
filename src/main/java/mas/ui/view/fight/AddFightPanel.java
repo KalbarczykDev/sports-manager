@@ -1,34 +1,28 @@
 package mas.ui.view.fight;
 
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import mas.model.Fighter;
-import mas.model.attribute.Address;
 import mas.model.data.ObjectExtent;
 import mas.ui.theme.Colors;
 import mas.ui.theme.Fonts;
+import mas.ui.viewmodel.ManageFightsViewModel;
 
 public class AddFightPanel extends JPanel {
 
   private JList<Fighter> fighterList;
   private JList<Fighter> selectedFighterList;
-  private JButton addButton;
+  private ManageFightsViewModel viewModel;
 
   public AddFightPanel() {
+
     List<Fighter> availableFighters = new ArrayList<>(ObjectExtent.getExtent(Fighter.class));
     availableFighters.sort(Comparator.comparing(f -> f.getName() + " " + f.getSurname()));
-
-    // Fake added fighters for now
-    Fighter mock1 =
-        new Fighter("John", "Doe", Address.of(123, "Main St", "City", "State", "12345"));
-    Fighter mock2 =
-        new Fighter("Jane", "Smith", Address.of(456, "Elm St", "City", "State", "67890"));
-    List<Fighter> alreadyAddedFighters = Arrays.asList(mock1, mock2);
 
     setLayout(new BorderLayout());
     setBorder(new EmptyBorder(20, 24, 20, 24));
@@ -67,7 +61,7 @@ public class AddFightPanel extends JPanel {
     selectedLabel.setFont(Fonts.TITLE);
     rightPanel.add(selectedLabel, BorderLayout.NORTH);
 
-    selectedFighterList = new JList<>(alreadyAddedFighters.toArray(new Fighter[0]));
+    selectedFighterList = new JList<>();
     selectedFighterList.setFont(Fonts.BODY);
     selectedFighterList.setEnabled(false); // read-only for now
     JScrollPane selectedScroll = new JScrollPane(selectedFighterList);
@@ -78,19 +72,53 @@ public class AddFightPanel extends JPanel {
     listsPanel.add(rightPanel);
     add(listsPanel, BorderLayout.CENTER);
 
-    // Button
-    addButton = new JButton("➕ Add");
-    addButton.setFont(Fonts.BUTTON);
-    addButton.setFocusPainted(false);
-    addButton.setBackground(new Color(59, 89, 152));
-    addButton.setForeground(Colors.BUTTON_TEXT);
-    addButton.setPreferredSize(new Dimension(200, 40));
-    addButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    // Buttons
+
+    JButton cancelButton =
+        createButton(
+            "❌ Cancel",
+            e -> {
+              System.out.println("Cancelling fight addition");
+            });
+
+    JButton addButton =
+        createButton(
+            "➕ Add",
+            e -> {
+              System.out.println("Adding fighter");
+            });
+    JButton removeButton =
+        createButton(
+            "➖ Remove",
+            e -> {
+              System.out.println("Removing selected fighters");
+            });
+
+    JButton confirmButton = createButton("✅ Confirm", e -> {});
 
     JPanel buttonPanel = new JPanel();
     buttonPanel.setBackground(Color.WHITE);
     buttonPanel.setBorder(new EmptyBorder(16, 0, 0, 0));
+    buttonPanel.add(cancelButton);
     buttonPanel.add(addButton);
+    buttonPanel.add(removeButton);
+    buttonPanel.add(confirmButton);
     add(buttonPanel, BorderLayout.SOUTH);
+  }
+
+  private JButton createButton(String text, ActionListener actionListener) {
+    JButton button = new JButton(text);
+    button.setFont(Fonts.BUTTON);
+    button.setFocusPainted(false);
+    button.setBackground(new Color(59, 89, 152));
+    button.setForeground(Colors.BUTTON_TEXT);
+    button.setPreferredSize(new Dimension(200, 40));
+    button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    button.addActionListener(actionListener);
+    return button;
+  }
+
+  public void setViewModel(ManageFightsViewModel viewModel) {
+    this.viewModel = viewModel;
   }
 }

@@ -21,7 +21,7 @@ public class Main {
 
     Seeder.run();
 
-    SwingUtilities.invokeLater(MainScreen::new);
+    SwingUtilities.invokeLater(MainScreen::getInstance);
     //   ObjectExtent.saveExtent();
   }
 }

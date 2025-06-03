@@ -17,6 +17,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import mas.ui.theme.Colors;
 import mas.ui.theme.Fonts;
+import mas.ui.view.layout.MainScreen;
 import mas.ui.view.util.IconLoader;
 
 public class MenuPanel extends JPanel {
@@ -57,12 +58,24 @@ public class MenuPanel extends JPanel {
 
       add(
           new MenuButton(
-              "Manage Fighters", "/icons/fighters-menu.png", e -> switchView.accept("fighters")));
+              "Manage Fighters",
+              "/icons/fighters-menu.png",
+              e -> {
+                if (MainScreen.getInstance().isEditing()) {
+                  showWarning("Save current progress before switching views.");
+                  return;
+                }
+                switchView.accept("fighters");
+              }));
       add(
           new MenuButton(
               "Manage Events",
               "/icons/event-menu.png",
               e -> {
+                if (MainScreen.getInstance().isEditing()) {
+                  showWarning("Save current progress before switching views.");
+                  return;
+                }
                 JOptionPane.showMessageDialog(
                     null,
                     "Feature not available in demo version.",
@@ -72,7 +85,15 @@ public class MenuPanel extends JPanel {
 
       add(
           new MenuButton(
-              "Manage Fights", "/icons/fight-menu.png", e -> switchView.accept("fights")));
+              "Manage Fights",
+              "/icons/fight-menu.png",
+              e -> {
+                if (MainScreen.getInstance().isEditing()) {
+                  showWarning("Save current progress before switching views.");
+                  return;
+                }
+                switchView.accept("fights");
+              }));
     }
   }
 
@@ -132,5 +153,9 @@ public class MenuPanel extends JPanel {
     public Dimension getMaximumSize() {
       return getPreferredSize();
     }
+  }
+
+  private void showWarning(String message) {
+    JOptionPane.showMessageDialog(this, message, "Warning", JOptionPane.WARNING_MESSAGE);
   }
 }

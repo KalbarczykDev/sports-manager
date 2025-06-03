@@ -6,12 +6,24 @@ import mas.ui.view.component.MenuPanel;
 import mas.ui.view.fight.AddFightPanel;
 import mas.ui.view.fight.FightPanel;
 import mas.ui.view.fighter.FighterPanel;
+import mas.ui.viewmodel.ManageFightsViewModel;
 
 public class MainScreen extends JFrame {
+
+  private static MainScreen instance;
 
   private CardLayout cardLayout;
   private JPanel cardPanel;
   private MenuPanel menuPanel;
+
+  private boolean editing = true; // TODO: Switch to false for prod
+
+  public static MainScreen getInstance() {
+    if (instance == null) {
+      instance = new MainScreen();
+    }
+    return instance;
+  }
 
   public MainScreen() {
     // Layout
@@ -25,7 +37,8 @@ public class MainScreen extends JFrame {
     cardPanel = new JPanel(cardLayout);
 
     // Create Views
-    JPanel addFightPanel = new AddFightPanel();
+    AddFightPanel addFightPanel = new AddFightPanel();
+    addFightPanel.setViewModel(new ManageFightsViewModel());
     JPanel fighterPanel = new FighterPanel();
     JPanel fightPanel = new FightPanel();
     cardPanel.add(addFightPanel, "addFight");
@@ -44,5 +57,13 @@ public class MainScreen extends JFrame {
 
   private void switchView(String viewName) {
     cardLayout.show(cardPanel, viewName);
+  }
+
+  public void toggleEditing() {
+    this.editing = !this.editing;
+  }
+
+  public boolean isEditing() {
+    return editing;
   }
 }
