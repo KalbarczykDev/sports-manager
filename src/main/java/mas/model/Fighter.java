@@ -281,34 +281,35 @@ public class Fighter extends Person {
 
   @Override
   public String toString() { // przeciążenie
-    return "Fighter{"
-        + ", name='"
-        + getName()
-        + '\''
-        + ", surname='"
-        + getSurname()
-        + '\''
-        + ", address="
-        + getAddress()
-        + ", titles="
-        + titles
-        + ", contracts="
-        + contracts.stream().map(Contract::getExpiresAt).toList()
-        + ", coaches="
-        + coaches.entrySet().stream()
-            .map(
-                entry ->
-                    entry.getKey()
-                        + ": "
-                        + entry.getValue().getName()
-                        + " "
-                        + entry.getValue().getSurname())
-            .toList()
-        + ", sponsors="
-        + sponsorships.stream().map(Sponsorship::getSponsor).toList()
-        + ", dateOfJoining="
-        + dateOfJoining
-        + '}';
+    // return "Fighter{"
+    //     + ", name='"
+    //     + getName()
+    //     + '\''
+    //     + ", surname='"
+    //     + getSurname()
+    //     + '\''
+    //     + ", address="
+    //     + getAddress()
+    //     + ", titles="
+    //     + titles
+    //     + ", contracts="
+    //     + contracts.stream().map(Contract::getExpiresAt).toList()
+    //     + ", coaches="
+    //     + coaches.entrySet().stream()
+    //         .map(
+    //             entry ->
+    //                 entry.getKey()
+    //                     + ": "
+    //                     + entry.getValue().getName()
+    //                     + " "
+    //                     + entry.getValue().getSurname())
+    //         .toList()
+    //     + ", sponsors="
+    //     + sponsorships.stream().map(Sponsorship::getSponsor).toList()
+    //     + ", dateOfJoining="
+    //     + dateOfJoining
+    //     + '}';
+    return this.getName() + " " + this.getSurname() + " (" + this.getTitles().size() + " titles)";
   }
 
   @Override

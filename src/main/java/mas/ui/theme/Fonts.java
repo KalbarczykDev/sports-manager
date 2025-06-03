@@ -8,13 +8,13 @@ public class Fonts {
   private static final String BASE_FONT = "Arial";
 
   // Headings
-  public static final Font TITLE = new Font(BASE_FONT, Font.BOLD, 20);
-  public static final Font SUBTITLE = new Font(BASE_FONT, Font.BOLD, 18);
-  public static final Font SECTION = new Font(BASE_FONT, Font.PLAIN, 16);
+  public static final Font TITLE = new Font(BASE_FONT, Font.BOLD, 21);
+  public static final Font SUBTITLE = new Font(BASE_FONT, Font.BOLD, 19);
+  public static final Font SECTION = new Font(BASE_FONT, Font.PLAIN, 17);
 
   // Body
-  public static final Font BODY = new Font(BASE_FONT, Font.PLAIN, 14);
-  public static final Font BODY_BOLD = new Font(BASE_FONT, Font.BOLD, 14);
+  public static final Font BODY = new Font(BASE_FONT, Font.PLAIN, 15);
+  public static final Font BODY_BOLD = new Font(BASE_FONT, Font.BOLD, 15);
 
   // Captions and Metadata
   public static final Font SMALL = new Font(BASE_FONT, Font.PLAIN, 12);

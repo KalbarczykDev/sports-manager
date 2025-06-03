@@ -3,6 +3,7 @@ package mas.ui.view.layout;
 import java.awt.*;
 import javax.swing.*;
 import mas.ui.view.component.MenuPanel;
+import mas.ui.view.fight.AddFightPanel;
 import mas.ui.view.fight.FightPanel;
 import mas.ui.view.fighter.FighterPanel;
 
@@ -24,9 +25,10 @@ public class MainScreen extends JFrame {
     cardPanel = new JPanel(cardLayout);
 
     // Create Views
+    JPanel addFightPanel = new AddFightPanel();
     JPanel fighterPanel = new FighterPanel();
     JPanel fightPanel = new FightPanel();
-
+    cardPanel.add(addFightPanel, "addFight");
     cardPanel.add(fighterPanel, "fighters");
     cardPanel.add(fightPanel, "fights");
 
