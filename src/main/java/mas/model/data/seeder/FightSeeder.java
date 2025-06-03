@@ -17,11 +17,11 @@ public class FightSeeder implements ISeeder {
     toMany.setName("ToMany");
     toMany.setSurname("Fights");
 
-    System.out.println("Changed fighter name to 'ToMany Fights'");
-
     for (int i = 0; i < 10; i++) {
       Fight fight = new Fight();
+      Fighter another = fighters.get(2);
       new FightParticipation(toMany, fight);
+      new FightParticipation(another, fight);
       Gala gala = ObjectExtent.getExtent(Gala.class).getFirst();
       gala.addFight(fight, i);
     }

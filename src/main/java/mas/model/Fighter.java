@@ -1,7 +1,13 @@
 package mas.model;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import mas.exceptions.ToManyFightsException;
 import mas.model.abstraction.Person;
 import mas.model.association.FightParticipation;
 import mas.model.association.Sponsorship;
@@ -219,8 +225,7 @@ public class Fighter extends Person {
 
   public void validateYearlyFightLimit() {
     if (fightParticipations.size() >= 10) {
-      throw new IllegalStateException(
-          "Fighter cannot participate in more than 10 fights in a year");
+      throw new ToManyFightsException();
     }
   }
 

@@ -58,7 +58,7 @@ public class FighterSeeder implements ISeeder {
   };
 
   public void run() {
-    int count = 10;
+    int count = 20;
     for (int i = 0; i < count; i++) {
       String name = random(FIRST_NAMES);
       String surname = random(LAST_NAMES);

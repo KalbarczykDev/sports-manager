@@ -13,8 +13,10 @@ public class FightParticipation extends ObjectExtent {
     try {
 
       for (FightParticipation participation : ObjectExtent.getExtent(FightParticipation.class)) {
-        if (participation.getFighter() != null && !participation.getFighter().equals(fighter)) {
-          throw new IllegalStateException("Figher already participates in this fight");
+        if (participation.getFighter() != null
+            && participation.getFighter().equals(fighter)
+            && participation.getFight().equals(fight)) {
+          throw new IllegalStateException("Fighter already participates in this fight");
         }
       }
 

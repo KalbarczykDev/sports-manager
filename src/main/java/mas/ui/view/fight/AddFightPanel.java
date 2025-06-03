@@ -5,12 +5,14 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Consumer;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import mas.model.Fighter;
 import mas.model.data.ObjectExtent;
 import mas.ui.theme.Colors;
 import mas.ui.theme.Fonts;
+import mas.ui.view.layout.MainScreen;
 import mas.ui.viewmodel.ManageFightsViewModel;
 
 public class AddFightPanel extends JPanel {
@@ -19,7 +21,7 @@ public class AddFightPanel extends JPanel {
   private JList<Fighter> selectedFighterList;
   private ManageFightsViewModel viewModel;
 
-  public AddFightPanel() {
+  public AddFightPanel(Consumer<String> switchView) {
 
     List<Fighter> availableFighters = new ArrayList<>(ObjectExtent.getExtent(Fighter.class));
     availableFighters.sort(Comparator.comparing(f -> f.getName() + " " + f.getSurname()));
@@ -46,7 +48,10 @@ public class AddFightPanel extends JPanel {
     availableLabel.setFont(Fonts.TITLE);
     leftPanel.add(availableLabel, BorderLayout.NORTH);
 
-    fighterList = new JList<>(availableFighters.toArray(new Fighter[0]));
+    DefaultListModel<Fighter> availableModel = new DefaultListModel<>();
+    availableFighters.forEach(availableModel::addElement);
+    fighterList = new JList<>(availableModel);
+
     fighterList.setVisibleRowCount(10);
     fighterList.setFont(Fonts.BODY);
     fighterList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
@@ -61,9 +66,11 @@ public class AddFightPanel extends JPanel {
     selectedLabel.setFont(Fonts.TITLE);
     rightPanel.add(selectedLabel, BorderLayout.NORTH);
 
-    selectedFighterList = new JList<>();
+    DefaultListModel<Fighter> selectedModel = new DefaultListModel<>();
+    selectedFighterList = new JList<>(selectedModel);
     selectedFighterList.setFont(Fonts.BODY);
-    selectedFighterList.setEnabled(false); // read-only for now
+    fighterList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+
     JScrollPane selectedScroll = new JScrollPane(selectedFighterList);
     selectedScroll.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
     rightPanel.add(selectedScroll, BorderLayout.CENTER);
@@ -77,24 +84,90 @@ public class AddFightPanel extends JPanel {
     JButton cancelButton =
         createButton(
             "❌ Cancel",
-            e -> {
-              System.out.println("Cancelling fight addition");
+            _ -> {
+              // ask if user wants to cancel
+              int response =
+                  JOptionPane.showConfirmDialog(
+                      this,
+                      "Are you sure you want to cancel?",
+                      "Cancel",
+                      JOptionPane.YES_NO_OPTION,
+                      JOptionPane.QUESTION_MESSAGE);
+
+              if (response == JOptionPane.YES_OPTION) {
+                MainScreen.getInstance().toggleEditing();
+                switchView.accept("fights");
+              }
             });
 
     JButton addButton =
         createButton(
             "➕ Add",
-            e -> {
-              System.out.println("Adding fighter");
+            _ -> {
+              try {
+                System.out.println("Adding fighter");
+                List<Fighter> selectedFighters = fighterList.getSelectedValuesList();
+                if (selectedFighters.isEmpty()) {
+                  JOptionPane.showMessageDialog(
+                      this,
+                      "Please select at least one fighter to add.",
+                      "Warning",
+                      JOptionPane.WARNING_MESSAGE);
+                  return;
+                }
+                DefaultListModel<Fighter> slectedModel =
+                    (DefaultListModel<Fighter>) selectedFighterList.getModel();
+                DefaultListModel<Fighter> avaiableModel =
+                    (DefaultListModel<Fighter>) fighterList.getModel();
+
+                for (Fighter fighter : selectedFighters) {
+                  if (!slectedModel.contains(fighter)) {
+                    slectedModel.addElement(fighter);
+                    avaiableModel.removeElement(fighter);
+                  } else {
+                    JOptionPane.showMessageDialog(
+                        this,
+                        "Fighter "
+                            + fighter.getName()
+                            + " "
+                            + fighter.getSurname()
+                            + " is already added.",
+                        "Warning",
+                        JOptionPane.WARNING_MESSAGE);
+                  }
+                }
+
+              } catch (Exception e) {
+                JOptionPane.showMessageDialog(
+                    this, e.getMessage(), "Ups...", JOptionPane.WARNING_MESSAGE);
+              }
             });
     JButton removeButton =
         createButton(
             "➖ Remove",
-            e -> {
+            _ -> {
               System.out.println("Removing selected fighters");
+              List<Fighter> selectedFighters = selectedFighterList.getSelectedValuesList();
+              if (selectedFighters.isEmpty()) {
+                JOptionPane.showMessageDialog(
+                    this,
+                    "Please select at least one fighter to remove.",
+                    "Warning",
+                    JOptionPane.WARNING_MESSAGE);
+                return;
+              }
+
+              DefaultListModel<Fighter> model =
+                  (DefaultListModel<Fighter>) selectedFighterList.getModel();
+              DefaultListModel<Fighter> avaiableModel =
+                  (DefaultListModel<Fighter>) fighterList.getModel();
+              for (Fighter fighter : selectedFighters) {
+                model.removeElement(fighter);
+                avaiableModel.addElement(fighter);
+              }
             });
 
-    JButton confirmButton = createButton("✅ Confirm", e -> {});
+    JButton confirmButton = createButton("✅ Confirm", _ -> {});
 
     JPanel buttonPanel = new JPanel();
     buttonPanel.setBackground(Color.WHITE);

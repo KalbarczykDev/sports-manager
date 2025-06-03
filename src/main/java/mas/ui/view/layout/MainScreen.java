@@ -37,7 +37,7 @@ public class MainScreen extends JFrame {
     cardPanel = new JPanel(cardLayout);
 
     // Create Views
-    AddFightPanel addFightPanel = new AddFightPanel();
+    AddFightPanel addFightPanel = new AddFightPanel(this::switchView);
     addFightPanel.setViewModel(new ManageFightsViewModel());
     JPanel fighterPanel = new FighterPanel();
     JPanel fightPanel = new FightPanel();
