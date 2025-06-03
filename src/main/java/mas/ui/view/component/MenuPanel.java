@@ -62,7 +62,7 @@ public class MenuPanel extends JPanel {
               "/icons/fighters-menu.png",
               _ -> {
                 if (MainScreen.getInstance().isEditing()) {
-                  Dialogs.showWarning("Save current progress before switching views.");
+                  Dialogs.showWarningDialog("Save current progress before switching views.");
                   return;
                 }
                 switchView.accept("fighters");
@@ -73,10 +73,10 @@ public class MenuPanel extends JPanel {
               "/icons/event-menu.png",
               _ -> {
                 if (MainScreen.getInstance().isEditing()) {
-                  Dialogs.showWarning("Save current progress before switching views.");
+                  Dialogs.showWarningDialog("Save current progress before switching views.");
                   return;
                 }
-                Dialogs.showWarning("Feature not avaiable in demo version.");
+                Dialogs.showWarningDialog("Feature not avaiable in demo version.");
               }));
 
       add(
@@ -85,7 +85,7 @@ public class MenuPanel extends JPanel {
               "/icons/fight-menu.png",
               _ -> {
                 if (MainScreen.getInstance().isEditing()) {
-                  Dialogs.showWarning("Save current progress before switching views.");
+                  Dialogs.showWarningDialog("Save current progress before switching views.");
                   return;
                 }
                 switchView.accept("fights");

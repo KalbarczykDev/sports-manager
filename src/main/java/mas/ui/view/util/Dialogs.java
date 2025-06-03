@@ -16,7 +16,7 @@ public class Dialogs {
     return JOptionPane.showConfirmDialog(null, message, "Confirm", JOptionPane.YES_NO_OPTION);
   }
 
-  public static void showWarning(String message) {
+  public static void showWarningDialog(String message) {
     JOptionPane.showMessageDialog(null, message, "Warning", JOptionPane.WARNING_MESSAGE);
   }
 }

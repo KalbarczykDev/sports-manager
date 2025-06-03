@@ -1,4 +1,4 @@
-package mas;
+publicackage mas;
 
 import java.io.IOException;
 import javax.swing.*;
