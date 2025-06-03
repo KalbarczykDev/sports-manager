@@ -19,11 +19,15 @@ public class FightSeeder implements ISeeder {
 
     for (int i = 0; i < 10; i++) {
       Fight fight = new Fight();
-      Fighter another = fighters.get(2);
+      Fighter another = fighters.get(i + 2);
       new FightParticipation(toMany, fight);
       new FightParticipation(another, fight);
-      Gala gala = ObjectExtent.getExtent(Gala.class).getFirst();
+      Gala gala = ObjectExtent.getExtent(Gala.class).get(Random(0, 2));
       gala.addFight(fight, i);
     }
+  }
+
+  private int Random(int i, int j) {
+    return (int) (Math.random() * (j - i + 1)) + i;
   }
 }

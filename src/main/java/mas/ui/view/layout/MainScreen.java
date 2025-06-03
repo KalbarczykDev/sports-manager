@@ -2,12 +2,17 @@ package mas.ui.view.layout;
 
 import java.awt.*;
 import javax.swing.*;
+import mas.model.data.ObjectExtent;
 import mas.ui.view.component.MenuPanel;
 import mas.ui.view.fight.AddFightPanel;
 import mas.ui.view.fight.FightPanel;
 import mas.ui.view.fighter.FighterPanel;
 import mas.ui.viewmodel.ManageFightsViewModel;
 
+/**
+ * MainScreen is the main application window that contains a menu and a card layout for different
+ * views.
+ */
 public class MainScreen extends JFrame {
 
   private static MainScreen instance;
@@ -18,6 +23,11 @@ public class MainScreen extends JFrame {
 
   private boolean editing = true; // TODO: Switch to false for prod
 
+  /**
+   * Returns the singleton instance of MainScreen.
+   *
+   * @return the instance of MainScreen
+   */
   public static MainScreen getInstance() {
     if (instance == null) {
       instance = new MainScreen();
@@ -25,10 +35,31 @@ public class MainScreen extends JFrame {
     return instance;
   }
 
+  /**
+   * Private constructor to initialize the main screen. Sets up the layout, menu, and card panel for
+   * different views.
+   */
   public MainScreen() {
     // Layout
     setLayout(new BorderLayout());
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    addWindowListener(
+        new java.awt.event.WindowAdapter() {
+          @Override
+          public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+            try {
+              // Save the current state of the application
+              ObjectExtent.saveExtent();
+            } catch (Exception e) {
+              JOptionPane.showMessageDialog(
+                  MainScreen.this,
+                  "An error occurred while saving the application state: " + e.getMessage(),
+                  "Error",
+                  JOptionPane.ERROR_MESSAGE);
+            }
+            System.exit(0);
+          }
+        });
     setSize(800, 600);
     setLocationRelativeTo(null);
 
@@ -55,14 +86,25 @@ public class MainScreen extends JFrame {
     setVisible(true);
   }
 
+  /**
+   * Switches the view in the card panel to the specified view name.
+   *
+   * @param viewName the name of the view to switch to
+   */
   private void switchView(String viewName) {
     cardLayout.show(cardPanel, viewName);
   }
 
+  /** Toggles the editing mode of the application. */
   public void toggleEditing() {
     this.editing = !this.editing;
   }
 
+  /**
+   * Checks if the application is in editing mode.
+   *
+   * @return true if in editing mode, false otherwise
+   */
   public boolean isEditing() {
     return editing;
   }
