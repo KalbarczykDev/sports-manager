@@ -122,6 +122,15 @@ public class AddFightPanel extends JPanel {
 
                 for (Fighter fighter : selectedFighters) {
                   if (!slectedModel.contains(fighter)) {
+
+                    try {
+                      fighter.validateYearlyFightLimit();
+                    } catch (Exception e) {
+                      JOptionPane.showMessageDialog(
+                          this, e.getMessage(), "Warning", JOptionPane.WARNING_MESSAGE);
+                      return;
+                    }
+
                     slectedModel.addElement(fighter);
                     avaiableModel.removeElement(fighter);
                   } else {
