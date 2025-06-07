@@ -7,7 +7,6 @@ import mas.model.data.ObjectExtent;
 import mas.model.data.seeder.Seeder;
 import mas.ui.view.layout.MainScreen;
 
-// TODO: Add Fight to Gala sequence
 // TODO: Java Docs for UI Classses
 
 public class Main {

@@ -40,6 +40,7 @@ public class Gala extends Event {
     } catch (Exception e) {
       removeFromExtent();
       System.out.println("Gala not created: " + e.getMessage());
+      throw new IllegalArgumentException(e.getMessage());
     }
   }
 
@@ -95,7 +96,7 @@ public class Gala extends Event {
 
   @Override
   public String toString() {
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     return getEventName() + " – " + (getDate() != null ? getDate().format(formatter) : "N/A");
   }
 }

@@ -1,18 +1,32 @@
 package mas.ui.view.gala;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import mas.model.Fight;
 import mas.model.Gala;
 import mas.model.data.ObjectExtent;
 import mas.ui.theme.Colors;
 import mas.ui.theme.Fonts;
+import mas.ui.view.component.AddGalaDialog;
 import mas.ui.view.layout.MainScreen;
 import mas.ui.view.util.Dialogs;
 import mas.ui.viewmodel.ManageFightsViewModel;
@@ -99,6 +113,8 @@ public class AssignFightToGalaPanel extends JPanel {
                 switchView.accept("fights");
               }
             });
+    JButton addNewGalaButton =
+        createButton("\u2795 Add New Gala", _ -> new AddGalaDialog(this, viewModel, switchView));
 
     JButton addButton = createButton("\u2795 Assign", _ -> handleAssignFight());
 
@@ -106,6 +122,7 @@ public class AssignFightToGalaPanel extends JPanel {
     panel.setBackground(Color.WHITE);
     panel.setBorder(new EmptyBorder(16, 0, 0, 0));
     panel.add(cancelButton);
+    panel.add(addNewGalaButton);
     panel.add(addButton);
     return panel;
   }
@@ -160,5 +177,9 @@ public class AssignFightToGalaPanel extends JPanel {
 
     galasList.clearSelection();
     slectedGalasList.clearSelection();
+  }
+
+  public DefaultListModel<Gala> getAvailableModel() {
+    return availableModel;
   }
 }

@@ -69,7 +69,10 @@ public class FightTableModel extends AbstractTableModel {
       }
 
       case "Date" -> {
-        String date = gala != null ? gala.getDate().format(DATE_FORMATTER) : "No Date";
+        String date =
+            (gala != null && gala.getDate() != null)
+                ? gala.getDate().format(DATE_FORMATTER)
+                : "No Date";
         yield date;
       }
 
