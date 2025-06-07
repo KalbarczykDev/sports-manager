@@ -22,7 +22,7 @@ public class MainScreen extends JFrame {
   private JPanel cardPanel;
   private MenuPanel menuPanel;
 
-  private boolean editing = true; // TODO: Switch to false for prod
+  private boolean editing = false;
 
   /**
    * Returns the singleton instance of MainScreen.
@@ -67,10 +67,10 @@ public class MainScreen extends JFrame {
     // Create Views
     AddFightPanel addFightPanel = new AddFightPanel(new ManageFightsViewModel(), this::switchView);
     JPanel fighterPanel = new FighterPanel();
-    JPanel fightPanel = new FightPanel();
+    JPanel fightPanel = new FightPanel(this::switchView);
+    cardPanel.add(fightPanel, "fights");
     cardPanel.add(addFightPanel, "addFight");
     cardPanel.add(fighterPanel, "fighters");
-    cardPanel.add(fightPanel, "fights");
 
     menuPanel = new MenuPanel(this::switchView);
 

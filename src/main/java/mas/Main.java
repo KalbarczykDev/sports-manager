@@ -1,9 +1,13 @@
-publicackage mas;
+package mas;
 
 import java.io.IOException;
 import javax.swing.*;
 import mas.model.data.seeder.Seeder;
 import mas.ui.view.layout.MainScreen;
+
+// TODO: Fix serialization issues (error when saving)
+// TODO: Add Fight to Gala sequence
+// TODO: Java Docs for UI Classses
 
 public class Main {
 

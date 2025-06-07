@@ -1,6 +1,7 @@
 package mas.ui.view.fight;
 
 import java.awt.*;
+import java.util.function.Consumer;
 import javax.swing.*;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableRowSorter;
@@ -8,14 +9,16 @@ import mas.model.Fight;
 import mas.model.Fighter;
 import mas.ui.theme.Colors;
 import mas.ui.theme.Fonts;
+import mas.ui.view.layout.*;
 import mas.ui.view.util.Dialogs;
 
 public class FightPanel extends JPanel {
 
   private JTable fighterTable;
   private FightTableModel tableModel;
+  private JButton addFightButton;
 
-  public FightPanel() {
+  public FightPanel(Consumer<String> switchView) {
     setLayout(new BorderLayout());
     setBackground(Colors.PANEL_BACKGROUND);
 
@@ -28,12 +31,23 @@ public class FightPanel extends JPanel {
     // Init Ui
     tableModel = new FightTableModel();
     fighterTable = new FightTable(tableModel);
+    addFightButton = new JButton("Add Fight");
+
+    // AddFight Button
+    addFightButton.setFont(Fonts.BUTTON);
+    addFightButton.setForeground(Colors.BUTTON_TEXT);
+    addFightButton.addActionListener(
+        _ -> {
+          MainScreen.getInstance().toggleEditing();
+          switchView.accept("addFight");
+        });
 
     JScrollPane scrollPane = new JScrollPane(fighterTable);
     scrollPane.setBorder(BorderFactory.createEmptyBorder(0, 16, 16, 16));
 
     // Add to layout
     add(title, BorderLayout.NORTH);
+    add(addFightButton, BorderLayout.SOUTH);
     add(scrollPane, BorderLayout.CENTER);
   }
 
