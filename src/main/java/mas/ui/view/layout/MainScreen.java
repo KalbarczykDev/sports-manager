@@ -53,6 +53,7 @@ public class MainScreen extends JFrame {
               ObjectExtent.saveExtent();
             } catch (Exception e) {
               Dialogs.showErrorDialog("Error saving data: " + e.getMessage());
+              e.printStackTrace();
             }
             System.exit(0);
           }

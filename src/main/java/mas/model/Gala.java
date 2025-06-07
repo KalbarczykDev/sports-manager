@@ -1,5 +1,6 @@
 package mas.model;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Comparator;
@@ -14,7 +15,15 @@ import mas.model.association.FightParticipation;
  * in those fights.
  */
 public class Gala extends Event {
-  private final Set<Fight> fights = new TreeSet<>(Comparator.comparingInt(Fight::getFightPriority));
+  public static class FightComparator implements Comparator<Fight>, Serializable {
+    @Override
+    public int compare(Fight f1, Fight f2) {
+      return Integer.compare(f1.getFightPriority(), f2.getFightPriority());
+    }
+  }
+
+  private final Set<Fight> fights = new TreeSet<>(new FightComparator());
+
   private static final Double COMPENSATION_RATE = 0.1;
 
   /**

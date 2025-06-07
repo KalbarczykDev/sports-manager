@@ -1,31 +1,28 @@
 package mas;
 
+import java.io.File;
 import java.io.IOException;
 import javax.swing.*;
+import mas.model.data.ObjectExtent;
 import mas.model.data.seeder.Seeder;
 import mas.ui.view.layout.MainScreen;
 
-// TODO: Fix serialization issues (error when saving)
 // TODO: Add Fight to Gala sequence
 // TODO: Java Docs for UI Classses
 
 public class Main {
 
   public static void main(String[] args) throws IOException, ClassNotFoundException {
-    // File file = new File("extent.ser");
+    File file = new File("extent.ser");
 
-    // TODO: Uncoment for prod
-    // if (file.exists()) {
-    //   System.out.println("Loading existing extent...");
-    //   ObjectExtent.loadExtent();
-    // } else {
-    //   System.out.println("No existing extent found, seeding the data");
-    //   Seeder.run();
-    // }
-
-    Seeder.run();
+    if (file.exists()) {
+      System.out.println("Loading existing extent...");
+      ObjectExtent.loadExtent();
+    } else {
+      System.out.println("No existing extent found, seeding the data");
+      Seeder.run();
+    }
 
     SwingUtilities.invokeLater(MainScreen::getInstance);
-    //   ObjectExtent.saveExtent();
   }
 }
