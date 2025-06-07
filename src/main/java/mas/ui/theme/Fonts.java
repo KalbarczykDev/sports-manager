@@ -2,6 +2,10 @@ package mas.ui.theme;
 
 import java.awt.Font;
 
+/**
+ * Fonts class defines the font styles used throughout the application. It includes styles for
+ * headings, body text, captions, buttons
+ */
 public class Fonts {
 
   // Base font family
@@ -22,7 +26,4 @@ public class Fonts {
 
   // Buttons
   public static final Font BUTTON = new Font(BASE_FONT, Font.BOLD, 14);
-
-  // Optional: Monospaced for code or debug UI
-  public static final Font MONO = new Font("Consolas", Font.PLAIN, 13);
 }

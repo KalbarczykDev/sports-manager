@@ -6,6 +6,10 @@ import javax.swing.table.AbstractTableModel;
 import mas.model.Fighter;
 import mas.model.data.ObjectExtent;
 
+/**
+ * FighterTableModel is an AbstractTableModel that provides data for a JTable displaying fighters.
+ * It retrieves fighter data from the ObjectExtent and formats it for display in the table.
+ */
 public class FighterTableModel extends AbstractTableModel {
 
   private List<Fighter> fighters;

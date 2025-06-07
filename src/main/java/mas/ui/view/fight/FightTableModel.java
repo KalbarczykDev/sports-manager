@@ -8,6 +8,10 @@ import mas.model.Fighter;
 import mas.model.Gala;
 import mas.model.data.ObjectExtent;
 
+/**
+ * FightTableModel is an AbstractTableModel that provides data for a JTable displaying fights. It
+ * retrieves fight data from the ObjectExtent and formats it for display in the table.
+ */
 public class FightTableModel extends AbstractTableModel {
 
   private List<Fight> fights;
@@ -19,10 +23,17 @@ public class FightTableModel extends AbstractTableModel {
     this.fights = ObjectExtent.getExtent(Fight.class);
   }
 
+  /**
+   * Returns the Fight object at the specified row index.
+   *
+   * @param rowIndex the index of the row
+   * @return the Fight object at the specified row index
+   */
   public Fight getFight(int rowIndex) {
     return fights.get(rowIndex);
   }
 
+  /** Refreshes the table data by reloading the fights from the ObjectExtent. */
   public void refresh() {
     fights = ObjectExtent.getExtent(Fight.class);
     fireTableDataChanged();

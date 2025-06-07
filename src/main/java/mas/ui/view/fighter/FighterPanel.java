@@ -9,6 +9,10 @@ import mas.ui.theme.Colors;
 import mas.ui.theme.Fonts;
 import mas.ui.view.util.Dialogs;
 
+/**
+ * FighterPanel is a JPanel that displays a table of fighters and allows users to manage them. It
+ * includes functionality to view fighter details on double-click.
+ */
 public class FighterPanel extends JPanel {
 
   private JTable fighterTable;
@@ -36,6 +40,10 @@ public class FighterPanel extends JPanel {
     add(scrollPane, BorderLayout.CENTER);
   }
 
+  /**
+   * FighterTable is a custom JTable that displays fighters. It allows double-clicking on a fighter
+   * to view its details.
+   */
   class FighterTable extends JTable {
     public FighterTable(FighterTableModel tableModel) {
       super(tableModel);
@@ -77,6 +85,11 @@ public class FighterPanel extends JPanel {
     }
   }
 
+  /**
+   * Displays the details of a fighter in a dialog.
+   *
+   * @param fighter the Fighter object whose details are to be displayed
+   */
   private void showFighterDetails(Fighter fighter) {
     Dialogs.showInfoDialog(
         "Fighter Details:\n"
@@ -96,14 +109,25 @@ public class FighterPanel extends JPanel {
             + fighter.getSalary());
   }
 
+  /** Refreshes the fighter table data by reloading the fighters from the ObjectExtent. */
   public void refreshTable() {
     tableModel.refresh();
   }
 
+  /**
+   * Returns the FighterTableModel associated with this panel.
+   *
+   * @return the FighterTableModel
+   */
   public FighterTableModel getTableModel() {
     return tableModel;
   }
 
+  /**
+   * Returns the JTable that displays the fighters.
+   *
+   * @return the JTable instance
+   */
   public JTable getTable() {
     return fighterTable;
   }

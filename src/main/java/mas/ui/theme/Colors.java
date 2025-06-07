@@ -2,6 +2,10 @@ package mas.ui.theme;
 
 import java.awt.Color;
 
+/**
+ * Colors class defines the color scheme for the application. It includes base colors, button
+ * styles, card and panel backgrounds, and status colors.
+ */
 public class Colors {
 
   // Base Colors

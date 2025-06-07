@@ -12,6 +12,10 @@ import mas.ui.theme.Fonts;
 import mas.ui.view.layout.*;
 import mas.ui.view.util.Dialogs;
 
+/**
+ * FightPanel is a JPanel that displays a table of fights and allows users to manage them. It
+ * includes functionality to add new fights and view details of existing fights.
+ */
 public class FightPanel extends JPanel {
 
   private JTable fighterTable;
@@ -51,6 +55,10 @@ public class FightPanel extends JPanel {
     add(scrollPane, BorderLayout.CENTER);
   }
 
+  /**
+   * FightTable is a custom JTable that displays fights. It allows double-clicking on a fight to
+   * view its details.
+   */
   class FightTable extends JTable {
     public FightTable(FightTableModel tableModel) {
       super(tableModel);
@@ -92,6 +100,11 @@ public class FightPanel extends JPanel {
     }
   }
 
+  /**
+   * Displays the details of a fight in a dialog. It shows the winner and participants of the fight.
+   *
+   * @param fight the fight whose details are to be displayed
+   */
   private void showFightDetails(Fight fight) {
     Fighter winner = fight.getWinner();
     String winnerName =

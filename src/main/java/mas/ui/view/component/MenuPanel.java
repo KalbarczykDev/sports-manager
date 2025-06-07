@@ -20,6 +20,10 @@ import mas.ui.view.layout.MainScreen;
 import mas.ui.view.util.Dialogs;
 import mas.ui.view.util.IconLoader;
 
+/**
+ * MenuPanel is a JPanel that contains the application logo and a navigation menu. The navigation
+ * menu includes buttons for managing fighters, events, and fights.
+ */
 public class MenuPanel extends JPanel {
 
   AppLogoPanel appLogoPanel;
@@ -51,6 +55,10 @@ public class MenuPanel extends JPanel {
     add(navigationMenu);
   }
 
+  /**
+   * NavigationMenu is a JPanel that contains buttons for navigating to different views in the
+   * application. It includes buttons for managing fighters, events, and fights.
+   */
   class NavigationMenu extends JPanel {
     public NavigationMenu(Consumer<String> switchView) {
       setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -93,6 +101,10 @@ public class MenuPanel extends JPanel {
     }
   }
 
+  /**
+   * MenuButton is a custom JButton that represents a button in the navigation menu. It has a title,
+   * an icon, and an action listener for handling button clicks.
+   */
   class MenuButton extends JButton {
     public MenuButton(String title, String iconPath, ActionListener actionListener) {
       super(title, IconLoader.load(iconPath, 24, 24, Colors.BUTTON_TEXT));
@@ -128,6 +140,10 @@ public class MenuPanel extends JPanel {
     }
   }
 
+  /**
+   * AppLogoPanel is a JPanel that displays the application logo and name. It is used at the top of
+   * the MenuPanel.
+   */
   class AppLogoPanel extends JPanel {
     public AppLogoPanel() {
       setLayout(new FlowLayout(FlowLayout.CENTER, 8, 8));

@@ -73,6 +73,11 @@ public class AssignFightToGalaPanel extends JPanel {
     add(createButtonPanel(switchView), BorderLayout.SOUTH);
   }
 
+  /**
+   * Creates a title label for the panel.
+   *
+   * @return a JLabel with the title "Assign Fight To Gala"
+   */
   private JLabel createTitle() {
     JLabel title = new JLabel("Assign Fight To Gala");
     title.setFont(Fonts.TITLE);
@@ -81,6 +86,11 @@ public class AssignFightToGalaPanel extends JPanel {
     return title;
   }
 
+  /**
+   * Creates a panel containing the lists of available and selected galas.
+   *
+   * @return a JPanel containing the lists
+   */
   private JPanel createListsPanel() {
     JPanel listsPanel = new JPanel(new GridLayout(1, 2, 20, 0));
     listsPanel.setBackground(Color.WHITE);
@@ -89,6 +99,13 @@ public class AssignFightToGalaPanel extends JPanel {
     return listsPanel;
   }
 
+  /**
+   * Creates a panel for a list with a title.
+   *
+   * @param title the title of the list
+   * @param list the JList to be displayed
+   * @return a JPanel containing the list and its title
+   */
   private JPanel createListPanel(String title, JList<Gala> list) {
     JPanel panel = new JPanel(new BorderLayout(10, 10));
     panel.setBackground(Color.WHITE);
@@ -102,6 +119,13 @@ public class AssignFightToGalaPanel extends JPanel {
     return panel;
   }
 
+  /**
+   * Creates a panel with buttons for canceling, adding a new gala, and assigning the selected fight
+   * to the selected gala.
+   *
+   * @param switchView a Consumer that takes a String to switch views
+   * @return a JPanel containing the buttons
+   */
   private JPanel createButtonPanel(Consumer<String> switchView) {
     JButton cancelButton =
         createButton(
@@ -127,6 +151,10 @@ public class AssignFightToGalaPanel extends JPanel {
     return panel;
   }
 
+  /**
+   * Handles the assignment of the selected fight to the selected gala. If no gala or fight is
+   * selected, it shows a warning dialog.
+   */
   private void handleAssignFight() {
     List<Gala> selected = galasList.getSelectedValuesList();
     if (selected.isEmpty()) {
@@ -151,6 +179,13 @@ public class AssignFightToGalaPanel extends JPanel {
     switchView.accept("fights");
   }
 
+  /**
+   * Creates a button with the specified text and action listener.
+   *
+   * @param text the text to display on the button
+   * @param listener the ActionListener to handle button clicks
+   * @return a JButton with the specified properties
+   */
   private JButton createButton(String text, ActionListener listener) {
     JButton button = new JButton(text);
     button.setFont(Fonts.BUTTON);
@@ -163,6 +198,10 @@ public class AssignFightToGalaPanel extends JPanel {
     return button;
   }
 
+  /**
+   * Resets the panel to its initial state, clearing selected and available galas. It repopulates
+   * the available galas list with all galas from the extent.
+   */
   public void reset() {
 
     selectedModel.clear();
@@ -179,6 +218,11 @@ public class AssignFightToGalaPanel extends JPanel {
     slectedGalasList.clearSelection();
   }
 
+  /**
+   * Returns the DefaultListModel containing available galas.
+   *
+   * @return the availableModel
+   */
   public DefaultListModel<Gala> getAvailableModel() {
     return availableModel;
   }

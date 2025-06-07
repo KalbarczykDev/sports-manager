@@ -19,6 +19,11 @@ import mas.ui.view.gala.AssignFightToGalaPanel;
 import mas.ui.view.util.Dialogs;
 import mas.ui.viewmodel.ManageFightsViewModel;
 
+/**
+ * AddGalaDialog is a dialog for creating a new Gala. It allows the user to input the name and date
+ * of the gala, and upon submission, it adds the gala to the available model in the
+ * AssignFightToGalaPanel.
+ */
 public class AddGalaDialog extends JDialog {
 
   public AddGalaDialog(
