@@ -140,9 +140,8 @@ public class AddFightPanel extends JPanel {
               }
               viewModel.assignFightersToNewFight(
                   java.util.Collections.list(selectedModel.elements()));
-              MainScreen.getInstance().toggleEditing();
               reset();
-              switchView.accept("fights");
+              switchView.accept("assignFightToGala");
             });
 
     JPanel panel = new JPanel();

@@ -2,6 +2,7 @@ package mas.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Set;
@@ -94,6 +95,7 @@ public class Gala extends Event {
 
   @Override
   public String toString() {
-    return "Gala{" + "date=" + (getDate() != null ? getDate() : "N/A") + '}';
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+    return getEventName() + " – " + (getDate() != null ? getDate().format(formatter) : "N/A");
   }
 }

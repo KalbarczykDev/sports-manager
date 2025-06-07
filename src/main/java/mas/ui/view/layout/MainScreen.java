@@ -7,6 +7,7 @@ import mas.ui.view.component.MenuPanel;
 import mas.ui.view.fight.AddFightPanel;
 import mas.ui.view.fight.FightPanel;
 import mas.ui.view.fighter.FighterPanel;
+import mas.ui.view.gala.AssignFightToGalaPanel;
 import mas.ui.view.util.Dialogs;
 import mas.ui.viewmodel.ManageFightsViewModel;
 
@@ -65,13 +66,20 @@ public class MainScreen extends JFrame {
     cardLayout = new CardLayout();
     cardPanel = new JPanel(cardLayout);
 
+    // View models
+    ManageFightsViewModel manageFightsViewModel = new ManageFightsViewModel();
+
     // Create Views
-    AddFightPanel addFightPanel = new AddFightPanel(new ManageFightsViewModel(), this::switchView);
+    AddFightPanel addFightPanel = new AddFightPanel(manageFightsViewModel, this::switchView);
+    AssignFightToGalaPanel assignFightToGalaPanel =
+        new AssignFightToGalaPanel(manageFightsViewModel, this::switchView);
     JPanel fighterPanel = new FighterPanel();
     JPanel fightPanel = new FightPanel(this::switchView);
+
     cardPanel.add(fightPanel, "fights");
-    cardPanel.add(addFightPanel, "addFight");
     cardPanel.add(fighterPanel, "fighters");
+    cardPanel.add(addFightPanel, "addFight");
+    cardPanel.add(assignFightToGalaPanel, "assignFightToGala");
 
     menuPanel = new MenuPanel(this::switchView);
 
