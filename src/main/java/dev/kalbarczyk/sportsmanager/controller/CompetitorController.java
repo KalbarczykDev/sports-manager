@@ -2,11 +2,9 @@ package dev.kalbarczyk.sportsmanager.controller;
 
 import dev.kalbarczyk.sportsmanager.model.Competitor;
 import dev.kalbarczyk.sportsmanager.model.Discipline;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -28,11 +26,6 @@ public class CompetitorController {
 
 
         return "competitor/index";
-    }
-
-    @PostMapping("/add")
-    public ResponseEntity<Competitor> addCompetitor(Competitor competitor) {
-        return ResponseEntity.ok(competitor);
     }
 
 }

@@ -6,6 +6,7 @@
 </head>
 <body>
 
+<a th:href="@{/}">Home</a>
 <h1>Competitors</h1>
 <p th:if="${competitors != null}" th:text="'Data loaded: ' + ${#lists.size(competitors)}">Fallback</p>
 
