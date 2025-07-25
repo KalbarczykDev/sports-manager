@@ -1,14 +1,18 @@
 package dev.kalbarczyk.sportsmanager.model;
 
-import dev.kalbarczyk.sportsmanager.model.attributes.Address;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public abstract class Person {
+    @NonNull
     private String name;
+    @NonNull
     private String surname;
     private double salary;
-    private Address address;
+    @NonNull
+    private String country;
+
 }

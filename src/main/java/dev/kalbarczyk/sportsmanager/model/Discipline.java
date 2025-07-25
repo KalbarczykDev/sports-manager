@@ -1,4 +1,4 @@
-package dev.kalbarczyk.sportsmanager.model.attributes;
+package dev.kalbarczyk.sportsmanager.model;
 
 public enum Discipline {
     FOOTBALL("Football"),

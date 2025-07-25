@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Competitors</title>
+</head>
+<body>
+
+<h1>Competitors</h1>
+<p th:if="${competitors != null}" th:text="'Data loaded: ' + ${#lists.size(competitors)}">Fallback</p>
+
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Surname</th>
+        <th>Country</th>
+        <th>Discipline</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="c : ${competitors}">
+        <td th:text="${c.name}"></td>
+        <td th:text="${c.surname}"></td>
+        <td th:text="${c.country}"></td>
+        <td th:text="${c.discipline}"></td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
