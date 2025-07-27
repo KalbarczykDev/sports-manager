@@ -1,4 +1,4 @@
-package dev.kalbarczyk.sportsmanager.shared.exception;
+package dev.kalbarczyk.sportsmanager.common.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,5 +1,6 @@
-package dev.kalbarczyk.sportsmanager.competitor;
+package dev.kalbarczyk.sportsmanager.competitor.repository;
 
+import dev.kalbarczyk.sportsmanager.competitor.model.Competitor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

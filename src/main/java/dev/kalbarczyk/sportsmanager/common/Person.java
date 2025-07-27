@@ -1,4 +1,4 @@
-package dev.kalbarczyk.sportsmanager.shared;
+package dev.kalbarczyk.sportsmanager.common;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;

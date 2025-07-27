@@ -1,4 +1,4 @@
-package dev.kalbarczyk.sportsmanager.shared.exception;
+package dev.kalbarczyk.sportsmanager.common.exception;
 
 public sealed class CrudException extends RuntimeException permits CrudException.NotFound {
 

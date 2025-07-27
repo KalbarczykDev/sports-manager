@@ -1,6 +1,7 @@
 package dev.kalbarczyk.sportsmanager.competitor;
 
-import dev.kalbarczyk.sportsmanager.shared.enums.Discipline;
+import dev.kalbarczyk.sportsmanager.common.enums.Discipline;
+import dev.kalbarczyk.sportsmanager.competitor.model.Competitor;
 import lombok.val;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

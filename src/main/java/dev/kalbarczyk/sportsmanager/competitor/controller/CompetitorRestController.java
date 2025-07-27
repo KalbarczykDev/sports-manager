@@ -1,5 +1,7 @@
-package dev.kalbarczyk.sportsmanager.competitor;
+package dev.kalbarczyk.sportsmanager.competitor.controller;
 
+import dev.kalbarczyk.sportsmanager.competitor.model.Competitor;
+import dev.kalbarczyk.sportsmanager.competitor.service.CompetitorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,8 +41,7 @@ public class CompetitorRestController {
     @PutMapping("/{id}")
     public Competitor updateCompetitor(final @PathVariable Long id, final @RequestBody Competitor competitor
     ) {
-        competitor.setId(id);
-        return competitorService.save(competitor);
+        return competitorService.update(id, competitor);
     }
 
 }

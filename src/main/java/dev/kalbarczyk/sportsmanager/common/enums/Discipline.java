@@ -1,4 +1,4 @@
-package dev.kalbarczyk.sportsmanager.shared.enums;
+package dev.kalbarczyk.sportsmanager.common.enums;
 
 public enum Discipline {
     FOOTBALL("Football"),
