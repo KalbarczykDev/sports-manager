@@ -15,6 +15,7 @@ public class CompetitorController {
     @GetMapping
     public String index(Model model) {
 
+        //TODO: Replace with actual data from the database
         List<Competitor> competitors = List.of(
                 Competitor.of("John", "Doe", 50000, "USA", Discipline.FOOTBALL),
                 Competitor.of("Jane", "Smith", 60000, "Canada", Discipline.BASKETBALL),
