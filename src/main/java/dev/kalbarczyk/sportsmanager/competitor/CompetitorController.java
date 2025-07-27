@@ -1,7 +1,6 @@
-package dev.kalbarczyk.sportsmanager.controller;
+package dev.kalbarczyk.sportsmanager.competitor;
 
-import dev.kalbarczyk.sportsmanager.model.Competitor;
-import dev.kalbarczyk.sportsmanager.model.Discipline;
+import dev.kalbarczyk.sportsmanager.shared.Discipline;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,5 +26,6 @@ public class CompetitorController {
 
         return "competitor/index";
     }
+
 
 }

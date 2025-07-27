@@ -1,4 +1,4 @@
-package dev.kalbarczyk.sportsmanager.controller;
+package dev.kalbarczyk.sportsmanager.home;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
