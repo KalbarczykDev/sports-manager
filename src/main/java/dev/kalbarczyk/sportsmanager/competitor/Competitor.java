@@ -1,7 +1,7 @@
 package dev.kalbarczyk.sportsmanager.competitor;
 
-import dev.kalbarczyk.sportsmanager.shared.Discipline;
 import dev.kalbarczyk.sportsmanager.shared.Person;
+import dev.kalbarczyk.sportsmanager.shared.enums.Discipline;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

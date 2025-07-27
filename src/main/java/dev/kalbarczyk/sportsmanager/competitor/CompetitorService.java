@@ -1,5 +1,7 @@
 package dev.kalbarczyk.sportsmanager.competitor;
 
+import dev.kalbarczyk.sportsmanager.shared.exception.CrudException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -8,7 +10,8 @@ import java.util.List;
 public class CompetitorService {
     private final CompetitorRepository competitorRepository;
 
-    public CompetitorService(CompetitorRepository competitorRepository) {
+    @Autowired
+    public CompetitorService(final CompetitorRepository competitorRepository) {
         this.competitorRepository = competitorRepository;
     }
 
@@ -16,11 +19,29 @@ public class CompetitorService {
         return competitorRepository.findAll();
     }
 
-    public Competitor save(Competitor competitor) {
+    public Competitor findById(final Long id) {
+        return competitorRepository.findById(id)
+                .orElseThrow(() -> new CrudException.NotFound("Competitor not found with id: " + id));
+    }
+
+    public Competitor save(final Competitor competitor) {
         return competitorRepository.save(competitor);
     }
 
-    public void delete(Long id) {
+    public Competitor update(final Long id, final Competitor competitor) {
+        if (!competitorRepository.existsById(id)) {
+            throw new CrudException.NotFound("Competitor not found with id: " + id);
+        }
+        competitor.setId(id);
+        return competitorRepository.save(competitor);
+    }
+
+    public void delete(final Long id) {
+
+        if (!competitorRepository.existsById(id)) {
+            throw new CrudException.NotFound("Competitor not found with id: " + id);
+        }
+
         competitorRepository.deleteById(id);
     }
 }

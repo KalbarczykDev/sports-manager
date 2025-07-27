@@ -1,6 +1,6 @@
 package dev.kalbarczyk.sportsmanager.competitor;
 
-import dev.kalbarczyk.sportsmanager.shared.Discipline;
+import dev.kalbarczyk.sportsmanager.shared.enums.Discipline;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
