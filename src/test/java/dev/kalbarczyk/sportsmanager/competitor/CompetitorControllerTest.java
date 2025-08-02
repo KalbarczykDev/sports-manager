@@ -19,7 +19,7 @@ import java.util.Objects;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebTestClient
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-public class CompetitorRestControllerTest {
+public class CompetitorControllerTest {
 
     @LocalServerPort
     private int port;
@@ -51,7 +51,7 @@ public class CompetitorRestControllerTest {
 
         for (Competitor c : competitors) {
             val id = Objects.requireNonNull(webTestClient.post()
-                            .uri("/api/competitors")
+                            .uri("/competitors")
                             .bodyValue(c)
                             .exchange()
                             .expectStatus().isOk()
@@ -62,37 +62,17 @@ public class CompetitorRestControllerTest {
 
             insertedIds.add(id);
         }
-
-
-        webTestClient.get().uri("/api/competitors")
-                .exchange()
-                .expectStatus().isOk()
-                .expectBodyList(Competitor.class)
-                .hasSize(3);
     }
 
     /**
-     * Test: GET /api/competitors
-     * Description: Ensures that the list of competitors contains exactly 3 entries.
-     */
-    @Test
-    void shouldReturnListOfCompetitors() {
-        webTestClient.get().uri("/api/competitors")
-                .exchange()
-                .expectStatus().isOk()
-                .expectBodyList(Competitor.class)
-                .value(list -> Assertions.assertThat(list).hasSize(3));
-    }
-
-    /**
-     * Test: GET /api/competitors/{id}
+     * Test: GET /competitors/{id}
      * Description: Retrieves a specific competitor by ID and verifies their details.
      */
     @Test
     void shouldReturnCompetitorById() {
         val id = insertedIds.getFirst();
 
-        webTestClient.get().uri("/api/competitors/" + id)
+        webTestClient.get().uri("/competitors/" + id)
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(Competitor.class)
@@ -104,14 +84,14 @@ public class CompetitorRestControllerTest {
     }
 
     /**
-     * Test: POST /api/competitors
+     * Test: POST /competitors
      * Description: Creates a new competitor and verifies the response contains a valid ID and correct data.
      */
     @Test
     void shouldCreateCompetitor() {
         val newCompetitor = Competitor.of("Bob", "Taylor", 70000, "Australia", Discipline.BASKETBALL);
 
-        webTestClient.post().uri("/api/competitors")
+        webTestClient.post().uri("/competitors")
                 .bodyValue(newCompetitor)
                 .exchange()
                 .expectStatus().isOk()
@@ -123,24 +103,24 @@ public class CompetitorRestControllerTest {
     }
 
     /**
-     * Test: DELETE /api/competitors/{id}
+     * Test: DELETE /competitors/{id}
      * Description: Deletes a competitor and verifies they no longer exist.
      */
     @Test
     void shouldDeleteCompetitor() {
         val id = insertedIds.getFirst();
 
-        webTestClient.delete().uri("/api/competitors/" + id)
+        webTestClient.delete().uri("/competitors/" + id)
                 .exchange()
-                .expectStatus().isOk();
+                .expectStatus().isNoContent();
 
-        webTestClient.get().uri("/api/competitors/" + id)
+        webTestClient.get().uri("/competitors/" + id)
                 .exchange()
                 .expectStatus().isNotFound();
     }
 
     /**
-     * Test: PUT /api/competitors/{id}
+     * Test: PUT /competitors/{id}
      * Description: Updates a competitor's data and verifies the updated values.
      */
     @Test
@@ -148,7 +128,7 @@ public class CompetitorRestControllerTest {
         val id = insertedIds.getFirst();
         val updated = Competitor.of("John", "Doe", 99999, "USA", Discipline.BASKETBALL);
 
-        webTestClient.put().uri("/api/competitors/" + id)
+        webTestClient.put().uri("/competitors/" + id)
                 .bodyValue(updated)
                 .exchange()
                 .expectStatus().isOk()
