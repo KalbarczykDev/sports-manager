@@ -5,6 +5,8 @@ import dev.kalbarczyk.sportsmanager.competitor.model.Competitor;
 import dev.kalbarczyk.sportsmanager.competitor.repository.CompetitorRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import net.datafaker.Faker;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -14,19 +16,25 @@ import org.springframework.stereotype.Component;
 public class CompetitorSeeder implements CommandLineRunner {
     private final CompetitorRepository competitorRepository;
 
+    @Value("${sportsmanager.seeder.count:10}")
+    private int seedCount = 10;
+
     @Override
     public void run(String... args) {
         if (competitorRepository.count() == 0) {
             log.info("Seeding initial competitors data...");
-            competitorRepository.save(
-                    Competitor.of("John", "Doe",
-                            50000, "USA", Discipline.FOOTBALL));
-            competitorRepository.save(
-                    Competitor.of("Jane", "Smith",
-                            60000, "Canada", Discipline.BASKETBALL));
-            competitorRepository.save(
-                    Competitor.of("Alice", "Johnson",
-                            55000, "UK", Discipline.VOLLEYBALL));
+
+            for (int i = 0; i < seedCount; i++) {
+                Faker faker = new Faker();
+                String firstName = faker.name().firstName();
+                String lastName = faker.name().lastName();
+                int score = faker.number().numberBetween(10000, 100000);
+                String country = faker.address().country();
+                Discipline discipline = Discipline.values()[faker.number().numberBetween(0, Discipline.values().length)];
+
+                competitorRepository.save(
+                        Competitor.of(firstName, lastName, score, country, discipline));
+            }
             log.info("Seeded initial competitors data complete!");
         }
     }
