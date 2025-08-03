@@ -30,16 +30,16 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="c : ${competitors}">
-                <td th:text="${c.name}">Name</td>
-                <td th:text="${c.surname}">Surname</td>
-                <td th:text="${c.country}">Country</td>
-                <td th:text="${c.discipline}">Discipline</td>
+            <tr th:each="competitor : ${competitors}">
+                <td th:text="${competitor.name}">Name</td>
+                <td th:text="${competitor.surname}">Surname</td>
+                <td th:text="${competitor.country}">Country</td>
+                <td th:text="${competitor.discipline}">Discipline</td>
                 <td>
-                    <a th:href="@{/competitors/edit/{id}(id=${c.id})}" class="btn btn-sm btn-primary">Edit</a>
-                    <a th:href="@{/competitors/delete/{id}(id=${c.id})}"
-                       class="btn btn-sm btn-danger"
-                       onclick="return confirm('Are you sure you want to delete this competitor?');">Delete</a>
+                    <button th:onclick="'deleteCompetitor(' + ${competitor.id} + ')'" class="btn btn-sm btn-danger"
+                            type="button">
+                        Delete
+                    </button>
                 </td>
             </tr>
             </tbody>
@@ -48,4 +48,23 @@
 </div>
 
 </body>
+<script>
+    function deleteCompetitor(id) {
+        if (confirm("Are you sure you want to delete this item?")) {
+            fetch('/competitors/' + id, {
+                method: 'DELETE'
+            })
+                .then(response => {
+                    if (response.ok) {
+                        console.log('Competitor deleted successfully!');
+                        window.location.reload();
+                    } else {
+                        console.error('Error deleting Competitor.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Network error:', error);
+                });
+        }
+    }</script>
 </html>
