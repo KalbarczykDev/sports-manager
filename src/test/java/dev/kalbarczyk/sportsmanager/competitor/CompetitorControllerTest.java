@@ -28,14 +28,6 @@ public class CompetitorControllerTest {
 
     private final List<Long> insertedIds = new ArrayList<>();
 
-    /**
-     * This method runs before each test.
-     * It:
-     * - Initializes the WebTestClient with the current server port
-     * - Creates and inserts 3 competitors using POST requests
-     * - Stores their generated IDs
-     * - Asserts that exactly 3 competitors exist in the database
-     */
     @BeforeEach
     void setUp() {
         this.webTestClient = WebTestClient.bindToServer().baseUrl("http://localhost:" + port).build();
@@ -64,10 +56,6 @@ public class CompetitorControllerTest {
         }
     }
 
-    /**
-     * Test: GET /competitors/{id}
-     * Description: Retrieves a specific competitor by ID and verifies their details.
-     */
     @Test
     void shouldReturnCompetitorById() {
         val id = insertedIds.getFirst();
@@ -83,10 +71,6 @@ public class CompetitorControllerTest {
                 });
     }
 
-    /**
-     * Test: POST /competitors
-     * Description: Creates a new competitor and verifies the response contains a valid ID and correct data.
-     */
     @Test
     void shouldCreateCompetitor() {
         val newCompetitor = Competitor.of("Bob", "Taylor", 70000, "Australia", Discipline.BASKETBALL);
@@ -99,13 +83,14 @@ public class CompetitorControllerTest {
                 .value(c -> {
                     Assertions.assertThat(c.getId()).isNotNull();
                     Assertions.assertThat(c.getName()).isEqualTo("Bob");
+                    Assertions.assertThat(c.getSurname()).isEqualTo("Taylor");
+                    Assertions.assertThat(c.getSalary()).isEqualTo(70000);
+                    Assertions.assertThat(c.getCountry()).isEqualTo("Australia");
+                    Assertions.assertThat(c.getDiscipline()).isEqualTo(Discipline.BASKETBALL);
                 });
     }
 
-    /**
-     * Test: DELETE /competitors/{id}
-     * Description: Deletes a competitor and verifies they no longer exist.
-     */
+
     @Test
     void shouldDeleteCompetitor() {
         val id = insertedIds.getFirst();
@@ -119,10 +104,7 @@ public class CompetitorControllerTest {
                 .expectStatus().isNotFound();
     }
 
-    /**
-     * Test: PUT /competitors/{id}
-     * Description: Updates a competitor's data and verifies the updated values.
-     */
+
     @Test
     void shouldUpdateCompetitor() {
         val id = insertedIds.getFirst();
