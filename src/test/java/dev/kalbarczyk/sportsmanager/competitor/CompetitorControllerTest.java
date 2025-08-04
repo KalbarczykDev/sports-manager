@@ -43,10 +43,10 @@ public class CompetitorControllerTest {
 
         for (Competitor c : competitors) {
             val id = Objects.requireNonNull(webTestClient.post()
-                            .uri("/competitors")
+                            .uri("/competitors/api")
                             .bodyValue(c)
                             .exchange()
-                            .expectStatus().isOk()
+                            .expectStatus().isCreated()
                             .expectBody(Competitor.class)
                             .returnResult()
                             .getResponseBody())
@@ -75,10 +75,10 @@ public class CompetitorControllerTest {
     void shouldCreateCompetitor() {
         val newCompetitor = Competitor.of("Bob", "Taylor", 70000, "Australia", Discipline.BASKETBALL);
 
-        webTestClient.post().uri("/competitors")
+        webTestClient.post().uri("/competitors/api")
                 .bodyValue(newCompetitor)
                 .exchange()
-                .expectStatus().isOk()
+                .expectStatus().isCreated()
                 .expectBody(Competitor.class)
                 .value(c -> {
                     Assertions.assertThat(c.getId()).isNotNull();

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Competitor</title>
+    <link rel="stylesheet" th:href="@{/css/competitors/index.css}">
+    <link rel="stylesheet" th:href="@{/css/competitors/new.css}">
+</head>
+<body>
+
+<div class="container form-container">
+    <div class="header-section">
+        <h1>Add New Competitor</h1>
+        <a th:href="@{/competitors}" class="button button-secondary">Back to Competitors</a>
+    </div>
+
+    <form th:action="@{/competitors}" th:object="${competitor}" method="post">
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" th:field="*{name}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="surname">Surname:</label>
+            <input type="text" id="surname" th:field="*{surname}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="country">Country:</label>
+            <input type="text" id="country" th:field="*{country}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="discipline">Discipline:</label>
+            <select id="discipline" th:field="*{discipline}" required>
+                <option value="">-- Select Discipline --</option>
+                <option th:each="disciplineEnum : ${T(dev.kalbarczyk.sportsmanager.common.enums.Discipline).values()}"
+                        th:value="${disciplineEnum.name()}"
+                        th:text="${disciplineEnum.label}">Discipline Name
+                </option>
+            </select>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="button button-success">Add Competitor</button>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

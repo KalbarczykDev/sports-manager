@@ -5,6 +5,7 @@ import dev.kalbarczyk.sportsmanager.competitor.service.CompetitorService;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +31,13 @@ public class CompetitorController {
         return "competitor/index";
     }
 
+    @GetMapping("/new")
+    public String showNew(final Model model) {
+        log.info("Received request to show add competitor form");
+        model.addAttribute("competitor", new Competitor());
+        return "competitor/new";
+    }
+
 
     @GetMapping("/{id}")
     @ResponseBody
@@ -39,11 +47,20 @@ public class CompetitorController {
     }
 
     @PostMapping
-    @ResponseBody
-    public Competitor createCompetitor(@RequestBody Competitor competitor) {
+    public String createCompetitorFromForm(final @ModelAttribute Competitor competitor) {
         log.info("Received request to create competitor: {}", competitor);
+        competitorService.save(competitor);
+        return "redirect:/competitors";
+    }
+
+    @PostMapping("/api")
+    @ResponseBody
+    @ResponseStatus(HttpStatus.CREATED)
+    public Competitor createCompetitorApi(@RequestBody Competitor competitor) {
+        log.info("Received request to create competitor via API: {}", competitor);
         return competitorService.save(competitor);
     }
+
 
     @DeleteMapping("/{id}")
     @ResponseBody
