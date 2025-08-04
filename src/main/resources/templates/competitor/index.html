@@ -2,25 +2,25 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Competitors</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/competitors.css">
 </head>
-<body class="bg-light">
+<body>
 
-<div class="container my-5">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="h3">Competitors</h1>
-        <a th:href="@{/}" class="btn btn-secondary">Home</a>
+<div class="container">
+    <div class="header-section">
+        <h1>Competitors</h1>
+        <a th:href="@{/}" class="button button-secondary">Home</a>
     </div>
 
-    <div class="mb-3">
-        <a th:href="@{/competitors/new}" class="btn btn-success">Add Competitor</a>
+    <div style="margin-bottom: 1rem;">
+        <a th:href="@{/competitors/new}" class="button button-success">Add Competitor</a>
     </div>
 
-
-    <div class="table-responsive">
-        <table class="table table-striped table-bordered align-middle text-center">
-            <thead class="table-dark">
+    <div class="table-wrapper">
+        <table>
+            <thead>
             <tr>
                 <th>Name</th>
                 <th>Surname</th>
@@ -30,41 +30,36 @@
             </tr>
             </thead>
             <tbody>
+
             <tr th:each="competitor : ${competitors}">
                 <td th:text="${competitor.name}">Name</td>
                 <td th:text="${competitor.surname}">Surname</td>
                 <td th:text="${competitor.country}">Country</td>
                 <td th:text="${competitor.discipline}">Discipline</td>
                 <td>
-                    <button th:onclick="'deleteCompetitor(' + ${competitor.id} + ')'" class="btn btn-sm btn-danger"
+                    <button th:onclick="'showDeleteModal(' + ${competitor.id} + ')'" class="button button-sm button-danger"
                             type="button">
                         Delete
                     </button>
                 </td>
             </tr>
+
+            <tr th:if="${#lists.isEmpty(competitors)}">
+                <td colspan="5">No competitors found.</td>
+            </tr>
             </tbody>
         </table>
     </div>
 </div>
+<div id="deleteModal" class="modal-overlay">
+    <div class="modal-content">
+        <p>Are you sure you want to delete this competitor?</p>
+        <div class="modal-buttons">
+            <button id="confirmDeleteBtn" class="button button-danger">Delete</button>
+            <button id="cancelDeleteBtn" class="button button-secondary">Cancel</button>
+        </div>
+    </div>
+</div>
+  <script src="/js/competitors.js"></script>
 
-</body>
-<script>
-    function deleteCompetitor(id) {
-        if (confirm("Are you sure you want to delete this competitor?")) {
-            fetch('/competitors/' + id, {
-                method: 'DELETE'
-            })
-                .then(response => {
-                    if (response.ok) {
-                        console.log('Competitor deleted successfully!');
-                        window.location.reload();
-                    } else {
-                        console.error('Error deleting Competitor.');
-                    }
-                })
-                .catch(error => {
-                    console.error('Network error:', error);
-                });
-        }
-    }</script>
 </html>

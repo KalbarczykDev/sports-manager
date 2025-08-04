@@ -2,13 +2,37 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sports Manager</title>
+    <link rel="stylesheet" href="/css/global.css">
+    <script src="/js/index.js"></script>
 </head>
 <body>
 
-<h1>Sports Manager</h1>
-<a th:href="@{/competitors}">Competitors</a>
+<div class="container">
+    <h1>
+        Sports Manager
+    </h1>
 
+    <p>
+        Your ultimate platform to manage competitors, events, and teams with ease.
+    </p>
+
+    <div class="button-group">
+        <a th:href="@{/competitors}" class="button button-primary">
+            View Competitors
+        </a>
+
+        <a th:href="@{#}" class="button button-secondary">
+            Manage Coaches (Coming Soon!)
+        </a>
+
+        <a th:href="@{#}" class="button button-secondary">
+            Manage Events (Coming Soon!)
+        </a>
+
+    </div>
+</div>
 
 </body>
 </html>
