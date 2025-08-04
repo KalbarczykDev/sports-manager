@@ -23,7 +23,7 @@ public class CompetitorController {
     }
 
     @GetMapping
-    public String index(Model model) {
+    public String index(final Model model) {
         log.info("Received request to get all competitors");
         val competitors = competitorService.findAll();
         model.addAttribute("competitors", competitors);
