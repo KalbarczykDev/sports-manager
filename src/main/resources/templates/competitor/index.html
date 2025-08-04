@@ -37,7 +37,8 @@
                 <td th:text="${competitor.country}">Country</td>
                 <td th:text="${competitor.discipline}">Discipline</td>
                 <td>
-                    <button th:onclick="'showDeleteModal(' + ${competitor.id} + ')'" class="button button-sm button-danger"
+                    <button th:onclick="'showDeleteModal(' + ${competitor.id} + ')'"
+                            class="button button-sm button-danger"
                             type="button">
                         Delete
                     </button>
@@ -60,6 +61,6 @@
         </div>
     </div>
 </div>
-  <script src="/js/competitors.js"></script>
-
+<script src="/js/competitors.js"></script>
+</body>
 </html>
