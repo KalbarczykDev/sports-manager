@@ -33,6 +33,15 @@ public class CompetitorValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "surname", "surname.empty", "Surname is required.");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "country", "country.empty", "Country is required.");
 
+        if (competitor.getName().length() < 2 || competitor.getName().length() > 50) {
+            errors.rejectValue("name", "name.size", "Name must be between 2 and 50 characters.");
+        }
+
+        if (competitor.getSurname().length() < 2 || competitor.getSurname().length() > 50) {
+            errors.rejectValue("surname", "surname.size", "Surname must be between 2 and 50 characters.");
+        }
+
+
         if (!countryService.countryNamesContain(competitor.getCountry())) {
             log.warn("Validation failed for country: '{}'", competitor.getCountry());
             errors.rejectValue("country", "country.invalid", "The selected country is not valid.");

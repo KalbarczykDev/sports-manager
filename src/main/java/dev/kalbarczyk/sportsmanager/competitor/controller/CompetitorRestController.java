@@ -44,6 +44,40 @@ public class CompetitorRestController {
     public ResponseEntity<Competitor> createCompetitor(final @RequestBody Competitor competitor, final BindingResult bindingResult) {
         log.info("Received request to create competitor via API: {}", competitor);
 
+        validateCompetitor(competitor, bindingResult);
+
+        Competitor savedCompetitor = competitorService.save(competitor);
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(savedCompetitor.getId())
+                .toUri();
+
+        return ResponseEntity.created(location).body(savedCompetitor);
+    }
+
+    @PutMapping("/{id}")
+    @ResponseBody
+    public Competitor updateCompetitor(final @PathVariable Long id, final @RequestBody Competitor competitor,
+                                       final BindingResult bindingResult) {
+        log.info("Received request to update competitor via API with id: {}", id);
+
+        validateCompetitor(competitor, bindingResult);
+
+        return competitorService.update(id, competitor);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseBody
+    public ResponseEntity<Void> deleteCompetitor(final @PathVariable Long id) {
+        log.info("Received request to delete competitor via API with id: {}", id);
+        competitorService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
+
+    private void validateCompetitor(final Competitor competitor, final BindingResult bindingResult) {
+
         competitorValidator.validate(competitor, bindingResult);
 
         if (bindingResult.hasErrors()) {
@@ -56,31 +90,6 @@ public class CompetitorRestController {
             throw new CompetitorException.Invalid(errors);
         }
 
-        Competitor savedCompetitor = competitorService.save(competitor);
-
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(savedCompetitor.getId())
-                .toUri();
-
-        return ResponseEntity.created(location).body(savedCompetitor);
-    }
-
-    @PutMapping("/{id}")
-    @ResponseBody
-    public Competitor updateCompetitor(final @PathVariable Long id, final @RequestBody Competitor competitor
-    ) {
-        log.info("Received request to update competitor via API with id: {}", id);
-        return competitorService.update(id, competitor);
-    }
-
-    @DeleteMapping("/{id}")
-    @ResponseBody
-    public ResponseEntity<Void> deleteCompetitor(final @PathVariable Long id) {
-        log.info("Received request to delete competitor via API with id: {}", id);
-        competitorService.delete(id);
-        return ResponseEntity.noContent().build();
     }
 
 
