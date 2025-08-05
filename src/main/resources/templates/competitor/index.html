@@ -22,10 +22,38 @@
         <table>
             <thead>
             <tr>
-                <th>Name</th>
-                <th>Surname</th>
-                <th>Country</th>
-                <th>Discipline</th>
+                <th>
+                    <a th:href="@{/competitors(sortBy='name', sortDir=${sortBy == 'name' and sortDir == 'asc' ? 'desc' : 'asc'})}">
+                        Name
+                        <span class="sort-icon" th:if="${sortBy == 'name'}"
+                              th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span>
+                    </a>
+                </th>
+
+                <th>
+                    <a th:href="@{/competitors(sortBy='surname', sortDir=${sortBy == 'surname' and sortDir == 'asc' ? 'desc' : 'asc'})}">
+                        Surname
+                        <span class="sort-icon" th:if="${sortBy == 'surname'}"
+                              th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span>
+                    </a>
+                </th>
+
+                <th>
+                    <a th:href="@{/competitors(sortBy='country', sortDir=${sortBy == 'country' and sortDir == 'asc' ? 'desc' : 'asc'})}">
+                        Country
+                        <span class="sort-icon" th:if="${sortBy == 'country'}"
+                              th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span>
+                    </a>
+                </th>
+
+                <th>
+                    <a th:href="@{/competitors(sortBy='discipline', sortDir=${sortBy == 'discipline' and sortDir == 'asc' ? 'desc' : 'asc'})}">
+                        Discipline
+                        <span class="sort-icon" th:if="${sortBy == 'discipline'}"
+                              th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span>
+                    </a>
+                </th>
+
                 <th>Actions</th>
             </tr>
             </thead>

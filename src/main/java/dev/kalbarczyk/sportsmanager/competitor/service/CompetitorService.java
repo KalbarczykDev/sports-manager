@@ -5,7 +5,7 @@ import dev.kalbarczyk.sportsmanager.competitor.model.Competitor;
 import java.util.List;
 
 public interface CompetitorService {
-    List<Competitor> findAll();
+    List<Competitor> findAll(final String sortBy, final String sortDir);
 
     Competitor findById(final Long id);
 

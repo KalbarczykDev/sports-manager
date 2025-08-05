@@ -19,4 +19,14 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(apiError);
 
     }
+
+    @ExceptionHandler(CrudException.InvalidSortingArgument.class)
+    public ResponseEntity<ApiError> handleInvalidSortingArgumentException(final CrudException.InvalidSortingArgument ex) {
+        val apiError = ApiError.forGeneralError(
+                HttpStatus.BAD_REQUEST.value(),
+                HttpStatus.BAD_REQUEST.getReasonPhrase(),
+                ex.getMessage()
+        );
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiError);
+    }
 }

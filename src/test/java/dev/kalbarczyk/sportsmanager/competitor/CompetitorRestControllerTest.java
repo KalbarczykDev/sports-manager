@@ -32,13 +32,13 @@ public class CompetitorRestControllerTest {
     void setUp() {
         competitorRepository.deleteAllInBatch();
 
-        val TEST_COMPETITORS = List.of(
-                Competitor.of("John", "Doe", 50000, "Slovenia", Discipline.FOOTBALL),
+        val testCompetitors = List.of(
+                Competitor.of("Alice", "Johnson", 55000, "Turkmenistan", Discipline.VOLLEYBALL),
                 Competitor.of("Jane", "Smith", 60000, "Singapore", Discipline.BASKETBALL),
-                Competitor.of("Alice", "Johnson", 55000, "Turkmenistan", Discipline.VOLLEYBALL)
+                Competitor.of("John", "Doe", 50000, "Slovenia", Discipline.FOOTBALL)
         );
 
-        competitorRepository.saveAllAndFlush(TEST_COMPETITORS);
+        competitorRepository.saveAllAndFlush(testCompetitors);
     }
 
     @Test
@@ -48,6 +48,70 @@ public class CompetitorRestControllerTest {
                 .expectStatus().isOk()
                 .expectBodyList(Competitor.class)
                 .value(competitors -> Assertions.assertThat(competitors).hasSize(3));
+    }
+
+    @Test
+    void shouldGetAllCompetitorsSortedByNameAscending() {
+        webTestClient.get().uri(uriBuilder -> uriBuilder
+                        .path("/api/competitors")
+                        .queryParam("sortBy", "name")
+                        .queryParam("sortDir", "asc")
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(Competitor.class)
+                .value(competitors -> {
+                    Assertions.assertThat(competitors).hasSize(3);
+                    Assertions.assertThat(competitors.get(0).getName()).isEqualTo("Alice");
+                    Assertions.assertThat(competitors.get(1).getName()).isEqualTo("Jane");
+                    Assertions.assertThat(competitors.get(2).getName()).isEqualTo("John");
+                });
+    }
+
+    @Test
+    void shouldGetAllCompetitorsSortedByNameDescending() {
+        webTestClient.get().uri(uriBuilder -> uriBuilder
+                        .path("/api/competitors")
+                        .queryParam("sortBy", "name")
+                        .queryParam("sortDir", "desc")
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(Competitor.class)
+                .value(competitors -> {
+                    Assertions.assertThat(competitors).hasSize(3);
+                    Assertions.assertThat(competitors.get(0).getName()).isEqualTo("John");
+                    Assertions.assertThat(competitors.get(1).getName()).isEqualTo("Jane");
+                    Assertions.assertThat(competitors.get(2).getName()).isEqualTo("Alice");
+                });
+    }
+
+    @Test
+    void shouldGetAllCompetitorsSortedBySalaryAscending() {
+        webTestClient.get().uri(uriBuilder -> uriBuilder
+                        .path("/api/competitors")
+                        .queryParam("sortBy", "salary")
+                        .queryParam("sortDir", "asc")
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(Competitor.class)
+                .value(competitors -> {
+                    Assertions.assertThat(competitors).hasSize(3);
+                    Assertions.assertThat(competitors.get(0).getSalary()).isEqualTo(50000); // John
+                    Assertions.assertThat(competitors.get(1).getSalary()).isEqualTo(55000); // Alice
+                    Assertions.assertThat(competitors.get(2).getSalary()).isEqualTo(60000); // Jane
+                });
+    }
+
+    @Test
+    void shouldReturnBadRequestForInvalidSortField() {
+        webTestClient.get().uri(uriBuilder -> uriBuilder
+                        .path("/api/competitors")
+                        .queryParam("sortBy", "invalidField")
+                        .build())
+                .exchange()
+                .expectStatus().isBadRequest();
     }
 
 

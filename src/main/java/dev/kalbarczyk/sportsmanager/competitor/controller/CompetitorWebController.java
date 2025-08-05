@@ -10,10 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RequestMapping("/competitors")
@@ -35,10 +32,18 @@ public class CompetitorWebController {
     }
 
     @GetMapping
-    public String index(final Model model) {
-        log.info("Received request to get all competitors");
-        val competitors = competitorService.findAll();
+    public String index(
+            final Model model,
+            final @RequestParam(name = "sortBy", defaultValue = "id") String sortBy,
+            final @RequestParam(name = "sortDir", defaultValue = "asc") String sortDir
+    ) {
+        log.info("Received request to get all competitors with sorting: sortBy={}, sortDir={}", sortBy, sortDir);
+
+        val competitors = competitorService.findAll(sortBy, sortDir);
         model.addAttribute("competitors", competitors);
+        model.addAttribute("sortBy", sortBy);
+        model.addAttribute("sortDir", sortDir);
+
         return "competitor/index";
     }
 

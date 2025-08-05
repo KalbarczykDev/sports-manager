@@ -4,7 +4,10 @@ import dev.kalbarczyk.sportsmanager.common.exception.CrudException;
 import dev.kalbarczyk.sportsmanager.competitor.model.Competitor;
 import dev.kalbarczyk.sportsmanager.competitor.repository.CompetitorRepository;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,9 +24,14 @@ public class DefaultCompetitorService implements CompetitorService {
     }
 
     @Override
-    public List<Competitor> findAll() {
+    public List<Competitor> findAll(final String sortBy, final String sortDir) {
         log.info("Fetching all competitors");
-        return competitorRepository.findAll();
+        try {
+            val sort = Sort.by(Sort.Direction.fromString(sortDir), sortBy);
+            return competitorRepository.findAll(sort);
+        } catch (PropertyReferenceException e) {
+            throw new CrudException.InvalidSortingArgument(e.getMessage());
+        }
     }
 
     @Override

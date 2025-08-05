@@ -29,9 +29,14 @@ public class CompetitorRestController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Competitor>> getAllCompetitors() {
-        log.info("Received request to get all competitors via API");
-        return ResponseEntity.ok(competitorService.findAll());
+    public ResponseEntity<List<Competitor>> getAllCompetitors(
+            final @RequestParam(name = "sortBy", defaultValue = "id") String sortBy,
+            final @RequestParam(name = "sortDir", defaultValue = "asc") String sortDir
+    ) {
+        log.info("Received request to get all competitors via API with sorting: sortBy={}, sortDir={}", sortBy, sortDir);
+        val competitors = competitorService.findAll(sortBy, sortDir);
+
+        return ResponseEntity.ok(competitors);
     }
 
     @GetMapping("/{id}")
