@@ -37,6 +37,17 @@
     margin-top: 1.5rem;
 }
 
+.error-message {
+    color: red;
+    font-size: 0.8em;
+    margin-top: 5px;
+}
+
+.form-group.has-error input,
+.form-group.has-error select {
+    border-color: red;
+}
+
 @media (min-width: 768px) {
     .container.form-container {
         max-width: 40rem;
