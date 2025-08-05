@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CompetitorRepository extends JpaRepository<Competitor, Long> {
-    Competitor findByName(String name);
+    Competitor findByName(final String name);
 }

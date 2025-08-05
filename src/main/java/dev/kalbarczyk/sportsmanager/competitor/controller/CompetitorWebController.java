@@ -27,7 +27,7 @@ public class CompetitorWebController {
     @Autowired
     public CompetitorWebController(
             final CompetitorService competitorService,
-            CompetitorValidator competitorValidator,
+            final CompetitorValidator competitorValidator,
             final CountryService countryService) {
         this.competitorService = competitorService;
         this.competitorValidator = competitorValidator;

@@ -5,6 +5,7 @@ import dev.kalbarczyk.sportsmanager.competitor.model.Competitor;
 import dev.kalbarczyk.sportsmanager.competitor.service.CompetitorService;
 import dev.kalbarczyk.sportsmanager.competitor.validation.CompetitorValidator;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +13,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
 import java.util.List;
 
 @Slf4j
@@ -46,8 +46,8 @@ public class CompetitorRestController {
 
         validateCompetitor(competitor, bindingResult);
 
-        Competitor savedCompetitor = competitorService.save(competitor);
-        URI location = ServletUriComponentsBuilder
+        val savedCompetitor = competitorService.save(competitor);
+        val location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(savedCompetitor.getId())
@@ -83,7 +83,7 @@ public class CompetitorRestController {
         if (bindingResult.hasErrors()) {
             log.warn("Validation errors found: {}", bindingResult.getAllErrors());
 
-            var errors = bindingResult.getAllErrors().stream()
+            val errors = bindingResult.getAllErrors().stream()
                     .map(DefaultMessageSourceResolvable::getDefaultMessage)
                     .toList();
 

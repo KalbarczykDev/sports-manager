@@ -5,7 +5,7 @@ import lombok.Getter;
 import java.util.List;
 
 public sealed class CompetitorException extends RuntimeException permits CompetitorException.Invalid {
-    public CompetitorException(String message) {
+    public CompetitorException(final String message) {
         super(message);
     }
 
@@ -13,7 +13,7 @@ public sealed class CompetitorException extends RuntimeException permits Competi
     public static final class Invalid extends CompetitorException {
         private final List<String> messages;
 
-        public Invalid(List<String> messages) {
+        public Invalid(final List<String> messages) {
             super(messages.getFirst());
             this.messages = messages;
         }

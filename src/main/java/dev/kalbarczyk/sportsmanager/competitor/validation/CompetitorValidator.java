@@ -4,6 +4,7 @@ package dev.kalbarczyk.sportsmanager.competitor.validation;
 import dev.kalbarczyk.sportsmanager.common.service.DefaultCountryService;
 import dev.kalbarczyk.sportsmanager.competitor.model.Competitor;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -21,13 +22,13 @@ public class CompetitorValidator implements Validator {
     }
 
     @Override
-    public boolean supports(@NonNull Class<?> aClass) {
+    public boolean supports(final @NonNull Class<?> aClass) {
         return Competitor.class.equals(aClass);
     }
 
     @Override
     public void validate(@NonNull Object o, @NonNull Errors errors) {
-        Competitor competitor = (Competitor) o;
+        val competitor = (Competitor) o;
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "name.empty", "Name is required.");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "surname", "surname.empty", "Surname is required.");
@@ -40,7 +41,6 @@ public class CompetitorValidator implements Validator {
         if (competitor.getSurname().length() < 2 || competitor.getSurname().length() > 50) {
             errors.rejectValue("surname", "surname.size", "Surname must be between 2 and 50 characters.");
         }
-
 
         if (!countryService.countryNamesContain(competitor.getCountry())) {
             log.warn("Validation failed for country: '{}'", competitor.getCountry());

@@ -1,5 +1,6 @@
 package dev.kalbarczyk.sportsmanager.common.service;
 
+import lombok.val;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +20,7 @@ public class DefaultCountryService implements CountryService {
 
 
     public DefaultCountryService() {
-        Set<String> countryCodes = Arrays.stream(Locale.getISOCountries()).collect(Collectors.toSet());
+        val countryCodes = Arrays.stream(Locale.getISOCountries()).collect(Collectors.toSet());
 
         this.validCountryNames = countryCodes.stream()
                 .map(code -> new Locale("", code).getDisplayCountry(Locale.ENGLISH))
@@ -32,7 +33,7 @@ public class DefaultCountryService implements CountryService {
 
 
     @Override
-    public boolean countryNamesContain(String name) {
+    public boolean countryNamesContain(final String name) {
         return validCountryNames.contains(name);
     }
 
