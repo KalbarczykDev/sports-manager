@@ -46,9 +46,9 @@ public class CompetitorRestControllerTest {
 
 
         List<Competitor> competitors = List.of(
-                Competitor.of("John", "Doe", 50000, "USA", Discipline.FOOTBALL),
-                Competitor.of("Jane", "Smith", 60000, "Canada", Discipline.BASKETBALL),
-                Competitor.of("Alice", "Johnson", 55000, "UK", Discipline.VOLLEYBALL)
+                Competitor.of("John", "Doe", 50000, "Slovenia", Discipline.FOOTBALL),
+                Competitor.of("Jane", "Smith", 60000, "Singapore", Discipline.BASKETBALL),
+                Competitor.of("Alice", "Johnson", 55000, "Turkmenistan", Discipline.VOLLEYBALL)
         );
 
 

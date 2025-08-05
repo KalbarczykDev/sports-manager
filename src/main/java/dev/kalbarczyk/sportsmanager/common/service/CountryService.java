@@ -6,4 +6,5 @@ public interface CountryService {
     boolean countryNamesContain(String name);
 
     List<String> getCountriesForForm();
+
 }
