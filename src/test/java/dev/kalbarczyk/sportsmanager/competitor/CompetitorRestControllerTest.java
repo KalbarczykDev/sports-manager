@@ -10,78 +10,52 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
 @AutoConfigureWebTestClient
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class CompetitorRestControllerTest {
-
-    @LocalServerPort
-    private int port;
-
     @Autowired
     private CompetitorRepository competitorRepository;
 
+    @Autowired
     private WebTestClient webTestClient;
 
-    private final List<Long> insertedIds = new ArrayList<>();
 
     @BeforeEach
     void setUp() {
-        this.webTestClient = WebTestClient.bindToServer().baseUrl("http://localhost:" + port + "/api/competitors").build();
+        competitorRepository.deleteAllInBatch();
 
-        competitorRepository.deleteAll();
-        competitorRepository.flush();
-
-        insertedIds.clear();
-
-
-        List<Competitor> competitors = List.of(
+        val TEST_COMPETITORS = List.of(
                 Competitor.of("John", "Doe", 50000, "Slovenia", Discipline.FOOTBALL),
                 Competitor.of("Jane", "Smith", 60000, "Singapore", Discipline.BASKETBALL),
                 Competitor.of("Alice", "Johnson", 55000, "Turkmenistan", Discipline.VOLLEYBALL)
         );
 
-
-        for (Competitor c : competitors) {
-            val id = Objects.requireNonNull(webTestClient.post()
-                            .uri("")
-                            .bodyValue(c)
-                            .exchange()
-                            .expectStatus().isCreated()
-                            .expectBody(Competitor.class)
-                            .returnResult()
-                            .getResponseBody())
-                    .getId();
-
-            insertedIds.add(id);
-        }
-
-        webTestClient.get().uri("")
-                .exchange()
-                .expectStatus().isOk()
-                .expectBodyList(Competitor.class)
-                .value(returnedCompetitors -> {
-                    Assertions.assertThat(returnedCompetitors).hasSize(competitors.size());
-                    Assertions.assertThat(returnedCompetitors.getFirst().getId()).isEqualTo(insertedIds.getFirst());
-                    Assertions.assertThat(returnedCompetitors.getLast().getId()).isEqualTo(insertedIds.getLast());
-                });
+        competitorRepository.saveAllAndFlush(TEST_COMPETITORS);
     }
 
     @Test
-    void shouldReturnCompetitorById() {
-        val id = insertedIds.getFirst();
+    void shouldGetAllCompetitors() {
+        webTestClient.get().uri("/api/competitors")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(Competitor.class)
+                .value(competitors -> Assertions.assertThat(competitors).hasSize(3));
+    }
 
-        webTestClient.get().uri("/" + id)
+
+    @Test
+    void shouldReturnCompetitorById() {
+        val id = competitorRepository.findByName("John").getId();
+
+        webTestClient.get().uri("/api/competitors/{id}", id)
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(Competitor.class)
@@ -93,10 +67,19 @@ public class CompetitorRestControllerTest {
     }
 
     @Test
+    void shouldReturnNotFoundForNonExistentId() {
+        val nonExistentId = Long.MAX_VALUE;
+
+        webTestClient.get().uri("/api/competitors/{id}", nonExistentId)
+                .exchange()
+                .expectStatus().isNotFound();
+    }
+
+    @Test
     void shouldCreateCompetitor() {
         val newCompetitor = Competitor.of("Bob", "Taylor", 70000, "Australia", Discipline.BASKETBALL);
 
-        webTestClient.post().uri("")
+        webTestClient.post().uri("/api/competitors")
                 .bodyValue(newCompetitor)
                 .exchange()
                 .expectStatus().isCreated()
@@ -114,13 +97,14 @@ public class CompetitorRestControllerTest {
 
     @Test
     void shouldDeleteCompetitor() {
-        val id = insertedIds.getFirst();
+        val id = competitorRepository.findByName("John").getId();
 
-        webTestClient.delete().uri("/" + id)
+        webTestClient.delete().uri("/api/competitors/{id}", id)
                 .exchange()
                 .expectStatus().isNoContent();
 
-        webTestClient.get().uri("/" + id)
+
+        webTestClient.get().uri("/api/competitors/{id}", id)
                 .exchange()
                 .expectStatus().isNotFound();
     }
@@ -128,10 +112,10 @@ public class CompetitorRestControllerTest {
 
     @Test
     void shouldUpdateCompetitor() {
-        val id = insertedIds.getFirst();
-        val updated = Competitor.of("John", "Doe", 99999, "USA", Discipline.BASKETBALL);
+        val id = competitorRepository.findByName("John").getId();
+        val updated = Competitor.of("John", "Doe", 99999, "United States", Discipline.BASKETBALL);
 
-        webTestClient.put().uri("/" + id)
+        webTestClient.put().uri("/api/competitors/{id}", id)
                 .bodyValue(updated)
                 .exchange()
                 .expectStatus().isOk()
@@ -139,9 +123,21 @@ public class CompetitorRestControllerTest {
                 .value(c -> {
                     Assertions.assertThat(c.getId()).isEqualTo(id);
                     Assertions.assertThat(c.getName()).isEqualTo("John");
+                    Assertions.assertThat(c.getSurname()).isEqualTo("Doe");
                     Assertions.assertThat(c.getDiscipline()).isEqualTo(Discipline.BASKETBALL);
                     Assertions.assertThat(c.getSalary()).isEqualTo(99999);
-                    Assertions.assertThat(c.getCountry()).isEqualTo("USA");
+                    Assertions.assertThat(c.getCountry()).isEqualTo("United States");
                 });
+    }
+
+    @Test
+    void shouldNotUpdateCompetitorWithInvalidData() {
+        val id = competitorRepository.findByName("John").getId();
+        val invalidCompetitor = Competitor.of("", "Doe", 99999, "United States", Discipline.BASKETBALL);
+
+        webTestClient.put().uri("/api/competitors/{id}", id)
+                .bodyValue(invalidCompetitor)
+                .exchange()
+                .expectStatus().isBadRequest();
     }
 }
