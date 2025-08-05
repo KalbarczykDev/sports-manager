@@ -59,6 +59,13 @@
 
         </div>
 
+        <div class="form-group">
+            <label for="salary">Salary(in $):</label>
+            <input type="number" id="salary" th:field="*{salary}" required>
+            <p class="error-message" th:if="${#fields.hasErrors('salary')}" th:errors="*{salary}">Salary
+                error</p>
+        </div>
+
         <div class="form-actions">
             <button type="submit" class="button button-success">Add Competitor</button>
         </div>

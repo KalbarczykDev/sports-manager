@@ -42,6 +42,10 @@ public class CompetitorValidator implements Validator {
             errors.rejectValue("surname", "surname.size", "Surname must be between 2 and 50 characters.");
         }
 
+        if (competitor.getSalary() < 0) {
+            errors.rejectValue("salary", "salary.empty", "Salary cannot be negative.");
+        }
+
         if (!countryService.countryNamesContain(competitor.getCountry())) {
             log.warn("Validation failed for country: '{}'", competitor.getCountry());
             errors.rejectValue("country", "country.invalid", "The selected country is not valid.");

@@ -29,7 +29,7 @@ public class CompetitorSeeder implements CommandLineRunner {
                 val faker = new Faker();
                 val firstName = faker.name().firstName();
                 val lastName = faker.name().lastName();
-                val score = faker.number().numberBetween(10000, 100000);
+                val score = faker.number().numberBetween(2000, 20000);
                 val country = faker.address().country();
                 val discipline = Discipline.values()[faker.number().numberBetween(0, Discipline.values().length)];
 

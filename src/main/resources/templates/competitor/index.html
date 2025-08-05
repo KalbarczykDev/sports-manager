@@ -54,6 +54,15 @@
                     </a>
                 </th>
 
+                <th>
+                    <a th:href="@{/competitors(sortBy='salary', sortDir=${sortBy == 'salary' and sortDir == 'asc' ? 'desc' : 'asc'})}">
+                        Salary
+                        <span class="sort-icon" th:if="${sortBy == 'discipline'}"
+                              th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span>
+                    </a>
+                </th>
+
+
                 <th>Actions</th>
             </tr>
             </thead>
@@ -64,6 +73,7 @@
                 <td th:text="${competitor.surname}">Surname</td>
                 <td th:text="${competitor.country}">Country</td>
                 <td th:text="${competitor.discipline.label}">Discipline</td>
+                <td th:text="${'$' + competitor.salary}">Salary</td>
                 <td>
                     <button th:onclick="'showDeleteModal(' + ${competitor.id} + ')'"
                             class="button button-sm button-danger"
