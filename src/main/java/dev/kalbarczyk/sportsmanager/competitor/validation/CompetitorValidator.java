@@ -1,0 +1,41 @@
+package dev.kalbarczyk.sportsmanager.competitor.validation;
+
+
+import dev.kalbarczyk.sportsmanager.common.service.DefaultCountryService;
+import dev.kalbarczyk.sportsmanager.competitor.model.Competitor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.lang.NonNull;
+import org.springframework.stereotype.Component;
+import org.springframework.validation.Errors;
+import org.springframework.validation.ValidationUtils;
+import org.springframework.validation.Validator;
+
+@Component
+@Slf4j
+public class CompetitorValidator implements Validator {
+
+    private final DefaultCountryService countryService;
+
+    public CompetitorValidator(final DefaultCountryService countryService) {
+        this.countryService = countryService;
+    }
+
+    @Override
+    public boolean supports(@NonNull Class<?> aClass) {
+        return Competitor.class.equals(aClass);
+    }
+
+    @Override
+    public void validate(@NonNull Object o, @NonNull Errors errors) {
+        Competitor competitor = (Competitor) o;
+
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "name.empty", "Name is required.");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "surname", "surname.empty", "Surname is required.");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "country", "country.empty", "Country is required.");
+
+        if (!countryService.countryNamesContain(competitor.getCountry())) {
+            log.warn("Validation failed for country: '{}'", competitor.getCountry());
+            errors.rejectValue("country", "country.invalid", "The selected country is not valid.");
+        }
+    }
+}

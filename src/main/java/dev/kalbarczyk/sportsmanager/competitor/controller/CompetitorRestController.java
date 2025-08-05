@@ -1,10 +1,14 @@
 package dev.kalbarczyk.sportsmanager.competitor.controller;
 
+import dev.kalbarczyk.sportsmanager.competitor.exception.CompetitorException;
 import dev.kalbarczyk.sportsmanager.competitor.model.Competitor;
 import dev.kalbarczyk.sportsmanager.competitor.service.CompetitorService;
+import dev.kalbarczyk.sportsmanager.competitor.validation.CompetitorValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -16,10 +20,12 @@ import java.util.List;
 @RequestMapping("/api/competitors")
 public class CompetitorRestController {
     private final CompetitorService competitorService;
+    private final CompetitorValidator competitorValidator;
 
     @Autowired
-    public CompetitorRestController(final CompetitorService competitorService) {
+    public CompetitorRestController(final CompetitorService competitorService, final CompetitorValidator competitorValidator) {
         this.competitorService = competitorService;
+        this.competitorValidator = competitorValidator;
     }
 
     @GetMapping
@@ -35,8 +41,20 @@ public class CompetitorRestController {
     }
 
     @PostMapping
-    public ResponseEntity<Competitor> createCompetitor(@RequestBody Competitor competitor) {
+    public ResponseEntity<Competitor> createCompetitor(final @RequestBody Competitor competitor, final BindingResult bindingResult) {
         log.info("Received request to create competitor via API: {}", competitor);
+
+        competitorValidator.validate(competitor, bindingResult);
+
+        if (bindingResult.hasErrors()) {
+            log.warn("Validation errors found: {}", bindingResult.getAllErrors());
+
+            var errors = bindingResult.getAllErrors().stream()
+                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                    .toList();
+
+            throw new CompetitorException.Invalid(errors);
+        }
 
         Competitor savedCompetitor = competitorService.save(competitor);
 

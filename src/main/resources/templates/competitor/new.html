@@ -28,7 +28,13 @@
 
         <div class="form-group">
             <label for="country">Country:</label>
-            <input type="text" id="country" th:field="*{country}" required>
+            <select id="country" th:field="*{country}" required>
+                <option value="">-- Select Country --</option>
+                <option th:each="countryName : ${countries}"
+                        th:value="${countryName}"
+                        th:text="${countryName}">Country Name
+                </option>
+            </select>
         </div>
 
         <div class="form-group">

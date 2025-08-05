@@ -15,6 +15,7 @@ import java.util.List;
 public class DefaultCompetitorService implements CompetitorService {
     private final CompetitorRepository competitorRepository;
 
+
     public DefaultCompetitorService(final CompetitorRepository competitorRepository) {
         this.competitorRepository = competitorRepository;
     }
@@ -38,6 +39,7 @@ public class DefaultCompetitorService implements CompetitorService {
     @Override
     public Competitor save(final Competitor competitor) {
         log.info("Saving new competitor: {} {}", competitor.getName(), competitor.getSurname());
+
         return competitorRepository.save(competitor);
     }
 
