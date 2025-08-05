@@ -23,7 +23,7 @@ import java.util.Objects;
 @ActiveProfiles("test")
 @AutoConfigureWebTestClient
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-public class CompetitorControllerTest {
+public class CompetitorRestControllerTest {
 
     @LocalServerPort
     private int port;
@@ -37,7 +37,7 @@ public class CompetitorControllerTest {
 
     @BeforeEach
     void setUp() {
-        this.webTestClient = WebTestClient.bindToServer().baseUrl("http://localhost:" + port).build();
+        this.webTestClient = WebTestClient.bindToServer().baseUrl("http://localhost:" + port + "/api/competitors").build();
 
         competitorRepository.deleteAll();
         competitorRepository.flush();
@@ -54,7 +54,7 @@ public class CompetitorControllerTest {
 
         for (Competitor c : competitors) {
             val id = Objects.requireNonNull(webTestClient.post()
-                            .uri("/competitors/api")
+                            .uri("")
                             .bodyValue(c)
                             .exchange()
                             .expectStatus().isCreated()
@@ -66,7 +66,7 @@ public class CompetitorControllerTest {
             insertedIds.add(id);
         }
 
-        webTestClient.get().uri("/competitors/api")
+        webTestClient.get().uri("")
                 .exchange()
                 .expectStatus().isOk()
                 .expectBodyList(Competitor.class)
@@ -81,7 +81,7 @@ public class CompetitorControllerTest {
     void shouldReturnCompetitorById() {
         val id = insertedIds.getFirst();
 
-        webTestClient.get().uri("/competitors/" + id)
+        webTestClient.get().uri("/" + id)
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(Competitor.class)
@@ -96,7 +96,7 @@ public class CompetitorControllerTest {
     void shouldCreateCompetitor() {
         val newCompetitor = Competitor.of("Bob", "Taylor", 70000, "Australia", Discipline.BASKETBALL);
 
-        webTestClient.post().uri("/competitors/api")
+        webTestClient.post().uri("")
                 .bodyValue(newCompetitor)
                 .exchange()
                 .expectStatus().isCreated()
@@ -116,11 +116,11 @@ public class CompetitorControllerTest {
     void shouldDeleteCompetitor() {
         val id = insertedIds.getFirst();
 
-        webTestClient.delete().uri("/competitors/" + id)
+        webTestClient.delete().uri("/" + id)
                 .exchange()
                 .expectStatus().isNoContent();
 
-        webTestClient.get().uri("/competitors/" + id)
+        webTestClient.get().uri("/" + id)
                 .exchange()
                 .expectStatus().isNotFound();
     }
@@ -131,7 +131,7 @@ public class CompetitorControllerTest {
         val id = insertedIds.getFirst();
         val updated = Competitor.of("John", "Doe", 99999, "USA", Discipline.BASKETBALL);
 
-        webTestClient.put().uri("/competitors/" + id)
+        webTestClient.put().uri("/" + id)
                 .bodyValue(updated)
                 .exchange()
                 .expectStatus().isOk()
