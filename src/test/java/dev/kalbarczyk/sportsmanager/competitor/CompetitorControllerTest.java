@@ -2,14 +2,17 @@ package dev.kalbarczyk.sportsmanager.competitor;
 
 import dev.kalbarczyk.sportsmanager.common.enums.Discipline;
 import dev.kalbarczyk.sportsmanager.competitor.model.Competitor;
+import dev.kalbarczyk.sportsmanager.competitor.repository.CompetitorRepository;
 import lombok.val;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import java.util.ArrayList;
@@ -17,12 +20,16 @@ import java.util.List;
 import java.util.Objects;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@ActiveProfiles("test")
 @AutoConfigureWebTestClient
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class CompetitorControllerTest {
 
     @LocalServerPort
     private int port;
+
+    @Autowired
+    private CompetitorRepository competitorRepository;
 
     private WebTestClient webTestClient;
 
@@ -32,7 +39,11 @@ public class CompetitorControllerTest {
     void setUp() {
         this.webTestClient = WebTestClient.bindToServer().baseUrl("http://localhost:" + port).build();
 
+        competitorRepository.deleteAll();
+        competitorRepository.flush();
+
         insertedIds.clear();
+
 
         List<Competitor> competitors = List.of(
                 Competitor.of("John", "Doe", 50000, "USA", Discipline.FOOTBALL),
@@ -54,6 +65,16 @@ public class CompetitorControllerTest {
 
             insertedIds.add(id);
         }
+
+        webTestClient.get().uri("/competitors/api")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(Competitor.class)
+                .value(returnedCompetitors -> {
+                    Assertions.assertThat(returnedCompetitors).hasSize(competitors.size());
+                    Assertions.assertThat(returnedCompetitors.getFirst().getId()).isEqualTo(insertedIds.getFirst());
+                    Assertions.assertThat(returnedCompetitors.getLast().getId()).isEqualTo(insertedIds.getLast());
+                });
     }
 
     @Test

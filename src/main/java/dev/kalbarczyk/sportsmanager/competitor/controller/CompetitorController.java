@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Slf4j
 @RequestMapping("/competitors")
 @Controller
@@ -31,11 +33,26 @@ public class CompetitorController {
         return "competitor/index";
     }
 
+    @GetMapping("/api")
+    @ResponseBody
+    public ResponseEntity<List<Competitor>> getAll() {
+        log.info("Received request to get all competitors via API");
+        return ResponseEntity.ok(competitorService.findAll());
+    }
+
     @GetMapping("/new")
     public String showNew(final Model model) {
         log.info("Received request to show add competitor form");
         model.addAttribute("competitor", new Competitor());
         return "competitor/new";
+    }
+
+    @PostMapping("/api")
+    @ResponseBody
+    @ResponseStatus(HttpStatus.CREATED)
+    public Competitor createCompetitorApi(@RequestBody Competitor competitor) {
+        log.info("Received request to create competitor via API: {}", competitor);
+        return competitorService.save(competitor);
     }
 
 
@@ -51,14 +68,6 @@ public class CompetitorController {
         log.info("Received request to create competitor: {}", competitor);
         competitorService.save(competitor);
         return "redirect:/competitors";
-    }
-
-    @PostMapping("/api")
-    @ResponseBody
-    @ResponseStatus(HttpStatus.CREATED)
-    public Competitor createCompetitorApi(@RequestBody Competitor competitor) {
-        log.info("Received request to create competitor via API: {}", competitor);
-        return competitorService.save(competitor);
     }
 
 
