@@ -1,6 +1,12 @@
 spring:
   application:
     name: sportsmanager
+  datasource:
+    url: jdbc:mysql://localhost:3306/sports_manager?createDatabaseIfNotExist=True
+    username: root
+    password: learnSpring
+
+
 
 
 sportsmanager:

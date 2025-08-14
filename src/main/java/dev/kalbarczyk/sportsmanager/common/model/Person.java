@@ -12,15 +12,16 @@ import lombok.*;
 @MappedSuperclass
 public abstract class Person {
     @NonNull
-    @Column(nullable = false)
+    @Column(nullable = false, name = "name")
     private String name;
     @NonNull
-    @Column(nullable = false)
+    @Column(nullable = false, name="surname")
     private String surname;
     @Min(0)
+    @Column(name="salary")
     private double salary;
     @NonNull
-    @Column(nullable = false)
+    @Column(nullable = false,name="country")
     private String country;
 
 }
