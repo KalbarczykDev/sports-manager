@@ -50,28 +50,42 @@ public class CompetitorWebController {
     @GetMapping("/new")
     public String showNewForm(final Model model) {
         log.info("Received request to show add competitor form");
-        model.addAttribute("competitor", new Competitor());
-        model.addAttribute("countries", countryService.getCountriesForForm());
-        return "competitor/new";
+        prepareFormModel(model, new Competitor(), "/competitors");
+        return "competitor/form";
     }
 
-    @PostMapping
-    public String createCompetitorFromForm(final @ModelAttribute Competitor competitor, final BindingResult bindingResult, final Model model) {
-        log.info("Received request to create competitor: {}", competitor);
+    @GetMapping("/{id}/edit")
+    public String showEditForm(final @PathVariable Long id, final Model model) {
+        log.info("Received request to edit competitor with id: {}", id);
+        prepareFormModel(model, competitorService.findById(id), "/competitors/" + id);
+        return "competitor/form";
+    }
 
+    @PostMapping({"", "/{id}"})
+    public String saveCompetitor(@PathVariable(required = false) Long id,
+                                 @ModelAttribute Competitor competitor,
+                                 BindingResult bindingResult,
+                                 Model model) {
         competitorValidator.validate(competitor, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            log.warn("Validation errors found: {}", bindingResult.getAllErrors());
-            model.addAttribute("countries", countryService.getCountriesForForm());
-            model.addAttribute("competitor", competitor);
-            model.addAttribute("errors", bindingResult.getAllErrors());
-            return "competitor/new";
+            prepareFormModel(model, competitor, id == null ? "/competitors" : "/competitors/" + id);
+            return "competitor/form";
         }
 
-        competitorService.save(competitor);
+        if (id == null) {
+            competitorService.save(competitor);
+        } else {
+            competitorService.update(id, competitor);
+        }
+
         return "redirect:/competitors";
     }
 
+    private void prepareFormModel(Model model, Competitor competitor, String formAction) {
+        model.addAttribute("competitor", competitor);
+        model.addAttribute("countries", countryService.getCountriesForForm());
+        model.addAttribute("formAction", formAction);
+    }
 
 }

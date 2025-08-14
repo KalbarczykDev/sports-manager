@@ -3,19 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Competitor</title>
+    <title>Competitor Form</title>
     <link rel="stylesheet" th:href="@{/css/competitors/index.css}">
-    <link rel="stylesheet" th:href="@{/css/competitors/new.css}">
+    <link rel="stylesheet" th:href="@{/css/competitors/form.css}">
 </head>
 <body>
 
 <div class="container form-container">
     <div class="header-section">
-        <h1>Add New Competitor</h1>
+        <h1 th:text="${competitor.id} != null ? 'Edit Competitor' : 'Add New Competitor'">Add/Edit Competitor</h1>
         <a th:href="@{/competitors}" class="button button-secondary">Back to Competitors</a>
     </div>
 
-    <form th:action="@{/competitors}" th:object="${competitor}" method="post">
+    <form th:object="${competitor}" th:action="@{${formAction}}" method="post">
+        <input type="hidden" name="_method" th:value="${methodOverride}"/>
+
 
         <div th:if="${#fields.hasGlobalErrors()}" class="form-group error-message">
             <p th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
@@ -66,9 +68,10 @@
                 error</p>
         </div>
 
-        <div class="form-actions">
-            <button type="submit" class="button button-success">Add Competitor</button>
-        </div>
+        <button type="submit" class="button button-success"
+                th:text="${competitor.id} != null ? 'Update Competitor' : 'Add Competitor'">
+            Add/Update Competitor
+        </button>
     </form>
 </div>
 

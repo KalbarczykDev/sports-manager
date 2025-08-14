@@ -74,12 +74,17 @@
                 <td th:text="${competitor.country}">Country</td>
                 <td th:text="${competitor.discipline.label}">Discipline</td>
                 <td th:text="${'$' + competitor.salary}">Salary</td>
-                <td>
+                <td class="action-buttons">
                     <button th:onclick="'showDeleteModal(' + ${competitor.id} + ')'"
                             class="button button-sm button-danger"
                             type="button">
                         Delete
                     </button>
+
+                    <a th:href="@{/competitors/{id}/edit(id=${competitor.id})}"
+                       class="button button-sm button-primary">
+                        Edit
+                    </a>
                 </td>
             </tr>
 

@@ -9,11 +9,11 @@ function showDeleteModal(id) {
     deleteModal.style.display = 'flex';
 }
 
-
 function hideDeleteModal() {
     deleteModal.style.display = 'none';
     competitorToDeleteId = null;
 }
+
 
 confirmDeleteBtn.addEventListener('click', () => {
     if (competitorToDeleteId) {
