@@ -25,16 +25,18 @@ public class CompetitorSeeder implements CommandLineRunner {
         if (competitorRepository.count() == 0) {
             log.info("Seeding initial competitors data...");
 
-            for (int i = 0; i < seedCount; i++) {
-                val faker = new Faker();
-                val firstName = faker.name().firstName();
-                val lastName = faker.name().lastName();
-                val score = faker.number().numberBetween(2000, 20000);
-                val country = faker.address().country();
-                val discipline = Discipline.values()[faker.number().numberBetween(0, Discipline.values().length)];
+            val faker = new Faker();
 
-                competitorRepository.save(
-                        Competitor.of(firstName, lastName, score, country, discipline));
+            for (int i = 0; i < seedCount; i++) {
+                val competitor = Competitor.builder()
+                        .name(faker.name().firstName())
+                        .surname(faker.name().lastName())
+                        .salary(faker.number().numberBetween(2000, 20000))
+                        .country(faker.address().country())
+                        .discipline(Discipline.values()[faker.number().numberBetween(0, Discipline.values().length)])
+                        .build();
+
+                competitorRepository.save(competitor);
             }
             log.info("Seeded initial competitors data complete!");
         }

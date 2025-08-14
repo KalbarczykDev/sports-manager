@@ -4,15 +4,16 @@ import dev.kalbarczyk.sportsmanager.common.enums.Discipline;
 import dev.kalbarczyk.sportsmanager.common.model.Person;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@Builder
+@SuperBuilder
 @Entity
-@Table(name="competitors")
+@Table(name = "competitors")
 public class Competitor extends Person {
 
     @Id
@@ -22,7 +23,7 @@ public class Competitor extends Person {
 
     @NonNull
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false,name="discipline")
+    @Column(nullable = false, name = "discipline")
     private Discipline discipline;
 
     private Competitor(final @NonNull String name, final @NonNull String surname, final double salary, final @NonNull String country,
