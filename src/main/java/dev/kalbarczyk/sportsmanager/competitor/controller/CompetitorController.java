@@ -48,6 +48,16 @@ public class CompetitorController {
         return "competitor/index";
     }
 
+    @GetMapping("{id}")
+    public String show(final @PathVariable Long id, final Model model) {
+        log.info("Received request to get competitors of id: {}", id);
+
+        val competitor = competitorService.findById(id);
+        model.addAttribute("competitor", competitor);
+
+        return "competitor/show";
+    }
+
     @GetMapping("/new")
     public String showNewForm(final Model model) {
         log.info("Received request to show add competitor form");

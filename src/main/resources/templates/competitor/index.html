@@ -68,7 +68,9 @@
             </thead>
             <tbody>
 
-            <tr th:each="competitor : ${competitors}">
+            <tr th:each="competitor : ${competitors}"
+                th:onclick="'window.location.href=\'/competitors/' + ${competitor.id} + '\';'"
+                style="cursor: pointer;">
                 <td th:text="${competitor.name}">Name</td>
                 <td th:text="${competitor.surname}">Surname</td>
                 <td th:text="${competitor.country}">Country</td>

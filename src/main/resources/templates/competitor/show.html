@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${competitor.name + ' ' + competitor.surname}">Competitor Details</title>
+    <link rel="stylesheet" th:href="@{/css/competitors/show.css}">
+</head>
+<body>
+
+<div class="container">
+    <div class="header-section">
+        <h1 th:text="${competitor.name + ' ' + competitor.surname}">Competitor Name</h1>
+        <a th:href="@{/competitors}" class="button button-secondary">Back to Competitors</a>
+    </div>
+
+    <!-- Competitor Basic Info -->
+    <div class="competitor-info">
+        <p><strong>Country:</strong> <span th:text="${competitor.country}">Country</span></p>
+        <p><strong>Discipline:</strong> <span th:text="${competitor.discipline.label}">Discipline</span></p>
+        <p><strong>Salary:</strong> $<span th:text="${competitor.salary}">Salary</span></p>
+    </div>
+
+    <!--    &lt;!&ndash; Contract Details &ndash;&gt;-->
+    <!--    <div class="contract-section">-->
+    <!--        <h2>Contract</h2>-->
+    <!--        <div th:if="${competitor.contract != null}">-->
+    <!--            <p><strong>Start Date:</strong> <span-->
+    <!--                    th:text="${#dates.format(competitor.contract.startDate, 'yyyy-MM-dd')}">Start</span></p>-->
+    <!--            <p><strong>End Date:</strong> <span th:text="${#dates.format(competitor.contract.endDate, 'yyyy-MM-dd')}">End</span>-->
+    <!--            </p>-->
+    <!--            <p><strong>Salary:</strong> $<span th:text="${competitor.contract.salary}">Salary</span></p>-->
+    <!--            <p><strong>Terms:</strong> <span th:text="${competitor.contract.terms}">Contract Terms</span></p>-->
+    <!--        </div>-->
+    <!--        <div th:if="${competitor.contract == null}">-->
+    <!--            <p>No contract assigned.</p>-->
+    <!--        </div>-->
+    <!--    </div>-->
+
+    <!--    &lt;!&ndash; Competitions &ndash;&gt;-->
+    <!--    <div class="competitions-section">-->
+    <!--        <h2>Competitions</h2>-->
+    <!--        <ul>-->
+    <!--            <li th:each="competition : ${competitor.competitions}"-->
+    <!--                th:text="${competition.name + ' (' + #dates.format(competition.date, 'yyyy-MM-dd') + ')'}">Competition-->
+    <!--            </li>-->
+    <!--        </ul>-->
+    <!--        <div th:if="${#lists.isEmpty(competitor.competitions)}">-->
+    <!--            <p>No competitions found.</p>-->
+    <!--        </div>-->
+    <!--    </div>-->
+
+    <!--    &lt;!&ndash; Coaches &ndash;&gt;-->
+    <!--    <div class="coaches-section">-->
+    <!--        <h2>Coaches</h2>-->
+    <!--        <ul>-->
+    <!--            <li th:each="coach : ${competitor.coaches}" th:text="${coach.name + ' ' + coach.surname}">Coach Name</li>-->
+    <!--        </ul>-->
+    <!--        <div th:if="${#lists.isEmpty(competitor.coaches)}">-->
+    <!--            <p>No coaches assigned.</p>-->
+    <!--        </div>-->
+    <!--    </div>-->
+
+    <!-- Actions -->
+    <div class="actions">
+        <a th:href="@{/competitors/{id}/edit(id=${competitor.id})}" class="button button-primary">Edit Competitor</a>
+        <button th:onclick="'showDeleteModal(' + ${competitor.id} + ')'" class="button button-danger" type="button">
+            Delete Competitor
+        </button>
+    </div>
+</div>
+
+<!-- Delete Modal -->
+<div id="deleteModal" class="modal-overlay">
+    <div class="modal-content">
+        <p>Are you sure you want to delete this competitor?</p>
+        <div class="modal-buttons">
+            <button id="confirmDeleteBtn" class="button button-danger">Delete</button>
+            <button id="cancelDeleteBtn" class="button button-secondary">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<script src="/js/competitors/show.js"></script>
+</body>
+</html>
