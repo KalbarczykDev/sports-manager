@@ -7,6 +7,7 @@ import dev.kalbarczyk.sportsmanager.competitor.validation.CompetitorValidator;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,14 +16,14 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RequestMapping("/competitors")
 @Controller
-public class CompetitorWebController {
+public class CompetitorController {
 
     private final CompetitorService competitorService;
     private final CompetitorValidator competitorValidator;
     private final CountryService countryService;
 
     @Autowired
-    public CompetitorWebController(
+    public CompetitorController(
             final CompetitorService competitorService,
             final CompetitorValidator competitorValidator,
             final CountryService countryService) {
@@ -86,6 +87,14 @@ public class CompetitorWebController {
         model.addAttribute("competitor", competitor);
         model.addAttribute("countries", countryService.getCountriesForForm());
         model.addAttribute("formAction", formAction);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseBody
+    public ResponseEntity<Void> deleteCompetitor(final @PathVariable Long id) {
+        log.info("Received request to delete competitor via API with id: {}", id);
+        competitorService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 
 }

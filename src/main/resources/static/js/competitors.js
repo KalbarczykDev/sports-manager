@@ -17,7 +17,7 @@ function hideDeleteModal() {
 
 confirmDeleteBtn.addEventListener('click', () => {
     if (competitorToDeleteId) {
-        fetch('/api/competitors/' + competitorToDeleteId, {
+        fetch('competitors/' + competitorToDeleteId, {
             method: 'DELETE'
         })
             .then(response => {
