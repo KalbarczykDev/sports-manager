@@ -1,19 +1,8 @@
 <div th:fragment="content">
-    <h1>Sports Manager</h1>
-    <p>Your ultimate platform to manage competitors, events, and teams with ease.</p>
-
-    <div class="button-group">
-        <a th:href="@{/competitors}" class="button button-primary">
-            View Competitors
-        </a>
-
-        <a th:href="@{#}" class="button button-secondary">
-            Manage Coaches (Coming Soon!)
-        </a>
-
-        <a th:href="@{#}" class="button button-secondary">
-            Manage Events (Coming Soon!)
-        </a>
-
+    <div class="text-center py-5 bg-light">
+        <h1 class="display-4">Welcome to Sports Manager</h1>
+        <p class="lead">Manage competitors, competitions, and coaches with ease.</p>
+        <img th:src="@{/images/logo.webp}" alt="logo" width="200" height="200">
     </div>
 </div>
+
