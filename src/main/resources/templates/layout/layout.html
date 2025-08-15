@@ -9,12 +9,10 @@
 </head>
 <body>
 
-<div th:replace="fragments/header :: header"></div>
 
-
-<div th:replace="${view} :: content"></div>
-
-<div th:replace="fragments/footer :: footer"></div>
+<header th:replace="~{fragments/header :: header}"></header>
+<main th:replace="~{${view} :: content}"></main>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
 
 </body>
 </html>

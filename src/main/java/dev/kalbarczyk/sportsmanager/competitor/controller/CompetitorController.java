@@ -44,13 +44,8 @@ public class CompetitorController {
         model.addAttribute("competitors", competitors);
         model.addAttribute("sortBy", sortBy);
         model.addAttribute("sortDir", sortDir);
-
-        // Variables for layout
-        model.addAttribute("title", "Competitors");
-        model.addAttribute("pageCss", "competitor.css"); // optional
-        model.addAttribute("pageJs", "competitor.js");   // optional
-
-        return "modules/competitor/index";
+        model.addAttribute("view", "modules/competitor/index");
+        return "layout/layout";
     }
 
     @GetMapping("{id}")
@@ -59,8 +54,8 @@ public class CompetitorController {
 
         val competitor = competitorService.findById(id);
         model.addAttribute("competitor", competitor);
-
-        return "modules/competitor/show";
+        model.addAttribute("view", "modules/competitor/show");
+        return "layout/layout";
     }
 
     @GetMapping("/new")
@@ -68,7 +63,7 @@ public class CompetitorController {
         log.info("Received request to show add competitor form");
         prepareFormModel(model, new Competitor(),
                 "/competitors", "New competitor");
-        return "modules/competitor/form";
+        return "layout/layout";
     }
 
     @GetMapping("/{id}/edit")
@@ -76,7 +71,7 @@ public class CompetitorController {
         log.info("Received request to edit competitor with id: {}", id);
         prepareFormModel(model, competitorService.findById(id),
                 "/competitors/" + id, "Edit competitor");
-        return "modules/competitor/form";
+        return "layout/layout";
     }
 
     @PostMapping({"", "/{id}"})
@@ -99,7 +94,7 @@ public class CompetitorController {
                 uri = "/competitors/" + id;
             }
             prepareFormModel(model, competitor, uri, title);
-            return "modules/competitor/form";
+            return "layout/layout";
         }
 
         if (id == null) {
@@ -107,7 +102,7 @@ public class CompetitorController {
         } else {
             competitorService.update(id, competitor);
         }
-
+        
         return "redirect:/competitors";
     }
 
@@ -116,6 +111,7 @@ public class CompetitorController {
         model.addAttribute("countries", countryService.getCountriesForForm());
         model.addAttribute("formAction", formAction);
         model.addAttribute("title", title);
+        model.addAttribute("view", "modules/competitor/form");
     }
 
     @DeleteMapping("/{id}")

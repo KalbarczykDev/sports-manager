@@ -1,14 +1,7 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout}">
-<head>
-    <title th:text="${title}">Competitors</title>
-    <link th:if="${pageCss}" th:href="@{/css/pages/${pageCss}}" rel="stylesheet">
-</head>
-<body>
-
-<div class="container">
+<div th:fragment="content">
+    <!--/*@thymesVar id="sortBy" type="java.lang.String"*/-->
+    <!--/*@thymesVar id="sortDir" type="java.lang.String"*/-->
+    <!--/*@thymesVar id="competitors" type="java.util.List<dev.kalbarczyk.sportsmanager.competitors.Competitor>"*/-->
     <div class="header-section">
         <h1>Competitors</h1>
         <a th:href="@{/}" class="button button-secondary">Home</a>
@@ -20,6 +13,7 @@
 
     <div class="table-wrapper">
         <table>
+
             <thead>
             <tr>
                 <th>
@@ -67,7 +61,6 @@
             </tr>
             </thead>
             <tbody>
-
             <tr th:each="competitor : ${competitors}"
                 th:onclick="'window.location.href=\'/competitors/' + ${competitor.id} + '\';'"
                 style="cursor: pointer;">
@@ -107,5 +100,3 @@
     </div>
 </div>
 <script src="/js/modules/competitors/competitors.js"></script>
-</body>
-</html>
