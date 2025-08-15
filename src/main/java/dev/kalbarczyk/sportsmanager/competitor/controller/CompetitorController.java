@@ -45,7 +45,12 @@ public class CompetitorController {
         model.addAttribute("sortBy", sortBy);
         model.addAttribute("sortDir", sortDir);
 
-        return "competitor/index";
+        // Variables for layout
+        model.addAttribute("title", "Competitors");
+        model.addAttribute("pageCss", "competitor.css"); // optional
+        model.addAttribute("pageJs", "competitor.js");   // optional
+
+        return "modules/competitor/index";
     }
 
     @GetMapping("{id}")
@@ -55,21 +60,21 @@ public class CompetitorController {
         val competitor = competitorService.findById(id);
         model.addAttribute("competitor", competitor);
 
-        return "competitor/show";
+        return "modules/competitor/show";
     }
 
     @GetMapping("/new")
     public String showNewForm(final Model model) {
         log.info("Received request to show add competitor form");
         prepareFormModel(model, new Competitor(), "/competitors");
-        return "competitor/form";
+        return "modules/competitor/form";
     }
 
     @GetMapping("/{id}/edit")
     public String showEditForm(final @PathVariable Long id, final Model model) {
         log.info("Received request to edit competitor with id: {}", id);
         prepareFormModel(model, competitorService.findById(id), "/competitors/" + id);
-        return "competitor/form";
+        return "modules/competitor/form";
     }
 
     @PostMapping({"", "/{id}"})
@@ -81,7 +86,7 @@ public class CompetitorController {
 
         if (bindingResult.hasErrors()) {
             prepareFormModel(model, competitor, id == null ? "/competitors" : "/competitors/" + id);
-            return "competitor/form";
+            return "modules/competitor/form";
         }
 
         if (id == null) {

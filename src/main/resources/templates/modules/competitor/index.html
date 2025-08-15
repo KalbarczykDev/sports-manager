@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Competitors</title>
-    <link rel="stylesheet" th:href="@{/css/pages/competitors/index.css}">
+    <title th:text="${title}">Competitors</title>
+    <link th:if="${pageCss}" th:href="@{/css/pages/${pageCss}}" rel="stylesheet">
 </head>
 <body>
 
 <div class="container">
     <div class="header-section">
         <h1>Competitors</h1>
-        <a th:href="@{/static}" class="button button-secondary">Home</a>
+        <a th:href="@{/}" class="button button-secondary">Home</a>
     </div>
 
     <div style="margin-bottom: 1rem;">
@@ -106,6 +106,6 @@
         </div>
     </div>
 </div>
-<script src="/js/modules/competitors/index.js"></script>
+<script src="/js/modules/competitors/competitors.js"></script>
 </body>
 </html>

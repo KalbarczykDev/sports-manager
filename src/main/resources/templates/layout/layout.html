@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title}">Sports Manager</title>
+
+    <!-- Global CSS -->
+    <link th:href="@{/css/main.css}" rel="stylesheet">
+
+    <!-- Page-specific CSS -->
+    <link th:if="${pageCss}" th:href="@{/css/pages/${pageCss}}" rel="stylesheet">
+</head>
+<body>
+<!-- Header fragment -->
+<div th:replace="fragments/header :: header"></div>
+
+<!-- Main content -->
+<!--suppress HtmlUnknownAttribute -->
+<div layout:fragment="content"></div>
+
+<!-- Footer fragment -->
+<div th:replace="fragments/footer :: footer"></div>
+
+<!-- Global JS -->
+<script th:src="@{/js/base/helpers.js}"></script>
+
+<!-- Page-specific JS -->
+<script th:if="${pageJs}" th:src="@{/js/modules/${pageJs}}"></script>
+</body>
+</html>
