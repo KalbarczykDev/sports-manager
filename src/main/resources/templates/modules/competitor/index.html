@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Competitors</title>
-    <link rel="stylesheet" th:href="@{/css/competitors/index.css}">
+    <link rel="stylesheet" th:href="@{/css/pages/competitors/index.css}">
 </head>
 <body>
 
 <div class="container">
     <div class="header-section">
         <h1>Competitors</h1>
-        <a th:href="@{/}" class="button button-secondary">Home</a>
+        <a th:href="@{/static}" class="button button-secondary">Home</a>
     </div>
 
     <div style="margin-bottom: 1rem;">
@@ -77,7 +77,7 @@
                 <td th:text="${competitor.discipline.label}">Discipline</td>
                 <td th:text="${'$' + competitor.salary}">Salary</td>
                 <td class="action-buttons">
-                    <button th:onclick="'showDeleteModal(' + ${competitor.id} + ')'"
+                    <button th:onclick="' event.stopPropagation(); showDeleteModal(' + ${competitor.id} + ')'"
                             class="button button-sm button-danger"
                             type="button">
                         Delete
@@ -106,6 +106,6 @@
         </div>
     </div>
 </div>
-<script src="/js/competitors/index.js"></script>
+<script src="/js/modules/competitors/index.js"></script>
 </body>
 </html>

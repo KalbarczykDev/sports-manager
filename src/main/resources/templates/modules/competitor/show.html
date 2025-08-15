@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="${competitor.name + ' ' + competitor.surname}">Competitor Details</title>
-    <link rel="stylesheet" th:href="@{/css/competitors/show.css}">
+    <link rel="stylesheet" th:href="@{/css/pages/competitors/show.css}">
 </head>
 <body>
 
@@ -69,18 +69,6 @@
         </button>
     </div>
 </div>
-
-<!-- Delete Modal -->
-<div id="deleteModal" class="modal-overlay">
-    <div class="modal-content">
-        <p>Are you sure you want to delete this competitor?</p>
-        <div class="modal-buttons">
-            <button id="confirmDeleteBtn" class="button button-danger">Delete</button>
-            <button id="cancelDeleteBtn" class="button button-secondary">Cancel</button>
-        </div>
-    </div>
-</div>
-
-<script src="/js/competitors/show.js"></script>
+<script src="/js/modules/competitors/index.js"></script>
 </body>
 </html>

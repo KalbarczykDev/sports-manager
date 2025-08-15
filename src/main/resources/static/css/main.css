@@ -1,0 +1,12 @@
+body {
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f2f5;
+    margin: 0;
+    padding: 1rem;
+    box-sizing: border-box;
+}
