@@ -66,14 +66,16 @@ public class CompetitorController {
     @GetMapping("/new")
     public String showNewForm(final Model model) {
         log.info("Received request to show add competitor form");
-        prepareFormModel(model, new Competitor(), "/competitors");
+        prepareFormModel(model, new Competitor(),
+                "/competitors", "New competitor");
         return "modules/competitor/form";
     }
 
     @GetMapping("/{id}/edit")
     public String showEditForm(final @PathVariable Long id, final Model model) {
         log.info("Received request to edit competitor with id: {}", id);
-        prepareFormModel(model, competitorService.findById(id), "/competitors/" + id);
+        prepareFormModel(model, competitorService.findById(id),
+                "/competitors/" + id, "Edit competitor");
         return "modules/competitor/form";
     }
 
@@ -85,7 +87,18 @@ public class CompetitorController {
         competitorValidator.validate(competitor, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            prepareFormModel(model, competitor, id == null ? "/competitors" : "/competitors/" + id);
+
+            final String uri;
+            final String title;
+
+            if (id == null) {
+                title = "New competitor";
+                uri = "/competitors";
+            } else {
+                title = "Edit competitor";
+                uri = "/competitors/" + id;
+            }
+            prepareFormModel(model, competitor, uri, title);
             return "modules/competitor/form";
         }
 
@@ -98,10 +111,11 @@ public class CompetitorController {
         return "redirect:/competitors";
     }
 
-    private void prepareFormModel(Model model, Competitor competitor, String formAction) {
+    private void prepareFormModel(Model model, Competitor competitor, String formAction, String title) {
         model.addAttribute("competitor", competitor);
         model.addAttribute("countries", countryService.getCountriesForForm());
         model.addAttribute("formAction", formAction);
+        model.addAttribute("title", title);
     }
 
     @DeleteMapping("/{id}")

@@ -1,19 +1,21 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Competitor Form</title>
-    <link rel="stylesheet" th:href="@{/css/pages/competitors/index.css}">
-    <link rel="stylesheet" th:href="@{/css/components/form.css}">
+    <title th:text="${title}">Competitors</title>
+    <link th:href="@{/css/main.css}" rel="stylesheet">
+    <link th:href="@{/css/components/form.css}" rel="stylesheet">
+    <link th:href="@{/css/components/button.css}" rel="stylesheet">
+
 </head>
 <body>
-
+<div class="header-section">
+    <h1 th:text="${competitor.id} != null ? 'Edit Competitor' : 'Add New Competitor'">Add/Edit Competitor</h1>
+    <button type="button" onclick="history.back()" class="button button-secondary">Back</button>
+</div>
 <div class="container form-container">
-    <div class="header-section">
-        <h1 th:text="${competitor.id} != null ? 'Edit Competitor' : 'Add New Competitor'">Add/Edit Competitor</h1>
-        <a th:href="@{/competitors}" class="button button-secondary">Back to Competitors</a>
-    </div>
+
 
     <form th:object="${competitor}" th:action="@{${formAction}}" method="post">
         <input type="hidden" name="_method" th:value="${methodOverride}"/>

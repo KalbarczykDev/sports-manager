@@ -1,17 +1,6 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout}">
-<body>
-
-<div layout:fragment="content" class="container">
-    <h1>
-        Sports Manager
-    </h1>
-
-    <p>
-        Your ultimate platform to manage competitors, events, and teams with ease.
-    </p>
+<div th:fragment="content">
+    <h1>Sports Manager</h1>
+    <p>Your ultimate platform to manage competitors, events, and teams with ease.</p>
 
     <div class="button-group">
         <a th:href="@{/competitors}" class="button button-primary">
@@ -28,6 +17,3 @@
 
     </div>
 </div>
-
-</body>
-</html>
