@@ -1,25 +1,25 @@
 /*  Colors */
 :root {
-    /* Primary color used for main branding elements like navbar, buttons, links */
-    --color-primary: #1E40AF;
-    --color-primary-light: #3B82F6; /* Hover or emphasis on primary elements */
-    --color-primary-dark: #1E3A8A; /* Deeper primary for active states */
 
-    /* Accent color used for highlights, call-to-action buttons, and hover states */
+    --color-primary: #1E40AF;
+    --color-primary-light: #3B82F6;
+    --color-primary-dark: #1E3A8A;
+
+
     --color-accent: #F59E0B;
     --color-accent-light: #FBBF24;
 
-    /* Semantic colors for status indicators */
-    --color-success: #10B981; /* Success messages, check marks, confirmations */
-    --color-success-light: #6EE7B7; /* Hover or background of success alerts */
-    --color-danger: #EF4444; /* Error messages, delete buttons, warnings */
-    --color-danger-light: #FCA5A5; /* Background of error alerts, hover states */
 
-    /* Background & text colors for readability and hierarchy */
-    --color-bg: #F9FAFB; /* Main page background */
-    --color-surface: #FFFFFF; /* Cards, modals, and secondary surfaces */
-    --color-text-light-bg: #111827; /* Primary text */
-    --color-text-dark-bg: #F9FAFB; /* Subtle secondary text, captions, or metadata */
+    --color-success: #10B981;
+    --color-success-light: #6EE7B7;
+    --color-danger: #EF4444;
+    --color-danger-light: #FCA5A5;
+
+
+    --color-bg: #F9FAFB;
+    --color-surface: #FFFFFF;
+    --color-text-light-bg: #111827;
+    --color-text-dark-bg: #F9FAFB;
 }
 
 /* GLOBAL */
@@ -32,52 +32,72 @@ body {
     line-height: 1.6;
 }
 
-
-/* Navbar */
-.sports-navbar {
-    background-color: var(--color-primary-dark);
-}
-
-.sports-navbar .nav-link {
-    color: var(--color-text-dark-bg);
-}
-
-.sports-navbar .nav-link:hover {
-    color: var(--color-accent);
-}
-
-/* Footer */
-footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    background-color: var(--color-primary);
-    color: #fff;
-    padding: 1rem 0;
-    text-align: center;
+h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-primary-dark);
+    margin-bottom: 1rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 
 /* Tables */
+.table {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.table thead th:first-child {
+    border-top-left-radius: 12px;
+}
+
+.table thead th:last-child {
+    border-top-right-radius: 12px;
+}
+
 
 .table thead th {
-    background-color: var(--color-primary);
-    color: var(--color-text-secondary);
+    background-color: var(--color-primary-dark);
+    color: var(--color-text-dark-bg);
+    padding: 12px 16px;
+    transition: all 0.3s ease;
+}
+
+.table thead th a {
+    text-decoration: none;
+    color: var(--color-text-dark-bg);
+}
+
+.table thead th a:hover {
+    color: var(--color-accent);
+}
+
+.table tbody tr a {
+    color: var(--color-text-dark-bg);
+    text-decoration: none;
 }
 
 .table tbody tr:hover {
-    background-color: var(--color-primary);
+    color: var(--color-accent);
 }
 
 /* Buttons*/
 .btn-primary {
     background-color: var(--color-primary);
     border-color: var(--color-primary);
+    color: var(--color-text-dark-bg);
+    padding: 0.5rem 1.2rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
 }
 
 .btn-primary:hover {
-    background-color: var(--color-accent);
-    border-color: var(--color-accent);
+    background-color: var(--color-primary-light);
+    border-color: var(--color-primary-light);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .btn-success {
@@ -116,3 +136,50 @@ footer {
     background-color: #FEE2E2;
     color: var(--color-danger);
 }
+
+/* Navbar */
+.sports-navbar {
+    background-color: var(--color-primary-dark);
+}
+
+.sports-navbar .nav-link {
+    color: var(--color-text-dark-bg);
+}
+
+.sports-navbar .nav-link:hover {
+    filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.4));
+    color: var(--color-accent);
+}
+
+.logo-shadow {
+    filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.4));
+}
+
+.logo-shadow:hover {
+    transform: scale(1.1);
+    filter: drop-shadow(4px 8px 10px rgba(0, 0, 0, 0.5));
+}
+
+/* Footer */
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: var(--color-primary-dark);
+    color: var(--color-text-dark-bg);
+    padding: 1rem 0;
+    text-align: center;
+}
+
+footer a {
+    text-decoration: none;
+    color: var(--color-text-dark-bg);
+}
+
+footer a:hover {
+    filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.4));
+    color: var(--color-accent);
+
+}
+
+

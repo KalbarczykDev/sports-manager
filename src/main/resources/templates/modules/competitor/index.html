@@ -3,21 +3,22 @@
     <!--/*@thymesVar id="sortDir" type="java.lang.String"*/-->
     <!--/*@thymesVar id="competitors" type="java.util.List<dev.kalbarczyk.sportsmanager.competitors.Competitor>"*/-->
 
-    <div class="mb-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
         <h1>Competitors</h1>
+        <a class="btn btn-primary" th:href="@{/competitors/new}">
+            <i class="bi bi-person-plus-fill"></i> Add Competitor
+        </a>
     </div>
 
-    <div class="mb-3 text-start">
-        <a class="btn btn-primary" th:href="@{/competitors/new}">Add Competitor</a>
-    </div>
-    <div class="card shadow-sm">
-        <div class="card-body table-responsive">
+    <div>
+        <div class="table-responsive">
             <table class="table table-striped table-hover align-middle">
                 <thead class="table-primary">
                 <tr>
                     <th>
-                        <a class="text-white text-decoration-none"
-                           th:href="@{/competitors(sortBy='name', sortDir=${sortBy == 'name' and sortDir == 'asc' ? 'desc' : 'asc'})}">
+                        <a
+                                th:href="@{/competitors(sortBy='name', sortDir=${sortBy == 'name' and sortDir == 'asc' ? 'desc' : 'asc'})}">
                             Name
                             <span th:if="${sortBy == 'name'}"
                                   th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span>
@@ -25,8 +26,8 @@
                     </th>
 
                     <th>
-                        <a class="text-white text-decoration-none"
-                           th:href="@{/competitors(sortBy='surname', sortDir=${sortBy == 'surname' and sortDir == 'asc' ? 'desc' : 'asc'})}">
+                        <a
+                                th:href="@{/competitors(sortBy='surname', sortDir=${sortBy == 'surname' and sortDir == 'asc' ? 'desc' : 'asc'})}">
                             Surname
                             <span th:if="${sortBy == 'surname'}"
                                   th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span>
@@ -34,8 +35,8 @@
                     </th>
 
                     <th>
-                        <a class="text-white text-decoration-none"
-                           th:href="@{/competitors(sortBy='country', sortDir=${sortBy == 'country' and sortDir == 'asc' ? 'desc' : 'asc'})}">
+                        <a
+                                th:href="@{/competitors(sortBy='country', sortDir=${sortBy == 'country' and sortDir == 'asc' ? 'desc' : 'asc'})}">
                             Country
                             <span th:if="${sortBy == 'country'}"
                                   th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span>
@@ -43,8 +44,8 @@
                     </th>
 
                     <th>
-                        <a class="text-white text-decoration-none"
-                           th:href="@{/competitors(sortBy='discipline', sortDir=${sortBy == 'discipline' and sortDir == 'asc' ? 'desc' : 'asc'})}">
+                        <a
+                                th:href="@{/competitors(sortBy='discipline', sortDir=${sortBy == 'discipline' and sortDir == 'asc' ? 'desc' : 'asc'})}">
                             Discipline
                             <span th:if="${sortBy == 'discipline'}"
                                   th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span>
@@ -52,8 +53,8 @@
                     </th>
 
                     <th>
-                        <a class="text-white text-decoration-none"
-                           th:href="@{/competitors(sortBy='salary', sortDir=${sortBy == 'salary' and sortDir == 'asc' ? 'desc' : 'asc'})}">
+                        <a
+                                th:href="@{/competitors(sortBy='salary', sortDir=${sortBy == 'salary' and sortDir == 'asc' ? 'desc' : 'asc'})}">
                             Salary
                             <span th:if="${sortBy == 'discipline'}"
                                   th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span>
