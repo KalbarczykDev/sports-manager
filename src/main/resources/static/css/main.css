@@ -1,24 +1,118 @@
+/*  Colors */
+:root {
+    /* Primary color used for main branding elements like navbar, buttons, links */
+    --color-primary: #1E40AF;
+    --color-primary-light: #3B82F6; /* Hover or emphasis on primary elements */
+    --color-primary-dark: #1E3A8A; /* Deeper primary for active states */
 
+    /* Accent color used for highlights, call-to-action buttons, and hover states */
+    --color-accent: #F59E0B;
+    --color-accent-light: #FBBF24;
+
+    /* Semantic colors for status indicators */
+    --color-success: #10B981; /* Success messages, check marks, confirmations */
+    --color-success-light: #6EE7B7; /* Hover or background of success alerts */
+    --color-danger: #EF4444; /* Error messages, delete buttons, warnings */
+    --color-danger-light: #FCA5A5; /* Background of error alerts, hover states */
+
+    /* Background & text colors for readability and hierarchy */
+    --color-bg: #F9FAFB; /* Main page background */
+    --color-surface: #FFFFFF; /* Cards, modals, and secondary surfaces */
+    --color-text-light-bg: #111827; /* Primary text */
+    --color-text-dark-bg: #F9FAFB; /* Subtle secondary text, captions, or metadata */
+}
+
+/* GLOBAL */
 body {
-    font-family: 'Inter', sans-serif;
-    background-color: #f8f9fa;
-    color: #212529;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--color-bg);
+    color: var(--color-text-light-bg);
     margin: 0;
     padding: 0;
     line-height: 1.6;
 }
 
-h1, h2, h3, h4, h5, h6 {
-    font-family: 'Inter', sans-serif;
+
+/* Navbar */
+.sports-navbar {
+    background-color: var(--color-primary-dark);
 }
 
+.sports-navbar .nav-link {
+    color: var(--color-text-dark-bg);
+}
+
+.sports-navbar .nav-link:hover {
+    color: var(--color-accent);
+}
+
+/* Footer */
 footer {
     position: fixed;
     bottom: 0;
     width: 100%;
-    background-color: #212529;
+    background-color: var(--color-primary);
     color: #fff;
     padding: 1rem 0;
     text-align: center;
 }
 
+
+/* Tables */
+
+.table thead th {
+    background-color: var(--color-primary);
+    color: var(--color-text-secondary);
+}
+
+.table tbody tr:hover {
+    background-color: var(--color-primary);
+}
+
+/* Buttons*/
+.btn-primary {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+.btn-primary:hover {
+    background-color: var(--color-accent);
+    border-color: var(--color-accent);
+}
+
+.btn-success {
+    background-color: var(--color-success);
+    border-color: var(--color-success);
+}
+
+.btn-success:hover {
+    background-color: #16a34a;
+    border-color: #16a34a;
+}
+
+.btn-danger {
+    background-color: var(--color-danger);
+    border-color: var(--color-danger);
+}
+
+.btn-danger:hover {
+    background-color: #b91c1c;
+    border-color: #b91c1c;
+}
+
+/*  Cards= */
+.card {
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Alerts */
+.alert-success {
+    background-color: #DCFCE7;
+    color: var(--color-success);
+}
+
+.alert-danger {
+    background-color: #FEE2E2;
+    color: var(--color-danger);
+}
