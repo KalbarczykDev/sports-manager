@@ -35,7 +35,7 @@ git clone https://github.com/KalbarczykDev/sports-manager
 ```yaml 
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/sports_manager?createDatabaseIfNotExist=Truer
+    url: jdbc:mysql://localhost:3306/sports_manager?createDatabaseIfNotExist=True
     username: root
     password: yourPassword 
 ```
@@ -50,6 +50,8 @@ spring:
 
 ## Usage
 
+- Start the application and open: `http://localhost:8080` in your favourite browser.
+
 - By default, the application will generate sample data you can change it in `application.yaml`
 
  ````yaml
@@ -57,8 +59,6 @@ sportsmanager:
   seeder:
     count: 100
 ````
-
-- Start the application and open: `http://localhost:8080` in your favourite browser.
 
 ### Example Workflows
 
