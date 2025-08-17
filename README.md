@@ -8,14 +8,6 @@ Sports Manager is a **CRUD application** designed to simulate a real-world syste
 by organizations like the **International Olympic Committee (IOC)** to manage competitors, competitions, and coaches
 assigned to competitors.
 
-### Entity-Relation Diagram
-
-![ER Diagram](images/er-diagram.png)
-
-### Class Diagram
-
-![Class Diagram](./images/class-diagram.png)
-
 ## Requirements
 
 - Java 21+
@@ -78,6 +70,16 @@ sportsmanager:
 
 - In the "Coaches" section, create a coach profile.
 - Link a coach to one or multiple competitors.
+
+## Documentation
+
+### Entity-Relation Diagram
+
+![ER Diagram](images/er-diagram.png)
+
+### Class Diagram
+
+![Class Diagram](./images/class-diagram.png)
 
 ## Contributing
 
