@@ -3,7 +3,7 @@ package dev.kalbarczyk.sportsmanager.coach.controller;
 import dev.kalbarczyk.sportsmanager.coach.model.Coach;
 import dev.kalbarczyk.sportsmanager.coach.service.DefaultCoachService;
 import dev.kalbarczyk.sportsmanager.common.controller.AbstractCrudController;
-import dev.kalbarczyk.sportsmanager.common.service.BaseService;
+import dev.kalbarczyk.sportsmanager.common.service.CrudService;
 import dev.kalbarczyk.sportsmanager.person.enums.Discipline;
 import dev.kalbarczyk.sportsmanager.person.validation.PersonValidator;
 import lombok.extern.slf4j.Slf4j;
@@ -26,13 +26,19 @@ public class CoachController extends AbstractCrudController<Coach> {
 
 
     @Override
-    protected BaseService<Coach> getBaseService() {
+    protected CrudService<Coach> getBaseService() {
         return coachService;
     }
 
+
     @Override
-    protected String getModuleName() {
+    protected String getEntityNameSingular() {
         return "coach";
+    }
+
+    @Override
+    protected String getEntityNamePlural() {
+        return "coaches";
     }
 
     @Override

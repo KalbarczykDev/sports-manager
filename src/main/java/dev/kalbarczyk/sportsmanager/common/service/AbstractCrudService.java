@@ -10,7 +10,7 @@ import org.springframework.data.mapping.PropertyReferenceException;
 import java.util.List;
 
 @Slf4j
-public abstract class AbstractBaseService<T extends BaseEntity> implements BaseService<T> {
+public abstract class AbstractCrudService<T extends BaseEntity> implements CrudService<T> {
 
     protected abstract JpaRepository<T, Long> getRepository();
 

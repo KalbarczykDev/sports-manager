@@ -1,8 +1,8 @@
 package dev.kalbarczyk.sportsmanager.competitor.controller;
 
 import dev.kalbarczyk.sportsmanager.common.controller.AbstractCrudController;
-import dev.kalbarczyk.sportsmanager.common.service.BaseService;
 import dev.kalbarczyk.sportsmanager.common.service.CountryService;
+import dev.kalbarczyk.sportsmanager.common.service.CrudService;
 import dev.kalbarczyk.sportsmanager.competitor.model.Competitor;
 import dev.kalbarczyk.sportsmanager.competitor.service.CompetitorService;
 import dev.kalbarczyk.sportsmanager.person.enums.Discipline;
@@ -54,12 +54,18 @@ public class CompetitorController extends AbstractCrudController<Competitor> {
     }
 
     @Override
-    protected BaseService<Competitor> getBaseService() {
+    protected CrudService<Competitor> getBaseService() {
         return competitorService;
     }
 
     @Override
-    protected String getModuleName() {
+    protected String getEntityNameSingular() {
         return "competitor";
     }
+
+    @Override
+    protected String getEntityNamePlural() {
+        return "competitors";
+    }
+
 }

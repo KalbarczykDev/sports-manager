@@ -1,6 +1,6 @@
 package dev.kalbarczyk.sportsmanager.competitor.service;
 
-import dev.kalbarczyk.sportsmanager.common.service.AbstractBaseService;
+import dev.kalbarczyk.sportsmanager.common.service.AbstractCrudService;
 import dev.kalbarczyk.sportsmanager.competitor.model.Competitor;
 import dev.kalbarczyk.sportsmanager.competitor.repository.CompetitorRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @Primary
-public class DefaultCompetitorService extends AbstractBaseService<Competitor> implements CompetitorService {
+public class DefaultCompetitorService extends AbstractCrudService<Competitor> implements CompetitorService {
     private final CompetitorRepository competitorRepository;
 
 

@@ -4,7 +4,7 @@ import dev.kalbarczyk.sportsmanager.common.model.BaseEntity;
 
 import java.util.List;
 
-public interface BaseService<T extends BaseEntity> {
+public interface CrudService<T extends BaseEntity> {
     List<T> findAll(final String sortBy, final String sortDir);
 
     T findById(final Long id);
