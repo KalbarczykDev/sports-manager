@@ -1,4 +1,4 @@
-package dev.kalbarczyk.sportsmanager.competitor.model;
+package dev.kalbarczyk.sportsmanager.coach.model;
 
 import dev.kalbarczyk.sportsmanager.common.model.Person;
 import jakarta.persistence.Entity;
@@ -8,12 +8,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-
 @Getter
 @Setter
 @NoArgsConstructor
 @SuperBuilder
 @Entity
-@Table(name = "competitors")
-public class Competitor extends Person {
+@Table(name = "coaches")
+public class Coach extends Person {
 }

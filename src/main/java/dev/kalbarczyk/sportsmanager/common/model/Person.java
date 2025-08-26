@@ -1,5 +1,6 @@
 package dev.kalbarczyk.sportsmanager.common.model;
 
+import dev.kalbarczyk.sportsmanager.common.enums.Discipline;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import lombok.*;
@@ -30,5 +31,8 @@ public abstract class Person {
     @NonNull
     @Column(nullable = false, name = "country")
     private String country;
-
+    @NonNull
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, name = "discipline")
+    private Discipline discipline;
 }
