@@ -1,21 +1,17 @@
 package dev.kalbarczyk.sportsmanager.competitor.service;
 
-import dev.kalbarczyk.sportsmanager.common.exception.CrudException;
+import dev.kalbarczyk.sportsmanager.common.service.AbstractBaseService;
 import dev.kalbarczyk.sportsmanager.competitor.model.Competitor;
 import dev.kalbarczyk.sportsmanager.competitor.repository.CompetitorRepository;
 import lombok.extern.slf4j.Slf4j;
-import lombok.val;
 import org.springframework.context.annotation.Primary;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.mapping.PropertyReferenceException;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Slf4j
 @Service
 @Primary
-public class DefaultCompetitorService implements CompetitorService {
+public class DefaultCompetitorService extends AbstractBaseService<Competitor> implements CompetitorService {
     private final CompetitorRepository competitorRepository;
 
 
@@ -23,52 +19,9 @@ public class DefaultCompetitorService implements CompetitorService {
         this.competitorRepository = competitorRepository;
     }
 
-    @Override
-    public List<Competitor> findAll(final String sortBy, final String sortDir) {
-        log.info("Fetching all competitors");
-        try {
-            val sort = Sort.by(Sort.Direction.fromString(sortDir), sortBy);
-            return competitorRepository.findAll(sort);
-        } catch (PropertyReferenceException e) {
-            throw new CrudException.InvalidSortingArgument(e.getMessage());
-        }
-    }
 
     @Override
-    public Competitor findById(final Long id) {
-        log.info("Fetching competitor by ID: {}", id);
-        return competitorRepository.findById(id)
-                .orElseThrow(() -> {
-                    log.warn("Competitor not found with ID: {}", id);
-                    return new CrudException.NotFound("Competitor not found with id: " + id);
-                });
-    }
-
-    @Override
-    public Competitor save(final Competitor competitor) {
-        log.info("Saving new competitor: {} {}", competitor.getName(), competitor.getSurname());
-
-        return competitorRepository.save(competitor);
-    }
-
-    @Override
-    public Competitor update(final Long id, final Competitor competitor) {
-        log.info("Updating competitor with ID: {}", id);
-        if (!competitorRepository.existsById(id)) {
-            log.warn("Cannot update. Competitor not found with ID: {}", id);
-            throw new CrudException.NotFound("Competitor not found with id: " + id);
-        }
-        competitor.setId(id);
-        return competitorRepository.save(competitor);
-    }
-
-    @Override
-    public void delete(final Long id) {
-        log.info("Deleting competitor with ID: {}", id);
-        if (!competitorRepository.existsById(id)) {
-            log.warn("Cannot delete. Competitor not found with ID: {}", id);
-            throw new CrudException.NotFound("Competitor not found with id: " + id);
-        }
-        competitorRepository.deleteById(id);
+    protected JpaRepository<Competitor, Long> getRepository() {
+        return competitorRepository;
     }
 }

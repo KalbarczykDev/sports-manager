@@ -3,22 +3,19 @@ package dev.kalbarczyk.sportsmanager.common.model;
 import dev.kalbarczyk.sportsmanager.common.enums.Discipline;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class Person {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
-    @Column(nullable = false, name = "id")
-    private Long id;
+public abstract class Person extends BaseEntity {
     @NonNull
     @Column(nullable = false, name = "name")
     private String name;
