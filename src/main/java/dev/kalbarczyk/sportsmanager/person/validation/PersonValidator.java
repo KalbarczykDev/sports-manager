@@ -1,4 +1,4 @@
-package dev.kalbarczyk.sportsmanager.competitor.validation;
+package dev.kalbarczyk.sportsmanager.person.validation;
 
 
 import dev.kalbarczyk.sportsmanager.common.service.DefaultCountryService;
@@ -13,11 +13,11 @@ import org.springframework.validation.Validator;
 
 @Component
 @Slf4j
-public class CompetitorValidator implements Validator {
+public class PersonValidator implements Validator {
 
     private final DefaultCountryService countryService;
 
-    public CompetitorValidator(final DefaultCountryService countryService) {
+    public PersonValidator(final DefaultCountryService countryService) {
         this.countryService = countryService;
     }
 

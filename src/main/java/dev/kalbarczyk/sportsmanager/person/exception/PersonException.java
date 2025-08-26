@@ -1,16 +1,16 @@
-package dev.kalbarczyk.sportsmanager.competitor.exception;
+package dev.kalbarczyk.sportsmanager.person.exception;
 
 import lombok.Getter;
 
 import java.util.List;
 
-public sealed class CompetitorException extends RuntimeException permits CompetitorException.Invalid {
-    public CompetitorException(final String message) {
+public sealed class PersonException extends RuntimeException permits PersonException.Invalid {
+    public PersonException(final String message) {
         super(message);
     }
 
     @Getter
-    public static final class Invalid extends CompetitorException {
+    public static final class Invalid extends PersonException {
         private final List<String> messages;
 
         public Invalid(final List<String> messages) {

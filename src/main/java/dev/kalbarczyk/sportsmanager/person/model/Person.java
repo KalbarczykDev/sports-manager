@@ -1,6 +1,7 @@
-package dev.kalbarczyk.sportsmanager.common.model;
+package dev.kalbarczyk.sportsmanager.person.model;
 
-import dev.kalbarczyk.sportsmanager.common.enums.Discipline;
+import dev.kalbarczyk.sportsmanager.common.model.BaseEntity;
+import dev.kalbarczyk.sportsmanager.person.enums.Discipline;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import lombok.Getter;

@@ -3,7 +3,7 @@ package dev.kalbarczyk.sportsmanager.competitor.controller;
 import dev.kalbarczyk.sportsmanager.common.service.CountryService;
 import dev.kalbarczyk.sportsmanager.competitor.model.Competitor;
 import dev.kalbarczyk.sportsmanager.competitor.service.CompetitorService;
-import dev.kalbarczyk.sportsmanager.competitor.validation.CompetitorValidator;
+import dev.kalbarczyk.sportsmanager.person.validation.PersonValidator;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +19,13 @@ import org.springframework.web.bind.annotation.*;
 public class CompetitorController {
 
     private final CompetitorService competitorService;
-    private final CompetitorValidator competitorValidator;
+    private final PersonValidator competitorValidator;
     private final CountryService countryService;
 
     @Autowired
     public CompetitorController(
             final CompetitorService competitorService,
-            final CompetitorValidator competitorValidator,
+            final PersonValidator competitorValidator,
             final CountryService countryService) {
         this.competitorService = competitorService;
         this.competitorValidator = competitorValidator;
@@ -102,7 +102,7 @@ public class CompetitorController {
         } else {
             competitorService.update(id, competitor);
         }
-        
+
         return "redirect:/competitors";
     }
 

@@ -1,8 +1,8 @@
 package dev.kalbarczyk.sportsmanager.competitor.init;
 
-import dev.kalbarczyk.sportsmanager.common.enums.Discipline;
 import dev.kalbarczyk.sportsmanager.competitor.model.Competitor;
 import dev.kalbarczyk.sportsmanager.competitor.repository.CompetitorRepository;
+import dev.kalbarczyk.sportsmanager.person.enums.Discipline;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;

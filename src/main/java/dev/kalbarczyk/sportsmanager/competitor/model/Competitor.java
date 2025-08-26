@@ -1,6 +1,6 @@
 package dev.kalbarczyk.sportsmanager.competitor.model;
 
-import dev.kalbarczyk.sportsmanager.common.model.Person;
+import dev.kalbarczyk.sportsmanager.person.model.Person;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.Getter;

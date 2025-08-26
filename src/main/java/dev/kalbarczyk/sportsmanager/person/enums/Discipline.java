@@ -1,4 +1,4 @@
-package dev.kalbarczyk.sportsmanager.common.enums;
+package dev.kalbarczyk.sportsmanager.person.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

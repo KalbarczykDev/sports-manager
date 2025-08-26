@@ -1,4 +1,4 @@
-package dev.kalbarczyk.sportsmanager.competitor.exception;
+package dev.kalbarczyk.sportsmanager.person.exception;
 
 import dev.kalbarczyk.sportsmanager.common.model.dto.ApiError;
 import lombok.val;
@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
-public class CompetitorExceptionHandler {
+public class PersonExceptionHandler {
 
-    @ExceptionHandler(CompetitorException.Invalid.class)
-    public ResponseEntity<ApiError> handleInvalidCompetitorException(final CompetitorException.Invalid ex) {
+    @ExceptionHandler(PersonException.Invalid.class)
+    public ResponseEntity<ApiError> handleInvalidCompetitorException(final PersonException.Invalid ex) {
         val apiError = ApiError.forValidationErrors(
                 HttpStatus.BAD_REQUEST.value(),
                 HttpStatus.BAD_REQUEST.getReasonPhrase(),
