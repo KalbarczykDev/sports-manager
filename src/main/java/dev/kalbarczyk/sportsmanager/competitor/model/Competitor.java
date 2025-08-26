@@ -15,12 +15,6 @@ import lombok.experimental.SuperBuilder;
 @Entity
 @Table(name = "competitors")
 public class Competitor extends Person {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
-
     @NonNull
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, name = "discipline")

@@ -63,7 +63,7 @@ sportsmanager:
 * **Schedule a Competition**
 
 - Go to the "Competitions" section.
-- Create a new competition by selecting date, location, and type.
+- Create a new competition by selecting date, location, and discipline.
 - Assign registered competitors.
 
 * **Assign a Coach**

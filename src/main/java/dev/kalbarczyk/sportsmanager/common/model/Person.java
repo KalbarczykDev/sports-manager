@@ -1,7 +1,6 @@
 package dev.kalbarczyk.sportsmanager.common.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -11,8 +10,14 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-@MappedSuperclass
+@Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Person {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.TABLE)
+    @Column(nullable = false, name = "id")
+    private Long id;
     @NonNull
     @Column(nullable = false, name = "name")
     private String name;
