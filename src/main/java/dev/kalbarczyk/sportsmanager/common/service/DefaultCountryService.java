@@ -23,8 +23,9 @@ public class DefaultCountryService implements CountryService {
         val countryCodes = Arrays.stream(Locale.getISOCountries()).collect(Collectors.toSet());
 
         this.validCountryNames = countryCodes.stream()
-                .map(code -> new Locale("", code).getDisplayCountry(Locale.ENGLISH))
+                .map(code -> new Locale.Builder().setRegion(code).build().getDisplayCountry(Locale.ENGLISH))
                 .collect(Collectors.toSet());
+
 
         this.countriesForForm = validCountryNames.stream()
                 .sorted()
