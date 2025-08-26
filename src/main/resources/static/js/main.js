@@ -14,11 +14,15 @@ document.querySelectorAll('.delete-button').forEach(btn => {
 });
 
 confirmDeleteBtn.addEventListener('click', () => {
-    if (competitorToDelete && rowToDelete) {
+    if (competitorToDelete) {
         fetch(`/competitors/${competitorToDelete}`, {method: 'DELETE'})
             .then(response => {
                 if (response.ok) {
-                    rowToDelete.remove();
+                    if (rowToDelete) {
+                        rowToDelete.remove();
+                    } else {
+                        window.location.href = '/competitors';
+                    }
                 } else {
                     console.error('Error deleting Competitor.');
                 }
