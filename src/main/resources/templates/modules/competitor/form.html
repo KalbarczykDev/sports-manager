@@ -57,7 +57,7 @@
                     <label for="discipline" class="form-label">Discipline</label>
                     <select id="discipline" th:field="*{discipline}" class="form-select" required>
                         <option value="">-- Select Discipline --</option>
-                        <option th:each="disciplineEnum : ${T(dev.kalbarczyk.sportsmanager.common.enums.Discipline).values()}"
+                        <option th:each="disciplineEnum : ${disciplines}"
                                 th:value="${disciplineEnum.name()}"
                                 th:text="${disciplineEnum.label}">
                         </option>
