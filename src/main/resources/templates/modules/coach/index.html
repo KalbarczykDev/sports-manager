@@ -1,13 +1,12 @@
 <div class="container my-5" th:fragment="content">
     <!--/*@thymesVar id="sortBy" type="java.lang.String"*/-->
     <!--/*@thymesVar id="sortDir" type="java.lang.String"*/-->
-    <!--/*@thymesVar id="competitors" type="java.util.List<dev.kalbarczyk.sportsmanager.competitor.model.Competitor>"*/-->
-
+    <!--/*@thymesVar id="coaches" type="java.util.List<dev.kalbarczyk.sportsmanager.coach.model.Coach>"*/-->
 
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1>Competitors</h1>
-        <a class="btn btn-primary add-button" th:href="@{/competitors/new}">
-            <i class="bi bi-person-plus-fill"></i> Add Competitor
+        <h1>Coaches</h1>
+        <a class="btn btn-primary add-button" th:href="@{/coaches/new}">
+            <i class="bi bi-person-plus-fill"></i> Add Coach
         </a>
     </div>
 
@@ -18,7 +17,7 @@
                 <tr>
                     <th>
                         <a
-                                th:href="@{/competitors(sortBy='name', sortDir=${sortBy == 'name' and sortDir == 'asc' ? 'desc' : 'asc'})}">
+                                th:href="@{/coaches(sortBy='name', sortDir=${sortBy == 'name' and sortDir == 'asc' ? 'desc' : 'asc'})}">
                             Name
                             <span th:if="${sortBy == 'name'}"
                                   th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span>
@@ -27,7 +26,7 @@
 
                     <th>
                         <a
-                                th:href="@{/competitors(sortBy='surname', sortDir=${sortBy == 'surname' and sortDir == 'asc' ? 'desc' : 'asc'})}">
+                                th:href="@{/coaches(sortBy='surname', sortDir=${sortBy == 'surname' and sortDir == 'asc' ? 'desc' : 'asc'})}">
                             Surname
                             <span th:if="${sortBy == 'surname'}"
                                   th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span>
@@ -36,7 +35,7 @@
 
                     <th>
                         <a
-                                th:href="@{/competitors(sortBy='country', sortDir=${sortBy == 'country' and sortDir == 'asc' ? 'desc' : 'asc'})}">
+                                th:href="@{/coaches(sortBy='country', sortDir=${sortBy == 'country' and sortDir == 'asc' ? 'desc' : 'asc'})}">
                             Country
                             <span th:if="${sortBy == 'country'}"
                                   th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span>
@@ -45,7 +44,7 @@
 
                     <th>
                         <a
-                                th:href="@{/competitors(sortBy='discipline', sortDir=${sortBy == 'discipline' and sortDir == 'asc' ? 'desc' : 'asc'})}">
+                                th:href="@{/coaches(sortBy='discipline', sortDir=${sortBy == 'discipline' and sortDir == 'asc' ? 'desc' : 'asc'})}">
                             Discipline
                             <span th:if="${sortBy == 'discipline'}"
                                   th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span>
@@ -54,7 +53,7 @@
 
                     <th>
                         <a
-                                th:href="@{/competitors(sortBy='salary', sortDir=${sortBy == 'salary' and sortDir == 'asc' ? 'desc' : 'asc'})}">
+                                th:href="@{/coaches(sortBy='salary', sortDir=${sortBy == 'salary' and sortDir == 'asc' ? 'desc' : 'asc'})}">
                             Salary
                             <span th:if="${sortBy == 'discipline'}"
                                   th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span>
@@ -66,35 +65,35 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="competitor : ${competitors}">
-                    <td th:text="${competitor.name}">Name</td>
-                    <td th:text="${competitor.surname}">Surname</td>
-                    <td th:text="${competitor.country}">Country</td>
-                    <td th:text="${competitor.discipline.label}">Discipline</td>
-                    <td th:text="${'$' + #numbers.formatDecimal(competitor.salary, 0, 'COMMA', 2, 'POINT')}"
+                <tr th:each="coach : ${coaches}">
+                    <td th:text="${coach.name}">Name</td>
+                    <td th:text="${coach.surname}">Surname</td>
+                    <td th:text="${coach.country}">Country</td>
+                    <td th:text="${coach.discipline.label}">Discipline</td>
+                    <td th:text="${'$' + #numbers.formatDecimal(coach.salary, 0, 'COMMA', 2, 'POINT')}"
                         class="text-end">Salary
                     </td>
 
                     <td>
-                        <button class="btn btn-danger btn-sm me-1 delete-button" th:attr="data-id=${competitor.id}"
+                        <button class="btn btn-danger btn-sm me-1 delete-button" th:attr="data-id=${coach.id}"
                                 type="button">
                             <i class="bi bi-trash3"></i>
                         </button>
 
                         <a class="btn btn-secondary btn-sm me-1"
-                           th:href="@{/competitors/{id}/edit(id=${competitor.id})}"
+                           th:href="@{/coaches/{id}/edit(id=${coach.id})}"
                         >
                             <i class="bi bi-pencil-square"></i>
                         </a>
 
-                        <a class="btn btn-info btn-sm text-white" th:href="@{/competitors/{id}(id=${competitor.id})}">
+                        <a class="btn btn-info btn-sm text-white" th:href="@{/coaches/{id}(id=${coach.id})}">
                             <i class="bi bi-info-square"></i>
                         </a>
                     </td>
                 </tr>
 
-                <tr th:if="${#lists.isEmpty(competitors)}">
-                    <td colspan="6" class="text-center">No competitors found.</td>
+                <tr th:if="${#lists.isEmpty(coaches)}">
+                    <td colspan="6" class="text-center">No coaches found.</td>
                 </tr>
                 </tbody>
             </table>
