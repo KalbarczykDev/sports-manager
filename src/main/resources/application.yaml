@@ -6,9 +6,8 @@ spring:
     username: root
     password: learnSpring
 
-
-
-
 sportsmanager:
   seeder:
-    count: 100
+    coaches: 10
+    competitors: 100
+    competitions: 5
