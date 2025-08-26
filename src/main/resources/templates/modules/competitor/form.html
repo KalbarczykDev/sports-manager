@@ -2,74 +2,83 @@
 <!--/*@thymesVar id="formAction" type="java.lang.String"*/-->
 <!--/*@thymesVar id="methodOverride" type="java.lang.String"*/-->
 <!--/*@thymesVar id="countries" type="java.util.List<java.lang.String>"*/-->
-<div th:fragment="content">
-    <div class="header-section">
-        <h1 th:text="${competitor.id} != null ? 'Edit Competitor' : 'Add New Competitor'">Add/Edit Competitor</h1>
-        <button type="button" onclick="history.back()" class="button button-secondary">Back</button>
-    </div>
-    <div class="container form-container">
-
-
-        <form th:object="${competitor}" th:action="@{${formAction}}" method="post">
-            <input type="hidden" name="_method" th:value="${methodOverride}"/>
-
-
-            <div th:if="${#fields.hasGlobalErrors()}" class="form-group error-message">
-                <p th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
-            </div>
-
-            <div class="form-group">
-                <label for="name">Name:</label>
-                <input type="text" id="name" th:field="*{name}" required>
-                <p class="error-message" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</p>
-            </div>
-
-            <div class="form-group">
-                <label for="surname">Surname:</label>
-                <input type="text" id="surname" th:field="*{surname}" required>
-                <p class="error-message" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">Surname
-                    error</p>
-            </div>
-
-            <div class="form-group">
-                <label for="country">Country:</label>
-                <select id="country" th:field="*{country}" required>
-                    <option value="">-- Select Country --</option>
-                    <option th:each="countryName : ${countries}"
-                            th:value="${countryName}"
-                            th:text="${countryName}">Country Name
-                    </option>
-                </select>
-                <p class="error-message" th:if="${#fields.hasErrors('country')}" th:errors="*{country}">Country
-                    error</p>
-            </div>
-
-            <div class="form-group">
-                <label for="discipline">Discipline:</label>
-                <select id="discipline" th:field="*{discipline}" required>
-                    <option value="">-- Select Discipline --</option>
-                    <option th:each="disciplineEnum : ${T(dev.kalbarczyk.sportsmanager.common.enums.Discipline).values()}"
-                            th:value="${disciplineEnum.name()}"
-                            th:text="${disciplineEnum.label}">Discipline Name
-                    </option>
-                </select>
-                <p class="error-message" th:if="${#fields.hasErrors('discipline')}" th:errors="*{discipline}">Discipline
-                    error</p>
-
-            </div>
-
-            <div class="form-group">
-                <label for="salary">Salary(in $):</label>
-                <input type="number" id="salary" th:field="*{salary}" required>
-                <p class="error-message" th:if="${#fields.hasErrors('salary')}" th:errors="*{salary}">Salary
-                    error</p>
-            </div>
-
-            <button type="submit" class="button button-success"
-                    th:text="${competitor.id} != null ? 'Update Competitor' : 'Add Competitor'">
-                Add/Update Competitor
-            </button>
-        </form>
+<div th:fragment="content" class="container my-5">
+    <!-- Header Section -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="fw-bold text-primary"
+            th:text="${competitor.id} != null ? 'Edit Competitor' : 'Add New Competitor'">
+            Add/Edit Competitor
+        </h1>
+        <button type="button" onclick="history.back()" class="btn btn-secondary">
+            Back
+        </button>
     </div>
 
+    <!-- Form Card -->
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <form th:object="${competitor}" th:action="@{${formAction}}" method="post" novalidate>
+                <input type="hidden" name="_method" th:value="${methodOverride}"/>
+
+                <!-- Global errors -->
+                <div th:if="${#fields.hasGlobalErrors()}" class="alert alert-danger">
+                    <p th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
+                </div>
+
+                <!-- Name -->
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" id="name" th:field="*{name}" class="form-control" required>
+                    <div class="text-danger small" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+                </div>
+
+                <!-- Surname -->
+                <div class="mb-3">
+                    <label for="surname" class="form-label">Surname</label>
+                    <input type="text" id="surname" th:field="*{surname}" class="form-control" required>
+                    <div class="text-danger small" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"></div>
+                </div>
+
+                <!-- Country -->
+                <div class="mb-3">
+                    <label for="country" class="form-label">Country</label>
+                    <select id="country" th:field="*{country}" class="form-select" required>
+                        <option value="">-- Select Country --</option>
+                        <option th:each="countryName : ${countries}"
+                                th:value="${countryName}"
+                                th:text="${countryName}">
+                        </option>
+                    </select>
+                    <div class="text-danger small" th:if="${#fields.hasErrors('country')}" th:errors="*{country}"></div>
+                </div>
+
+                <!-- Discipline -->
+                <div class="mb-3">
+                    <label for="discipline" class="form-label">Discipline</label>
+                    <select id="discipline" th:field="*{discipline}" class="form-select" required>
+                        <option value="">-- Select Discipline --</option>
+                        <option th:each="disciplineEnum : ${T(dev.kalbarczyk.sportsmanager.common.enums.Discipline).values()}"
+                                th:value="${disciplineEnum.name()}"
+                                th:text="${disciplineEnum.label}">
+                        </option>
+                    </select>
+                    <div class="text-danger small" th:if="${#fields.hasErrors('discipline')}"
+                         th:errors="*{discipline}"></div>
+                </div>
+
+                <!-- Salary -->
+                <div class="mb-3">
+                    <label for="salary" class="form-label">Salary (in $)</label>
+                    <input type="number" id="salary" th:field="*{salary}" class="form-control" required>
+                    <div class="text-danger small" th:if="${#fields.hasErrors('salary')}" th:errors="*{salary}"></div>
+                </div>
+
+                <!-- Submit -->
+                <button type="submit" class="btn btn-success"
+                        th:text="${competitor.id} != null ? 'Update Competitor' : 'Add Competitor'">
+                    Add/Update Competitor
+                </button>
+            </form>
+        </div>
+    </div>
 </div>
