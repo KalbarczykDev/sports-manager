@@ -18,9 +18,9 @@ public abstract class AbstractCrudController<T extends BaseEntity> {
 
     protected abstract String getEntityNamePlural();
 
-    protected abstract void prepareFormModel(Model model, T entity, String formAction, String title);
+    protected abstract void prepareFormModel(final Model model, final T entity, final String formAction, final String title);
 
-    protected abstract void validateEntity(T entity, BindingResult bindingResult);
+    protected abstract void validateEntity(final T entity, final BindingResult bindingResult);
 
     protected abstract T createNewInstance();
 
@@ -28,8 +28,8 @@ public abstract class AbstractCrudController<T extends BaseEntity> {
     @GetMapping
     public String index(
             final Model model,
-            @RequestParam(name = "sortBy", defaultValue = "id") String sortBy,
-            @RequestParam(name = "sortDir", defaultValue = "asc") String sortDir
+            final @RequestParam(name = "sortBy", defaultValue = "id") String sortBy,
+            final @RequestParam(name = "sortDir", defaultValue = "asc") String sortDir
     ) {
         val entities = getBaseService().findAll(sortBy, sortDir);
         model.addAttribute(getEntityNamePlural(), entities);
@@ -49,10 +49,10 @@ public abstract class AbstractCrudController<T extends BaseEntity> {
 
     @PostMapping({"", "/{id}"})
     public String save(
-            @PathVariable(required = false) Long id,
-            @ModelAttribute T entity,
-            BindingResult bindingResult,
-            Model model) {
+            final @PathVariable(required = false) Long id,
+            final @ModelAttribute T entity,
+            final BindingResult bindingResult,
+            final Model model) {
 
         validateEntity(entity, bindingResult);
 
@@ -73,13 +73,13 @@ public abstract class AbstractCrudController<T extends BaseEntity> {
     }
 
     @GetMapping("/new")
-    public String showNewForm(Model model) {
+    public String showNewForm(final Model model) {
         prepareFormModel(model, createNewInstance(), "/" + getEntityNamePlural(), "New " + getEntityNameSingular());
         return "layout/layout";
     }
 
     @GetMapping("/{id}/edit")
-    public String showEditForm(@PathVariable Long id, Model model) {
+    public String showEditForm(final @PathVariable Long id, final Model model) {
         prepareFormModel(model,
                 getBaseService().findById(id),
                 "/" + getEntityNamePlural() + "/" + id,
@@ -89,7 +89,7 @@ public abstract class AbstractCrudController<T extends BaseEntity> {
 
     @DeleteMapping("/{id}")
     @ResponseBody
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(final @PathVariable Long id) {
         getBaseService().delete(id);
         return ResponseEntity.noContent().build();
     }

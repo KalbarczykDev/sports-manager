@@ -9,10 +9,14 @@ import dev.kalbarczyk.sportsmanager.person.enums.Discipline;
 import dev.kalbarczyk.sportsmanager.person.validation.PersonValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Slf4j
 @RequestMapping("/competitors")
@@ -33,9 +37,18 @@ public class CompetitorController extends AbstractCrudController<Competitor> {
         this.countryService = countryService;
     }
 
+    @PutMapping("/{competitorId}/coaches/{coachId}")
+    @ResponseBody
+    public ResponseEntity<Void> addCoach(final @PathVariable Long competitorId, @PathVariable Long coachId) {
+        competitorService.addCoach(coachId, competitorId);
+        return ResponseEntity.status(204).build();
+    }
+
+
     @Override
     protected void prepareFormModel(Model model, Competitor competitor, String formAction, String title) {
         model.addAttribute("competitor", competitor);
+        model.addAttribute("coaches", competitor.getCoaches());
         model.addAttribute("countries", countryService.getCountriesForForm());
         model.addAttribute("disciplines", Discipline.values());
         model.addAttribute("formAction", formAction);
