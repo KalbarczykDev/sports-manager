@@ -31,7 +31,6 @@ public abstract class AbstractCrudController<T extends BaseEntity> {
             @RequestParam(name = "sortBy", defaultValue = "id") String sortBy,
             @RequestParam(name = "sortDir", defaultValue = "asc") String sortDir
     ) {
-        log.info("Fetching all {} sorted by {} {}", getEntityNamePlural(), sortBy, sortDir);
         val entities = getBaseService().findAll(sortBy, sortDir);
         model.addAttribute(getEntityNamePlural(), entities);
         model.addAttribute("sortBy", sortBy);
@@ -42,10 +41,9 @@ public abstract class AbstractCrudController<T extends BaseEntity> {
 
     @GetMapping("{id}")
     public String show(final @PathVariable Long id, final Model model) {
-        log.info("Fetching {} with id {}", getEntityNameSingular(), id);
         val entity = getBaseService().findById(id);
         model.addAttribute(getEntityNameSingular(), entity);
-        model.addAttribute("view", "modules/" + getEntityNamePlural() + "/show");
+        model.addAttribute("view", "modules/" + getEntityNameSingular() + "/show");
         return "layout/layout";
     }
 
@@ -92,7 +90,6 @@ public abstract class AbstractCrudController<T extends BaseEntity> {
     @DeleteMapping("/{id}")
     @ResponseBody
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        log.info("Deleting {} with id {}", getEntityNameSingular(), id);
         getBaseService().delete(id);
         return ResponseEntity.noContent().build();
     }

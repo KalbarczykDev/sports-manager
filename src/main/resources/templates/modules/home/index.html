@@ -1,8 +1,76 @@
-<div th:fragment="content">
-    <div class="text-center py-5 bg-light">
-        <h1 class="display-4">Welcome to Sports Manager</h1>
-        <p class="lead">Manage competitors, competitions, and coaches with ease.</p>
-        <img th:src="@{/images/logo.webp}" alt="logo" width="200" height="200">
-    </div>
-</div>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="eng">
+<head>
+    <meta charset="UTF-8">
+    <title>Sports Manager</title>
+    <link th:href="@{/css/main.css}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
+</head>
+<body>
+<!-- Hero Section -->
+<section class="text-center py-5 bg-dark text-white">
+    <div class="container">
+        <img th:src="@{/images/logo.webp}" alt="logo" width="150" height="150" class="mb-4">
+        <h1 class="display-3 fw-bold">Sports Manager</h1>
+        <p class="lead">Your all-in-one platform to manage competitors, coaches & competitions with ease.</p>
+        <a href="/competitors" class="btn btn-primary btn-lg me-3 mt-3">Manage Competitors</a>
+        <a href="/competitions" class="btn btn-outline-light btn-lg mt-3">View Competitions</a>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-4 mb-4">
+                <a href="/competitors" class="text-decoration-none text-dark">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body">
+                            <i class="bi bi-people display-4 text-primary mb-3"></i>
+                            <h5 class="card-title fw-bold">Competitors</h5>
+                            <p class="card-text">Add, edit and track all your competitors with detailed stats and
+                                profiles.</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4 mb-4">
+                <a href="/competitions" class="text-decoration-none text-dark">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body">
+                            <i class="bi bi-trophy display-4 text-warning mb-3"></i>
+                            <h5 class="card-title fw-bold">Competitions</h5>
+                            <p class="card-text">Organize tournaments, manage brackets and record results
+                                efficiently.</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4 mb-4">
+                <a href="/coaches" class="text-decoration-none text-dark">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body">
+                            <i class="bi bi-person-badge display-4 text-success mb-3"></i>
+                            <h5 class="card-title fw-bold">Coaches</h5>
+                            <p class="card-text">Assign coaches, monitor their performance and link them to teams.</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call To Action -->
+<section class="py-5 text-center bg-primary text-white">
+    <div class="container">
+        <h2 class="fw-bold">Ready to streamline your sports management?</h2>
+        <p class="lead mb-4">Start building your team and organizing competitions today.</p>
+        <a href="/competitors/new" class="btn btn-light btn-lg me-3">Add New Competitor</a>
+        <a href="/competitions/new" class="btn btn-outline-light btn-lg">Create Competition</a>
+    </div>
+</section>
+</body>
+</html>

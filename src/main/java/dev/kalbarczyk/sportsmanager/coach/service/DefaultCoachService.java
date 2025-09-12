@@ -24,4 +24,10 @@ public class DefaultCoachService extends AbstractCrudService<Coach> implements C
     protected JpaRepository<Coach, Long> getRepository() {
         return coachRepository;
     }
+
+
+    @Override
+    protected String getEntityName() {
+        return "Coach";
+    }
 }

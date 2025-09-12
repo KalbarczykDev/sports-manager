@@ -14,6 +14,8 @@ public abstract class AbstractCrudService<T extends BaseEntity> implements CrudS
 
     protected abstract JpaRepository<T, Long> getRepository();
 
+    protected abstract String getEntityName();
+
     @Override
     public List<T> findAll(String sortBy, String sortDir) {
         log.info("Fetching all objects of type {}", this.getClass().getSimpleName());
@@ -27,24 +29,24 @@ public abstract class AbstractCrudService<T extends BaseEntity> implements CrudS
 
     @Override
     public T findById(Long id) {
-        log.info("Fetching object of type {}", this.getClass().getSimpleName());
+        log.info("Fetching object of type {}", this.getEntityName());
         return getRepository().findById(id).orElseThrow(() -> {
-            log.warn("Object {} not found with id {}", this.getClass().getSimpleName(), id);
-            return new CrudException.NotFound(this.getClass().getSimpleName());
+            log.warn("Object {} not found with id {}", this.getEntityName(), id);
+            return new CrudException.NotFound(this.getEntityName());
         });
     }
 
     @Override
     public T save(T entity) {
-        log.info("Saving object of type {}", this.getClass().getSimpleName());
+        log.info("Saving object of type {}", this.getEntityName());
         return getRepository().save(entity);
     }
 
     @Override
     public T update(Long id, T entity) {
-        log.info("Updating object of type {} and id {}", this.getClass().getSimpleName(), id);
+        log.info("Updating object of type {} and id {}", this.getEntityName(), id);
         if (!getRepository().existsById(id)) {
-            log.warn("Cannot update. Object {} not found with ID: {}", this.getClass().getSimpleName(), id);
+            log.warn("Cannot update. Object {} not found with ID: {}", this.getEntityName(), id);
             throw new CrudException.NotFound("Competitor not found with id: " + id);
         }
         entity.setId(id);
@@ -53,7 +55,7 @@ public abstract class AbstractCrudService<T extends BaseEntity> implements CrudS
 
     @Override
     public void delete(Long id) {
-        log.info("Deleting {} with ID: {}", this.getClass().getSimpleName(), id);
+        log.info("Deleting {} with ID: {}", this.getEntityName(), id);
         if (!getRepository().existsById(id)) {
             throw new RuntimeException("Entity not found with id: " + id);
         }

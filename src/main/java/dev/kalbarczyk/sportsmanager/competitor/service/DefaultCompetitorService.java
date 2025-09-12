@@ -24,4 +24,9 @@ public class DefaultCompetitorService extends AbstractCrudService<Competitor> im
     protected JpaRepository<Competitor, Long> getRepository() {
         return competitorRepository;
     }
+
+    @Override
+    protected String getEntityName() {
+        return "Competitor";
+    }
 }
