@@ -26,16 +26,17 @@ public abstract class AbstractCrudController<T extends BaseEntity> {
 
 
     @GetMapping
-    public String index(
-            final Model model,
-            final @RequestParam(name = "sortBy", defaultValue = "id") String sortBy,
-            final @RequestParam(name = "sortDir", defaultValue = "asc") String sortDir
-    ) {
-        val entities = getBaseService().findAll(sortBy, sortDir);
-        model.addAttribute(getEntityNamePlural(), entities);
+    public String index(final Model model, final @RequestParam(name = "page",
+                                defaultValue = "0") int page,
+                        final @RequestParam(name = "size",
+                                defaultValue = "30") int size, final @RequestParam(name = "sortBy", defaultValue = "id") String sortBy, final @RequestParam(name = "sortDir", defaultValue = "asc") String sortDir) {
+        val pageResult = getBaseService().findAll(page, size, sortBy, sortDir);
+        model.addAttribute(getEntityNamePlural(), pageResult.getContent());
         model.addAttribute("sortBy", sortBy);
         model.addAttribute("sortDir", sortDir);
         model.addAttribute("view", "modules/" + getEntityNameSingular() + "/index");
+        model.addAttribute("currentPage", pageResult.getNumber());
+        model.addAttribute("totalPages", pageResult.getTotalPages());
         return "layout/layout";
     }
 
@@ -48,11 +49,7 @@ public abstract class AbstractCrudController<T extends BaseEntity> {
     }
 
     @PostMapping({"", "/{id}"})
-    public String save(
-            final @PathVariable(required = false) Long id,
-            final @ModelAttribute T entity,
-            final BindingResult bindingResult,
-            final Model model) {
+    public String save(final @PathVariable(required = false) Long id, final @ModelAttribute T entity, final BindingResult bindingResult, final Model model) {
 
         validateEntity(entity, bindingResult);
 
@@ -80,10 +77,7 @@ public abstract class AbstractCrudController<T extends BaseEntity> {
 
     @GetMapping("/{id}/edit")
     public String showEditForm(final @PathVariable Long id, final Model model) {
-        prepareFormModel(model,
-                getBaseService().findById(id),
-                "/" + getEntityNamePlural() + "/" + id,
-                "Edit " + getEntityNameSingular());
+        prepareFormModel(model, getBaseService().findById(id), "/" + getEntityNamePlural() + "/" + id, "Edit " + getEntityNameSingular());
         return "layout/layout";
     }
 

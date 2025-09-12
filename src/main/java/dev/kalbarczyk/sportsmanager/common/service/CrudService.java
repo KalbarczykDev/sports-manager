@@ -1,11 +1,11 @@
 package dev.kalbarczyk.sportsmanager.common.service;
 
 import dev.kalbarczyk.sportsmanager.common.model.BaseEntity;
+import org.springframework.data.domain.Page;
 
-import java.util.List;
 
 public interface CrudService<T extends BaseEntity> {
-    List<T> findAll(final String sortBy, final String sortDir);
+    Page<T> findAll(final int page, final int size, final String sortBy, final String sortDir);
 
     T findById(final Long id);
 

@@ -100,7 +100,41 @@ data-entity='competitors'"
                 </tbody>
             </table>
         </div>
+        <div class="d-flex justify-content-center mt-4" th:if="${totalPages > 1}">
+            <nav>
+                <ul class="pagination pagination-rounded">
+
+                    <!-- Previous Page -->
+                    <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+                        <a class="page-link"
+                           th:href="@{/competitors(page=${currentPage - 1}, sortBy=${sortBy}, sortDir=${sortDir})}"
+                           aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+
+                    <!-- Page Numbers -->
+                    <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+                        th:classappend="${i == currentPage} ? 'active'">
+                        <a class="page-link"
+                           th:href="@{/competitors(page=${i}, sortBy=${sortBy}, sortDir=${sortDir})}"
+                           th:text="${i + 1}">1</a>
+                    </li>
+
+                    <!-- Next Page -->
+                    <li class="page-item" th:classappend="${currentPage + 1 == totalPages} ? 'disabled'">
+                        <a class="page-link"
+                           th:href="@{/competitors(page=${currentPage + 1}, sortBy=${sortBy}, sortDir=${sortDir})}"
+                           aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </nav>
+        </div>
     </div>
+
     <div th:replace="~{fragments/delete-modal :: delete-modal}"></div>
 
 </div>

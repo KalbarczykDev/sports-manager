@@ -3,11 +3,12 @@ package dev.kalbarczyk.sportsmanager.common.service;
 import dev.kalbarczyk.sportsmanager.common.exception.CrudException;
 import dev.kalbarczyk.sportsmanager.common.model.BaseEntity;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.mapping.PropertyReferenceException;
-
-import java.util.List;
 
 @Slf4j
 public abstract class AbstractCrudService<T extends BaseEntity> implements CrudService<T> {
@@ -17,11 +18,11 @@ public abstract class AbstractCrudService<T extends BaseEntity> implements CrudS
     protected abstract String getEntityName();
 
     @Override
-    public List<T> findAll(String sortBy, String sortDir) {
+    public Page<T> findAll(final int page, final int size, final String sortBy, final String sortDir) {
         log.info("Fetching all objects of type {}", this.getClass().getSimpleName());
         try {
-            Sort sort = Sort.by(Sort.Direction.fromString(sortDir), sortBy);
-            return getRepository().findAll(sort);
+            val pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(sortDir), sortBy));
+            return getRepository().findAll(pageable);
         } catch (PropertyReferenceException e) {
             throw new CrudException.InvalidSortingArgument(e.getMessage());
         }
