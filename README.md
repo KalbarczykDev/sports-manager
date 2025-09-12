@@ -8,6 +8,17 @@ Sports Manager is a **CRUD application** designed to simulate a real-world syste
 by organizations like the **International Olympic Committee (IOC)** to manage competitors, competitions, and coaches
 assigned to competitors.
 
+## Table of Contents
+
+- [Requirements](#requirements)
+- [Installation/Running](#installationrunning)
+- [Usage](#usage)
+- [Documentation](#documentation)
+    - [UI](#ui)
+    - [Diagrams](#diagrams)
+- [Contributing](#contributing)
+- [License](#license)
+
 ## Requirements
 
 - Java 21+
@@ -60,26 +71,29 @@ sportsmanager:
 - Click **Add Competitor** and fill in details such as name, age, and assigned coach.
 - Save to persist the competitor in the database.
 
-* **Schedule a Competition**
-
-- Go to the "Competitions" section.
-- Create a new competition by selecting date, location, and discipline.
-- Assign registered competitors.
-
-* **Assign a Coach**
-
-- In the "Coaches" section, create a coach profile.
-- Link a coach to one or multiple competitors.
-
 ## Documentation
 
-### Entity-Relation Diagram
+### UI
 
-![ER Diagram](images/er-diagram.png)
+* Home Screen
+  ![Home Screen](images/home.png)
 
-### Class Diagram
+* Entity List View
+  ![Entity List](images/entity-list.png)
 
-![Class Diagram](./images/class-diagram.png)
+* Entity Details View
+  ![Entity Details](images/entity-details.png)
+
+* Entity Form View
+  ![Entity Form](images/entity-form.png)
+
+### Diagrams
+
+* Entity-Relation Diagram
+  ![ER Diagram](images/er-diagram.png)
+
+* Class Diagram
+  ![Class Diagram](./images/class-diagram.png)
 
 ## Contributing
 
