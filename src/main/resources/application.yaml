@@ -7,10 +7,10 @@ spring:
     url: jdbc:mysql://localhost:3306/sports_manager?createDatabaseIfNotExist=True
     username: root
     password: learnSpring
-  
+
 
 sportsmanager:
   seeder:
-    coaches: 10
+    coaches: 50
     competitors: 100
-    competitions: 5
+    competitions: 10

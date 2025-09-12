@@ -99,6 +99,10 @@
                 </tbody>
             </table>
         </div>
+        <!--/*@thymesVar id="currentPage" type="dev.kalbarczyk.sportsmanager.common"*/-->
+        <!--/*@thymesVar id="totalPages" type="dev.kalbarczyk.sportsmanager.common"*/-->
+        <div th:replace="~{fragments/list-pagination :: pagination(
+        ${currentPage}, ${totalPages}, ${sortBy}, ${sortDir})}"></div>
     </div>
     <div th:replace="~{fragments/delete-modal :: delete-modal}"></div>
 

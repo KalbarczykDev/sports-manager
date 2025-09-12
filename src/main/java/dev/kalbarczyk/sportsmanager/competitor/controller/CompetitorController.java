@@ -1,6 +1,5 @@
 package dev.kalbarczyk.sportsmanager.competitor.controller;
 
-import dev.kalbarczyk.sportsmanager.coach.service.CoachService;
 import dev.kalbarczyk.sportsmanager.common.controller.AbstractCrudController;
 import dev.kalbarczyk.sportsmanager.common.service.CountryService;
 import dev.kalbarczyk.sportsmanager.common.service.CrudService;
@@ -24,17 +23,15 @@ public class CompetitorController extends AbstractCrudController<Competitor> {
     private final CompetitorService competitorService;
     private final PersonValidator competitorValidator;
     private final CountryService countryService;
-    private final CoachService coachService;
 
     @Autowired
     public CompetitorController(
             final CompetitorService competitorService,
             final PersonValidator competitorValidator,
-            final CountryService countryService, CoachService coachService) {
+            final CountryService countryService) {
         this.competitorService = competitorService;
         this.competitorValidator = competitorValidator;
         this.countryService = countryService;
-        this.coachService = coachService;
     }
 
     @PutMapping("/{competitorId}/coaches/{coachId}")
