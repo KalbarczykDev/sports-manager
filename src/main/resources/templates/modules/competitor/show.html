@@ -36,14 +36,18 @@
             </div>
 
             <ul class="list-group" th:if="${!#lists.isEmpty(competitor.coaches)}">
+
                 <li class="list-group-item"
                     th:each="coach : ${competitor.coaches}">
-                    <span th:text="${coach.name + ' ' + coach.surname}">Coach Name</span>
-                    (<span th:text="${coach.country}">Country</span>)
+                    <a class="text-decoration-none text-reset" th:href="@{/coaches/{id}(id=${coach.id})}">
+                        <span th:text="${coach.name + ' ' + coach.surname}">Coach Name</span>
+                        (<span th:text="${coach.discipline.label}">Discipline</span>)
+                    </a>
                 </li>
             </ul>
         </div>
     </div>
+
 
     <!-- Actions -->
     <div class="d-flex gap-2">

@@ -1,0 +1,35 @@
+<div th:fragment="pagination(currentPage, totalPages, sortBy, sortDir)">
+    <div class="d-flex justify-content-center mt-4" th:if="${totalPages > 1}">
+        <nav>
+            <ul class="pagination pagination-rounded">
+
+                <!-- Previous -->
+                <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+                    <a class="page-link page-link-custom"
+                       th:href="@{/competitors(page=${currentPage - 1}, sortBy=${sortBy}, sortDir=${sortDir})}"
+                       aria-label="Previous">
+                        &laquo;
+                    </a>
+                </li>
+
+                <!-- Page Numbers -->
+                <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+                    th:classappend="${i == currentPage} ? 'active'">
+                    <a class="page-link page-link-custom"
+                       th:href="@{/competitors(page=${i}, sortBy=${sortBy}, sortDir=${sortDir})}"
+                       th:text="${i + 1}">1</a>
+                </li>
+
+                <!-- Next -->
+                <li class="page-item" th:classappend="${currentPage + 1 == totalPages} ? 'disabled'">
+                    <a class="page-link page-link-custom"
+                       th:href="@{/competitors(page=${currentPage + 1}, sortBy=${sortBy}, sortDir=${sortDir})}"
+                       aria-label="Next">
+                        &raquo;
+                    </a>
+                </li>
+
+            </ul>
+        </nav>
+    </div>
+</div>

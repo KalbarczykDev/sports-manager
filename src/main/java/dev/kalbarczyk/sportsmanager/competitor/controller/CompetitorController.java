@@ -1,5 +1,6 @@
 package dev.kalbarczyk.sportsmanager.competitor.controller;
 
+import dev.kalbarczyk.sportsmanager.coach.service.CoachService;
 import dev.kalbarczyk.sportsmanager.common.controller.AbstractCrudController;
 import dev.kalbarczyk.sportsmanager.common.service.CountryService;
 import dev.kalbarczyk.sportsmanager.common.service.CrudService;
@@ -13,10 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RequestMapping("/competitors")
@@ -26,15 +24,17 @@ public class CompetitorController extends AbstractCrudController<Competitor> {
     private final CompetitorService competitorService;
     private final PersonValidator competitorValidator;
     private final CountryService countryService;
+    private final CoachService coachService;
 
     @Autowired
     public CompetitorController(
             final CompetitorService competitorService,
             final PersonValidator competitorValidator,
-            final CountryService countryService) {
+            final CountryService countryService, CoachService coachService) {
         this.competitorService = competitorService;
         this.competitorValidator = competitorValidator;
         this.countryService = countryService;
+        this.coachService = coachService;
     }
 
     @PutMapping("/{competitorId}/coaches/{coachId}")
@@ -42,6 +42,16 @@ public class CompetitorController extends AbstractCrudController<Competitor> {
     public ResponseEntity<Void> addCoach(final @PathVariable Long competitorId, @PathVariable Long coachId) {
         competitorService.addCoach(coachId, competitorId);
         return ResponseEntity.status(204).build();
+    }
+
+    @DeleteMapping("/{competitorId}/coaches/{coachId}")
+    @ResponseBody
+    public ResponseEntity<Void> removeCoach(
+            final @PathVariable Long competitorId,
+            final @PathVariable Long coachId
+    ) {
+        competitorService.removeCoach(coachId, competitorId);
+        return ResponseEntity.noContent().build();
     }
 
 

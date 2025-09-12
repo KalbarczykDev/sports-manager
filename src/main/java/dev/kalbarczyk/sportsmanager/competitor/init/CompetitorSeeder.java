@@ -59,7 +59,10 @@ public class CompetitorSeeder extends AbstractPersonSeeder<Competitor> implement
             Collections.shuffle(allCoaches, random);
             int assignCount = random.nextInt(Math.min(5, allCoaches.size()) + 1);
             for (int i = 0; i < assignCount; i++) {
-                competitor.addCoach(allCoaches.get(i));
+                if (competitor.getDiscipline().equals(allCoaches.get(i).getDiscipline())) {
+                    competitor.addCoach(allCoaches.get(i));
+                }
+
             }
         }
 

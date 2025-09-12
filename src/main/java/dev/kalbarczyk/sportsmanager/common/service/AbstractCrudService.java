@@ -19,7 +19,7 @@ public abstract class AbstractCrudService<T extends BaseEntity> implements CrudS
 
     @Override
     public Page<T> findAll(final int page, final int size, final String sortBy, final String sortDir) {
-        log.info("Fetching all objects of type {}", this.getClass().getSimpleName());
+        log.info("Fetching {} objects of type {} on page {} sorted by {} direction {}", size, this.getClass().getSimpleName(), page, sortBy, sortDir);
         try {
             val pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(sortDir), sortBy));
             return getRepository().findAll(pageable);

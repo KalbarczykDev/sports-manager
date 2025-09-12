@@ -205,6 +205,28 @@ a.btn-danger:hover {
     text-decoration: underline;
 }
 
+/* Pagination Styles */
+.pagination-rounded .page-item .page-link-custom {
+    background-color: var(--color-surface);
+    color: var(--color-primary-dark);
+    border: 1px solid var(--color-primary-light);
+    border-radius: 8px;
+    margin: 0 3px;
+    transition: all 0.3s ease;
+}
+
+.pagination-rounded .page-item.active .page-link-custom {
+    background-color: var(--color-primary-dark);
+    color: var(--color-text-dark-bg);
+    border-color: var(--color-primary-dark);
+}
+
+.pagination-rounded .page-item .page-link-custom:hover {
+    background-color: var(--color-primary-light);
+    color: var(--color-text-dark-bg);
+    transform: translateY(-2px);
+}
+
 /* Footer */
 footer {
     position: fixed;
