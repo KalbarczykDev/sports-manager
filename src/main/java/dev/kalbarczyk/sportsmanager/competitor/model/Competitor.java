@@ -3,6 +3,7 @@ package dev.kalbarczyk.sportsmanager.competitor.model;
 import dev.kalbarczyk.sportsmanager.coach.model.Coach;
 import dev.kalbarczyk.sportsmanager.person.model.Person;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
@@ -22,6 +23,7 @@ public class Competitor extends Person {
             joinColumns = @JoinColumn(name = "competitor_id"),
             inverseJoinColumns = @JoinColumn(name = "coach_id")
     )
+    @Builder.Default
     Set<Coach> coaches = new HashSet<>();
 
     public void addCoach(final Coach coach) {

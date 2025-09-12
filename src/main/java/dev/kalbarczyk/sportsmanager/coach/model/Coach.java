@@ -5,6 +5,7 @@ import dev.kalbarczyk.sportsmanager.person.model.Person;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
@@ -17,6 +18,7 @@ import java.util.Set;
 @Table(name = "coaches")
 public class Coach extends Person {
     @ManyToMany(mappedBy = "coaches")
+    @Builder.Default
     Set<Competitor> competitors = new HashSet<>();
 
     public void addCompetitor(final Competitor competitor) {

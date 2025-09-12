@@ -3,19 +3,22 @@ package dev.kalbarczyk.sportsmanager.coach.init;
 import dev.kalbarczyk.sportsmanager.coach.model.Coach;
 import dev.kalbarczyk.sportsmanager.coach.repository.CoachRepository;
 import dev.kalbarczyk.sportsmanager.person.init.AbstractPersonSeeder;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
+@Order(1)
 @RequiredArgsConstructor
-public final class CoachSeeder extends AbstractPersonSeeder<Coach> implements CommandLineRunner {
+public class CoachSeeder extends AbstractPersonSeeder<Coach> implements CommandLineRunner {
     private final CoachRepository coachRepository;
 
-    @Value("${sportsmanager.seeder.competitors:100}")
+    @Value("${sportsmanager.seeder.coaches:100}")
     private int seedCount;
 
     @Override
@@ -34,6 +37,7 @@ public final class CoachSeeder extends AbstractPersonSeeder<Coach> implements Co
     }
 
     @Override
+    @Transactional
     protected Coach createRandomPerson() {
         return Coach.builder()
                 .name(randomFirstName())
@@ -45,6 +49,7 @@ public final class CoachSeeder extends AbstractPersonSeeder<Coach> implements Co
     }
 
     @Override
+    @Transactional
     public void run(String... args) {
         seed();
     }

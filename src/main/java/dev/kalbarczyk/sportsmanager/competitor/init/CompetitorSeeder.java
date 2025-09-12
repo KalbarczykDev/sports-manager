@@ -1,19 +1,27 @@
 package dev.kalbarczyk.sportsmanager.competitor.init;
 
+import dev.kalbarczyk.sportsmanager.coach.repository.CoachRepository;
 import dev.kalbarczyk.sportsmanager.competitor.model.Competitor;
 import dev.kalbarczyk.sportsmanager.competitor.repository.CompetitorRepository;
 import dev.kalbarczyk.sportsmanager.person.init.AbstractPersonSeeder;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
+import java.util.Random;
+
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public final class CompetitorSeeder extends AbstractPersonSeeder<Competitor> implements CommandLineRunner {
+public class CompetitorSeeder extends AbstractPersonSeeder<Competitor> implements CommandLineRunner {
     private final CompetitorRepository competitorRepository;
+    private final CoachRepository coachRepository;
+    private final Random random = new Random();
 
     @Value("${sportsmanager.seeder.competitors:100}")
     private int seedCount;
@@ -34,17 +42,32 @@ public final class CompetitorSeeder extends AbstractPersonSeeder<Competitor> imp
     }
 
     @Override
+    @Transactional
     protected Competitor createRandomPerson() {
-        return Competitor.builder()
+
+
+        val competitor = Competitor.builder()
                 .name(randomFirstName())
                 .surname(randomLastName())
                 .salary(randomSalary(2000, 20000))
                 .country(randomCountry())
                 .discipline(randomDiscipline())
                 .build();
+
+        val allCoaches = coachRepository.findAll();
+        if (!allCoaches.isEmpty()) {
+            Collections.shuffle(allCoaches, random);
+            int assignCount = random.nextInt(Math.min(3, allCoaches.size()) + 1);
+            for (int i = 0; i < assignCount; i++) {
+                competitor.addCoach(allCoaches.get(i));
+            }
+        }
+
+        return competitor;
     }
 
     @Override
+    @Transactional
     public void run(String... args) {
         seed();
     }
