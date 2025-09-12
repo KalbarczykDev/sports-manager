@@ -76,7 +76,8 @@
                     </td>
 
                     <td>
-                        <button class="btn btn-danger btn-sm me-1 delete-button" th:attr="data-id=${competitor.id}"
+                        <button class="btn btn-danger btn-sm me-1 delete-button" th:attr="data-id=${competitor.id},
+data-entity='competitors'"
                                 type="button">
                             <i class="bi bi-trash3"></i>
                         </button>

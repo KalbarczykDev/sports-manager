@@ -57,7 +57,7 @@ public abstract class AbstractCrudService<T extends BaseEntity> implements CrudS
     public void delete(Long id) {
         log.info("Deleting {} with ID: {}", this.getEntityName(), id);
         if (!getRepository().existsById(id)) {
-            throw new RuntimeException("Entity not found with id: " + id);
+            throw new CrudException.NotImplementedEntityException("Entity not found with id: " + id);
         }
         getRepository().deleteById(id);
     }

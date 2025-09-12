@@ -3,7 +3,8 @@ package dev.kalbarczyk.sportsmanager.common.exception;
 public sealed class CrudException extends RuntimeException
         permits CrudException.NotFound,
         CrudException.InvalidSortingArgument,
-        CrudException.InvalidEntityIdException {
+        CrudException.InvalidEntityIdException,
+        CrudException.NotImplementedEntityException {
 
     public CrudException(final String message) {
         super(message);
@@ -25,6 +26,12 @@ public sealed class CrudException extends RuntimeException
 
     public static final class InvalidEntityIdException extends CrudException {
         public InvalidEntityIdException(final String message) {
+            super(message);
+        }
+    }
+
+    public static final class NotImplementedEntityException extends CrudException {
+        public NotImplementedEntityException(final String message) {
             super(message);
         }
     }

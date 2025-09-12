@@ -30,6 +30,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiError);
     }
 
+    @ExceptionHandler(CrudException.InvalidEntityIdException.class)
     public ResponseEntity<ApiError> handleInvalidEntityIdException(final CrudException.InvalidEntityIdException ex) {
         val apiError = ApiError.forGeneralError(
                 HttpStatus.BAD_REQUEST.value(),
@@ -38,4 +39,15 @@ public class GlobalExceptionHandler {
         );
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiError);
     }
+
+    @ExceptionHandler(CrudException.NotImplementedEntityException.class)
+    public ResponseEntity<ApiError> handleNotImplementedEntityException(final Exception ex) {
+        val apiError = ApiError.forGeneralError(
+                HttpStatus.NOT_IMPLEMENTED.value(),
+                HttpStatus.NOT_IMPLEMENTED.getReasonPhrase(),
+                ex.getMessage()
+        );
+        return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(apiError);
+    }
+
 }

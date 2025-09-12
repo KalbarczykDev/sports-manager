@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,9 +23,7 @@ public class Coach extends Person {
     Set<Competitor> competitors = new HashSet<>();
 
     public void addCompetitor(final Competitor competitor) {
-
         if (competitor == null || competitors.contains(competitor)) return;
-
         competitors.add(competitor);
         competitor.addCoach(this);
     }
@@ -33,6 +32,10 @@ public class Coach extends Person {
         if (competitor == null || !competitors.contains(competitor)) return;
         competitors.remove(competitor);
         competitor.removeCoach(this);
+    }
+
+    public Set<Competitor> getCompetitors() {
+        return Collections.unmodifiableSet(competitors);
     }
 
 
