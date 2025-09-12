@@ -57,7 +57,7 @@ public class CompetitorSeeder extends AbstractPersonSeeder<Competitor> implement
         val allCoaches = coachRepository.findAll();
         if (!allCoaches.isEmpty()) {
             Collections.shuffle(allCoaches, random);
-            int assignCount = random.nextInt(Math.min(3, allCoaches.size()) + 1);
+            int assignCount = random.nextInt(Math.min(5, allCoaches.size()) + 1);
             for (int i = 0; i < assignCount; i++) {
                 competitor.addCoach(allCoaches.get(i));
             }

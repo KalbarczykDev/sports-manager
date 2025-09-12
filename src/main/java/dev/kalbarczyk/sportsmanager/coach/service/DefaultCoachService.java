@@ -25,6 +25,7 @@ public class DefaultCoachService extends AbstractCrudService<Coach> implements C
         return coachRepository;
     }
 
+
     @Override
     protected String getEntityName() {
         return "Coach";

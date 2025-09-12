@@ -59,6 +59,7 @@ public class DefaultCompetitorService extends AbstractCrudService<Competitor> im
         return competitor.getCoaches();
     }
 
+
     private Competitor getCompetitorOrThrow(Long competitorId) {
         return competitorRepository.findById(competitorId).orElseThrow(() -> {
             log.warn("Competitor with ID {} not found", competitorId);
