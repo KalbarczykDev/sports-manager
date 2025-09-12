@@ -45,6 +45,10 @@ spring:
 
 * Apply flyway migrations
 
+```bash
+./mvnw flyway:migrate
+```
+
 * Run application using maven
 
 ```bash
@@ -76,23 +80,29 @@ sportsmanager:
 ### UI
 
 * Home Screen
+
   ![Home Screen](images/home.png)
 
 * Entity List View
+
   ![Entity List](images/entity-list.png)
 
 * Entity Details View
+
   ![Entity Details](images/entity-details.png)
 
 * Entity Form View
+
   ![Entity Form](images/entity-form.png)
 
 ### Diagrams
 
 * Entity-Relation Diagram
+
   ![ER Diagram](images/er-diagram.png)
 
 * Class Diagram
+
   ![Class Diagram](./images/class-diagram.png)
 
 ## Contributing
