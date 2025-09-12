@@ -31,8 +31,9 @@ public class Coach extends Person {
 
     public void removeCompetitor(final Competitor competitor) {
         if (competitor == null || !competitors.contains(competitor)) return;
-
         competitors.remove(competitor);
         competitor.removeCoach(this);
     }
+
+
 }

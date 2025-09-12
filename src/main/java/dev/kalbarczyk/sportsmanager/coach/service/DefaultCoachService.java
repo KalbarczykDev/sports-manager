@@ -3,6 +3,7 @@ package dev.kalbarczyk.sportsmanager.coach.service;
 import dev.kalbarczyk.sportsmanager.coach.model.Coach;
 import dev.kalbarczyk.sportsmanager.coach.repository.CoachRepository;
 import dev.kalbarczyk.sportsmanager.common.service.AbstractCrudService;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -25,6 +26,13 @@ public class DefaultCoachService extends AbstractCrudService<Coach> implements C
         return coachRepository;
     }
 
+
+    @Override
+    @Transactional
+    public void delete(Long id) {
+        coachRepository.deleteById(id);
+        log.info("Deleted coach with id {}", id);
+    }
 
     @Override
     protected String getEntityName() {

@@ -34,11 +34,13 @@ public class Competitor extends Person {
         coach.addCompetitor(this);
     }
 
+
     public void removeCoach(final Coach coach) {
         if (coach == null || !coaches.contains(coach)) return;
         coaches.remove(coach);
         coach.removeCompetitor(this);
     }
+
 
     public Set<Coach> getCoaches() {
         return Collections.unmodifiableSet(coaches);

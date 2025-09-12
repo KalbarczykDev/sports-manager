@@ -1,5 +1,6 @@
-let competitorToDelete = null;
+let entityToDelete = null;
 let rowToDelete = null;
+let entityType = null;
 
 const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
 const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
@@ -7,24 +8,25 @@ const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
 document.querySelectorAll('.delete-button').forEach(btn => {
     btn.addEventListener('click', (event) => {
         event.stopPropagation();
-        competitorToDelete = btn.dataset.id;
+        entityToDelete = btn.dataset.id;
+        entityType = btn.dataset.entity;
         rowToDelete = btn.closest('tr');
         deleteModal.show();
     });
 });
 
 confirmDeleteBtn.addEventListener('click', () => {
-    if (competitorToDelete) {
-        fetch(`/competitors/${competitorToDelete}`, {method: 'DELETE'})
+    if (entityToDelete && entityType) {
+        fetch(`/${entityType}/${entityToDelete}`, {method: 'DELETE'})
             .then(response => {
                 if (response.ok) {
                     if (rowToDelete) {
                         rowToDelete.remove();
                     } else {
-                        window.location.href = '/competitors';
+                        window.location.href = `/${entityType}`;
                     }
                 } else {
-                    console.error('Error deleting Competitor.');
+                    console.error(`Error deleting ${entityType}.`);
                 }
             })
             .catch(error => {
@@ -32,8 +34,9 @@ confirmDeleteBtn.addEventListener('click', () => {
             })
             .finally(() => {
                 deleteModal.hide();
-                competitorToDelete = null;
+                entityToDelete = null;
                 rowToDelete = null;
+                entityType = null;
             });
     }
 });
