@@ -7,8 +7,8 @@ import dev.kalbarczyk.sportsmanager.competitor.model.Competitor;
 import dev.kalbarczyk.sportsmanager.competitor.service.CompetitorService;
 import dev.kalbarczyk.sportsmanager.person.enums.Discipline;
 import dev.kalbarczyk.sportsmanager.person.validation.PersonValidator;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,21 +18,12 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RequestMapping("/competitors")
 @Controller
+@RequiredArgsConstructor
 public class CompetitorController extends AbstractCrudController<Competitor> {
 
     private final CompetitorService competitorService;
-    private final PersonValidator competitorValidator;
+    private final PersonValidator personValidator;
     private final CountryService countryService;
-
-    @Autowired
-    public CompetitorController(
-            final CompetitorService competitorService,
-            final PersonValidator competitorValidator,
-            final CountryService countryService) {
-        this.competitorService = competitorService;
-        this.competitorValidator = competitorValidator;
-        this.countryService = countryService;
-    }
 
     @PutMapping("/{competitorId}/coaches/{coachId}")
     @ResponseBody
@@ -55,7 +46,6 @@ public class CompetitorController extends AbstractCrudController<Competitor> {
     @Override
     protected void prepareFormModel(Model model, Competitor competitor, String formAction, String title) {
         model.addAttribute("competitor", competitor);
-        model.addAttribute("coaches", competitor.getCoaches());
         model.addAttribute("countries", countryService.getCountriesForForm());
         model.addAttribute("disciplines", Discipline.values());
         model.addAttribute("formAction", formAction);
@@ -65,7 +55,7 @@ public class CompetitorController extends AbstractCrudController<Competitor> {
 
     @Override
     protected void validateEntity(Competitor entity, BindingResult bindingResult) {
-        competitorValidator.validate(entity, bindingResult);
+        personValidator.validate(entity, bindingResult);
     }
 
     @Override
