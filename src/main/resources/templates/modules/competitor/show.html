@@ -26,25 +26,39 @@
         </div>
     </div>
 
-    <!-- Coaches Section -->
     <div class="card shadow-sm mb-4">
         <div class="card-body">
             <h5 class="fw-bold mb-3">Coaches</h5>
 
-            <div th:if="${#lists.isEmpty(competitor.coaches)}">
-                <p class="text-muted">No coaches assigned</p>
-            </div>
-
-            <ul class="list-group" th:if="${!#lists.isEmpty(competitor.coaches)}">
-
-                <li class="list-group-item"
+            <!-- List of current coaches -->
+            <ul class="list-group mb-3">
+                <li class="list-group-item d-flex justify-content-between align-items-center"
                     th:each="coach : ${competitor.coaches}">
-                    <a class="text-decoration-none text-reset" th:href="@{/coaches/{id}(id=${coach.id})}">
-                        <span th:text="${coach.name + ' ' + coach.surname}">Coach Name</span>
-                        (<span th:text="${coach.discipline.label}">Discipline</span>)
-                    </a>
+                    <span th:text="${coach.name + ' ' + coach.surname}">Coach Name</span>
+                    <button type="button" class="btn btn-danger btn-sm"
+                            th:data-competitor-id="${competitor.id}"
+                            th:data-coach-id="${coach.id}"
+                            onclick="removeCoach(this)">
+                        <i class="bi bi-trash3"></i>
+                    </button>
+
+                </li>
+                <li th:if="${#lists.isEmpty(competitor.coaches)}" class="list-group-item text-muted">
+                    No coaches assigned.
                 </li>
             </ul>
+
+            <!-- Add new coach -->
+            <div class="input-group">
+                <select class="form-select" id="availableCoachSelect">
+                    <!--/*@thymesVar id="availableCoaches" type="dev"*/-->
+                    <option th:each="coach : ${availableCoaches}"
+                            th:value="${coach.id}"
+                            th:text="${coach.name + ' ' + coach.surname}">
+                    </option>
+                </select>
+                <button class="btn btn-primary" type="button" onclick="addCoach(1)">Add Coach</button>
+            </div>
         </div>
     </div>
 
@@ -65,3 +79,31 @@ data-entity='competitors'"
 
     <div th:replace="~{fragments/delete-modal :: delete-modal}"></div>
 </div>
+
+<script>
+    function addCoach(competitorId) {
+        const select = document.getElementById('availableCoachSelect');
+        const coachId = select.value;
+
+        fetch(`/competitors/${competitorId}/coaches/${coachId}`, {
+            method: 'PUT'
+        }).then(res => {
+            if (res.ok) {
+                location.reload();
+            }
+        });
+    }
+
+    function removeCoach(button) {
+        const competitorId = button.dataset.competitorId;
+        const coachId = button.dataset.coachId;
+
+        fetch(`/competitors/${competitorId}/coaches/${coachId}`, {
+            method: 'DELETE'
+        }).then(res => {
+            if (res.ok) {
+                location.reload();
+            }
+        });
+    }
+</script>

@@ -4,6 +4,7 @@ public sealed class CrudException extends RuntimeException
         permits CrudException.NotFound,
         CrudException.InvalidSortingArgument,
         CrudException.InvalidEntityIdException,
+        CrudException.RelationRequirementsException,
         CrudException.NotImplementedEntityException {
 
     public CrudException(final String message) {
@@ -26,6 +27,12 @@ public sealed class CrudException extends RuntimeException
 
     public static final class InvalidEntityIdException extends CrudException {
         public InvalidEntityIdException(final String message) {
+            super(message);
+        }
+    }
+
+    public static final class RelationRequirementsException extends CrudException {
+        public RelationRequirementsException(final String message) {
             super(message);
         }
     }

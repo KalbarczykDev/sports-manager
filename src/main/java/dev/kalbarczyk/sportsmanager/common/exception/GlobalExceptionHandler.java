@@ -40,6 +40,16 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiError);
     }
 
+    @ExceptionHandler(CrudException.RelationRequirementsException.class)
+    public ResponseEntity<ApiError> handleRelationRequirementsException(final CrudException.RelationRequirementsException ex) {
+        val apiError = ApiError.forGeneralError(
+                HttpStatus.BAD_REQUEST.value(),
+                HttpStatus.BAD_REQUEST.getReasonPhrase(),
+                ex.getMessage()
+        );
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiError);
+    }
+
     @ExceptionHandler(CrudException.NotImplementedEntityException.class)
     public ResponseEntity<ApiError> handleNotImplementedEntityException(final Exception ex) {
         val apiError = ApiError.forGeneralError(

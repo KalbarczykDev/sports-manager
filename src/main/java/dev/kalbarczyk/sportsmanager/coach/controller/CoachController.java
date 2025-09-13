@@ -5,6 +5,7 @@ import dev.kalbarczyk.sportsmanager.coach.service.DefaultCoachService;
 import dev.kalbarczyk.sportsmanager.common.controller.AbstractCrudController;
 import dev.kalbarczyk.sportsmanager.common.service.CountryService;
 import dev.kalbarczyk.sportsmanager.common.service.CrudService;
+import dev.kalbarczyk.sportsmanager.competitor.service.CompetitorService;
 import dev.kalbarczyk.sportsmanager.person.enums.Discipline;
 import dev.kalbarczyk.sportsmanager.person.validation.PersonValidator;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ public class CoachController extends AbstractCrudController<Coach> {
     private final DefaultCoachService coachService;
     private final PersonValidator personValidator;
     private final CountryService countryService;
+    private final CompetitorService competitorService;
 
     @Override
     protected CrudService<Coach> getBaseService() {
@@ -46,6 +48,11 @@ public class CoachController extends AbstractCrudController<Coach> {
         model.addAttribute("formAction", formAction);
         model.addAttribute("title", title);
         model.addAttribute("view", "modules/coach/form");
+    }
+
+    @Override
+    protected void addOptionalContentToModelInSHowView(Coach entity, Model model) {
+        model.addAttribute("availableCompetitors", competitorService.findAllCompetitorsByDiscipline(entity.getDiscipline()));
     }
 
     @Override

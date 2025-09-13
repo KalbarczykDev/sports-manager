@@ -22,14 +22,13 @@ public abstract class AbstractCrudController<T extends BaseEntity> {
 
     protected abstract void validateEntity(final T entity, final BindingResult bindingResult);
 
+    protected abstract void addOptionalContentToModelInSHowView(final T entity, final Model model);
+
     protected abstract T createNewInstance();
 
 
     @GetMapping
-    public String index(final Model model, final @RequestParam(name = "page",
-                                defaultValue = "0") int page,
-                        final @RequestParam(name = "size",
-                                defaultValue = "30") int size, final @RequestParam(name = "sortBy", defaultValue = "id") String sortBy, final @RequestParam(name = "sortDir", defaultValue = "asc") String sortDir) {
+    public String index(final Model model, final @RequestParam(name = "page", defaultValue = "0") int page, final @RequestParam(name = "size", defaultValue = "30") int size, final @RequestParam(name = "sortBy", defaultValue = "id") String sortBy, final @RequestParam(name = "sortDir", defaultValue = "asc") String sortDir) {
         val pageResult = getBaseService().findAll(page, size, sortBy, sortDir);
         model.addAttribute(getEntityNamePlural(), pageResult.getContent());
         model.addAttribute("sortBy", sortBy);
@@ -45,6 +44,7 @@ public abstract class AbstractCrudController<T extends BaseEntity> {
         val entity = getBaseService().findById(id);
         model.addAttribute(getEntityNameSingular(), entity);
         model.addAttribute("view", "modules/" + getEntityNameSingular() + "/show");
+        addOptionalContentToModelInSHowView(entity, model);
         return "layout/layout";
     }
 

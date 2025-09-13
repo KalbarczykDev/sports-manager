@@ -1,5 +1,6 @@
 package dev.kalbarczyk.sportsmanager.competitor.controller;
 
+import dev.kalbarczyk.sportsmanager.coach.service.CoachService;
 import dev.kalbarczyk.sportsmanager.common.controller.AbstractCrudController;
 import dev.kalbarczyk.sportsmanager.common.service.CountryService;
 import dev.kalbarczyk.sportsmanager.common.service.CrudService;
@@ -24,6 +25,7 @@ public class CompetitorController extends AbstractCrudController<Competitor> {
     private final CompetitorService competitorService;
     private final PersonValidator personValidator;
     private final CountryService countryService;
+    private final CoachService coachService;
 
     @PutMapping("/{competitorId}/coaches/{coachId}")
     @ResponseBody
@@ -51,6 +53,11 @@ public class CompetitorController extends AbstractCrudController<Competitor> {
         model.addAttribute("formAction", formAction);
         model.addAttribute("title", title);
         model.addAttribute("view", "modules/competitor/form");
+    }
+
+    @Override
+    protected void addOptionalContentToModelInSHowView(final Competitor competitor, final Model model) {
+        model.addAttribute("availableCoaches", coachService.findAllCoachesByDiscipline(competitor.getDiscipline()));
     }
 
     @Override

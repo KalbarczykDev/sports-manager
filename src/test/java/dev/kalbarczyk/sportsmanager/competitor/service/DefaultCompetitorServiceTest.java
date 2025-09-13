@@ -60,6 +60,15 @@ public class DefaultCompetitorServiceTest {
         }
 
         @Test
+        void shouldThrowWhenDifferentDisciplines() {
+            val newCoach = Coach.builder().id(3L).name("Mike").surname("Doe").country("US").discipline(Discipline.FOOTBALL).salary(2000.0).build();
+            when(competitorRepository.findById(1L)).thenReturn(Optional.of(competitor));
+            when(coachRepository.findById(3L)).thenReturn(Optional.of(newCoach));
+            assertThatThrownBy(() -> competitorService.addCoach(3L, 1L)).isInstanceOf(CrudException.RelationRequirementsException.class);
+            verify(competitorRepository, never()).save(any());
+        }
+
+        @Test
         void shouldThrowWhenCompetitorNotFound() {
             when(competitorRepository.findById(1L)).thenReturn(Optional.empty());
 

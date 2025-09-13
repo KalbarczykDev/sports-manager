@@ -6,11 +6,14 @@ import dev.kalbarczyk.sportsmanager.common.exception.CrudException;
 import dev.kalbarczyk.sportsmanager.common.service.AbstractCrudService;
 import dev.kalbarczyk.sportsmanager.competitor.model.Competitor;
 import dev.kalbarczyk.sportsmanager.competitor.repository.CompetitorRepository;
+import dev.kalbarczyk.sportsmanager.person.enums.Discipline;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
 
 @Slf4j
@@ -38,19 +41,31 @@ public class DefaultCompetitorService extends AbstractCrudService<Competitor> im
 
     @Override
     public void addCoach(final Long coachId, final Long competitorId) {
-        var competitor = getCompetitorOrThrow(competitorId);
-        var coach = getCoachOrThrow(coachId);
+        val competitor = getCompetitorOrThrow(competitorId);
+        val coach = getCoachOrThrow(coachId);
+
+        if (competitor.getDiscipline() != coach.getDiscipline()) {
+            throw new CrudException.RelationRequirementsException(
+                    "Coach must practice the same discipline as Competitor"
+            );
+        }
+
         competitor.addCoach(coach);
         competitorRepository.save(competitor);
     }
 
     @Override
     public void removeCoach(Long coachId, Long competitorId) {
-        var competitor = getCompetitorOrThrow(competitorId);
-        var coach = getCoachOrThrow(coachId);
+        val competitor = getCompetitorOrThrow(competitorId);
+        val coach = getCoachOrThrow(coachId);
         competitor.removeCoach(coach);
         competitorRepository.save(competitor);
 
+    }
+
+    @Override
+    public List<Competitor> findAllCompetitorsByDiscipline(Discipline discipline) {
+        return competitorRepository.findByDiscipline(discipline);
     }
 
     @Override
