@@ -1,32 +1,44 @@
 package dev.kalbarczyk.sportsmanager.auth.controller;
 
-import dev.kalbarczyk.sportsmanager.user.service.UserService;
+import dev.kalbarczyk.sportsmanager.auth.model.LoginRequest;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.Map;
 
 @AllArgsConstructor
 @Controller
 public class AuthController {
 
-    private final UserService userService;
+    private final AuthenticationManager authenticationManager;
+
 
     @GetMapping("/login")
     public String loginPage() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return "modules/auth/login";
     }
 
-    @GetMapping("/register")
-    public String registerPage() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginRequest request) {
+        try {
+            Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.email(), request.password()));
+            User user = (User) auth.getPrincipal();
+            return ResponseEntity.ok(Map.of("message", "Login successful", "email", user.getUsername()));
+
+        } catch (AuthenticationException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "Invalid credentials"));
+        }
     }
 
-    @PostMapping("/register")
-    public String registerUser(@RequestParam String username,
-                               @RequestParam String password) {
-        userService.register(username, password, false);
-        return "redirect:/login";
-    }
+
 }
