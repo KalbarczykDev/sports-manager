@@ -34,7 +34,9 @@
             <ul class="list-group mb-3">
                 <li class="list-group-item d-flex justify-content-between align-items-center"
                     th:each="coach : ${competitor.coaches}">
-                    <span th:text="${coach.name + ' ' + coach.surname}">Coach Name</span>
+                    <a class="text-decoration-none text-reset" th:href="@{/coaches/{id}(id=${coach.id})}">
+                        <span th:text="${coach.name + ' ' + coach.surname}">Coach Name</span>
+                    </a>
                     <button type="button"
                             class="btn btn-danger btn-sm remove-coach-btn"
                             th:data-competitor-id="${competitor.id}"

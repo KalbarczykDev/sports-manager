@@ -42,7 +42,6 @@
                     th:each="competitor : ${coach.competitors}">
                     <a class="text-decoration-none text-reset" th:href="@{/competitors/{id}(id=${competitor.id})}">
                         <span th:text="${competitor.name + ' ' + competitor.surname}">Competitor Name</span>
-                        (<span th:text="${competitor.discipline.label}">Discipline</span>)
                     </a>
                 </li>
             </ul>
