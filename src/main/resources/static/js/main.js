@@ -14,7 +14,6 @@ document.querySelectorAll('.delete-button').forEach(btn => {
         deleteModal.show();
     });
 });
-
 confirmDeleteBtn.addEventListener('click', () => {
     if (entityToDelete && entityType) {
         fetch(`/${entityType}/${entityToDelete}`, {method: 'DELETE'})
@@ -39,4 +38,38 @@ confirmDeleteBtn.addEventListener('click', () => {
                 entityType = null;
             });
     }
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    const addBtn = document.getElementById("addCoachButton");
+    if (addBtn) {
+        addBtn.addEventListener("click", function () {
+            const competitorId = this.dataset.competitorId;
+            const select = document.getElementById("availableCoachSelect");
+            const coachId = select.value;
+
+            fetch(`/competitors/${competitorId}/coaches/${coachId}`, {
+                method: "PUT"
+            }).then(res => {
+                if (res.status === 201) {
+                    location.reload();
+                }
+            }).catch(err => console.error(err));
+        });
+    }
+
+    document.querySelectorAll(".remove-coach-btn").forEach(button => {
+        button.addEventListener("click", function () {
+            const competitorId = this.dataset.competitorId;
+            const coachId = this.dataset.coachId;
+
+            fetch(`/competitors/${competitorId}/coaches/${coachId}`, {
+                method: "DELETE"
+            }).then(res => {
+                if (res.status === 204) {
+                    location.reload();
+                }
+            }).catch(err => console.error(err));
+        });
+    });
 });

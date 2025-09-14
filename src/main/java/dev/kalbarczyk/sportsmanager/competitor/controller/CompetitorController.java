@@ -31,7 +31,7 @@ public class CompetitorController extends AbstractCrudController<Competitor> {
     @ResponseBody
     public ResponseEntity<Void> addCoach(final @PathVariable Long competitorId, @PathVariable Long coachId) {
         competitorService.addCoach(coachId, competitorId);
-        return ResponseEntity.status(204).build();
+        return ResponseEntity.status(201).build();
     }
 
     @DeleteMapping("/{competitorId}/coaches/{coachId}")
