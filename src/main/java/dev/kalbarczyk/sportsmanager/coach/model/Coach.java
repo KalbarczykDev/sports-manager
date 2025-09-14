@@ -8,7 +8,6 @@ import jakarta.persistence.Table;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import lombok.val;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -33,13 +32,6 @@ public class Coach extends Person {
         if (competitor == null || !competitors.contains(competitor)) return;
         competitors.remove(competitor);
         competitor.removeCoach(this);
-    }
-
-    public void clearCompetitors() {
-        for (val competitor : new HashSet<>(competitors)) {
-            removeCompetitor(competitor);
-        }
-        competitors.clear();
     }
 
     public Set<Competitor> getCompetitors() {

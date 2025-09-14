@@ -6,7 +6,6 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import lombok.val;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -41,14 +40,6 @@ public class Competitor extends Person {
         coaches.remove(coach);
         coach.removeCompetitor(this);
     }
-
-    public void clearCoaches() {
-        for (val coach : new HashSet<>(coaches)) {
-            removeCoach(coach);
-        }
-        coaches.clear();
-    }
-
 
     public Set<Coach> getCoaches() {
         return Collections.unmodifiableSet(coaches);
