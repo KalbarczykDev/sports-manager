@@ -24,6 +24,15 @@ CREATE TABLE competitors
     discipline VARCHAR(255) NOT NULL
 );
 
+CREATE TABLE competitions
+(
+    id         BIGINT       NOT NULL AUTO_INCREMENT,
+    name       VARCHAR(255) NOT NULL,
+    discipline VARCHAR(255) NOT NULL,
+    date       DATE         NOT NULL,
+    PRIMARY KEY (id)
+);
+
 create table coaches
 (
     id         bigint auto_increment
