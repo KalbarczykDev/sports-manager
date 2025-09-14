@@ -44,6 +44,23 @@ public class CompetitorController extends AbstractCrudController<Competitor> {
         return ResponseEntity.noContent().build();
     }
 
+    @PutMapping("/{competitorId}/competitions/{competitionId}")
+    @ResponseBody
+    public ResponseEntity<Void> addCompetition(final @PathVariable Long competitorId, @PathVariable Long competitionId) {
+        competitorService.addCompetition(competitionId, competitorId);
+        return ResponseEntity.status(201).build();
+    }
+
+    @DeleteMapping("/{competitorId}/coaches/{competitionId}")
+    @ResponseBody
+    public ResponseEntity<Void> removeCompetition(
+            final @PathVariable Long competitorId,
+            final @PathVariable Long competitionId
+    ) {
+        competitorService.removeCompetition(competitionId, competitorId);
+        return ResponseEntity.noContent().build();
+    }
+
 
     @Override
     protected void prepareFormModel(Model model, Competitor competitor, String formAction, String title) {

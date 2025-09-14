@@ -1,12 +1,14 @@
 package dev.kalbarczyk.sportsmanager.competitor.service;
 
 import dev.kalbarczyk.sportsmanager.coach.model.Coach;
-import dev.kalbarczyk.sportsmanager.coach.repository.CoachRepository;
+import dev.kalbarczyk.sportsmanager.coach.service.CoachService;
 import dev.kalbarczyk.sportsmanager.common.exception.CrudException;
 import dev.kalbarczyk.sportsmanager.common.service.AbstractCrudService;
+import dev.kalbarczyk.sportsmanager.competition.service.CompetitionService;
 import dev.kalbarczyk.sportsmanager.competitor.model.Competitor;
 import dev.kalbarczyk.sportsmanager.competitor.repository.CompetitorRepository;
 import dev.kalbarczyk.sportsmanager.person.enums.Discipline;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.springframework.context.annotation.Primary;
@@ -19,15 +21,11 @@ import java.util.Set;
 @Slf4j
 @Service
 @Primary
+@RequiredArgsConstructor
 public class DefaultCompetitorService extends AbstractCrudService<Competitor> implements CompetitorService {
     private final CompetitorRepository competitorRepository;
-    private final CoachRepository coachRepository;
-
-
-    public DefaultCompetitorService(final CompetitorRepository competitorRepository, final CoachRepository coachRepository) {
-        this.competitorRepository = competitorRepository;
-        this.coachRepository = coachRepository;
-    }
+    private final CoachService coachService;
+    private final CompetitionService competitionService;
 
     @Override
     protected JpaRepository<Competitor, Long> getRepository() {
@@ -41,26 +39,44 @@ public class DefaultCompetitorService extends AbstractCrudService<Competitor> im
 
     @Override
     public void addCoach(final Long coachId, final Long competitorId) {
-        val competitor = getCompetitorOrThrow(competitorId);
-        val coach = getCoachOrThrow(coachId);
+        val competitor = findById(competitorId);
+        val coach = coachService.findById(coachId);
 
         if (competitor.getDiscipline() != coach.getDiscipline()) {
-            throw new CrudException.RelationRequirementsException(
-                    "Coach must practice the same discipline as Competitor"
-            );
+            throw new CrudException.RelationRequirementsException("Coach must practice the same discipline as Competitor");
         }
-
         competitor.addCoach(coach);
         competitorRepository.save(competitor);
     }
 
     @Override
     public void removeCoach(Long coachId, Long competitorId) {
-        val competitor = getCompetitorOrThrow(competitorId);
-        val coach = getCoachOrThrow(coachId);
+        val competitor = findById(competitorId);
+        val coach = coachService.findById(coachId);
         competitor.removeCoach(coach);
         competitorRepository.save(competitor);
 
+    }
+
+    @Override
+    public void addCompetition(Long competitionId, Long competitorId) {
+        val competitor = findById(competitionId);
+        val competition = competitionService.findById(competitorId);
+
+        if (competitor.getDiscipline() != competition.getDiscipline()) {
+            throw new CrudException.RelationRequirementsException("Discipline for competition and competitor must be the same");
+        }
+
+        competitor.addCompetition(competition);
+        competitorRepository.save(competitor);
+    }
+
+    @Override
+    public void removeCompetition(Long competitionId, Long competitorId) {
+        val competitor = findById(competitionId);
+        val competition = competitionService.findById(competitorId);
+        competitor.removeCompetition(competition);
+        competitorRepository.save(competitor);
     }
 
     @Override
@@ -70,22 +86,8 @@ public class DefaultCompetitorService extends AbstractCrudService<Competitor> im
 
     @Override
     public Set<Coach> findAllCoaches(Long competitorId) {
-        var competitor = getCompetitorOrThrow(competitorId);
+        var competitor = findById(competitorId);
         return competitor.getCoaches();
     }
 
-
-    private Competitor getCompetitorOrThrow(Long competitorId) {
-        return competitorRepository.findById(competitorId).orElseThrow(() -> {
-            log.warn("Competitor with ID {} not found", competitorId);
-            return new CrudException.InvalidEntityIdException("competitor not found");
-        });
-    }
-
-    private Coach getCoachOrThrow(Long coachId) {
-        return coachRepository.findById(coachId).orElseThrow(() -> {
-            log.warn("Coach with ID {} not found", coachId);
-            return new CrudException.InvalidEntityIdException("coach not found");
-        });
-    }
 }

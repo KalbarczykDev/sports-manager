@@ -14,6 +14,10 @@ public interface CompetitorService extends CrudService<Competitor> {
 
     void removeCoach(final Long coachId, final Long competitorId);
 
+    void addCompetition(final Long competitionId, final Long competitorId);
+
+    void removeCompetition(final Long competitionId, final Long competitorId);
+
     Set<Coach> findAllCoaches(final Long competitorId);
 
     List<Competitor> findAllCompetitorsByDiscipline(final Discipline discipline);
