@@ -1,8 +1,10 @@
 package dev.kalbarczyk.sportsmanager.competitor.service;
 
 import dev.kalbarczyk.sportsmanager.coach.model.Coach;
-import dev.kalbarczyk.sportsmanager.coach.repository.CoachRepository;
+import dev.kalbarczyk.sportsmanager.coach.service.CoachService;
 import dev.kalbarczyk.sportsmanager.common.exception.CrudException;
+import dev.kalbarczyk.sportsmanager.competition.model.Competition;
+import dev.kalbarczyk.sportsmanager.competition.service.CompetitionService;
 import dev.kalbarczyk.sportsmanager.competitor.model.Competitor;
 import dev.kalbarczyk.sportsmanager.competitor.repository.CompetitorRepository;
 import dev.kalbarczyk.sportsmanager.person.enums.Discipline;
@@ -14,6 +16,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.time.LocalDate;
 import java.util.Optional;
 import java.util.Set;
 
@@ -25,22 +28,86 @@ import static org.mockito.Mockito.*;
 public class DefaultCompetitorServiceTest {
     @Mock
     private CompetitorRepository competitorRepository;
-
     @Mock
-    private CoachRepository coachRepository;
+    private CoachService coachService;
+    @Mock
+    private CompetitionService competitionService;
 
     @InjectMocks
     private DefaultCompetitorService competitorService;
 
     private Competitor competitor;
     private Coach coach;
+    private Competition competition;
 
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
         competitor = Competitor.builder().id(1L).name("John").surname("Doe").country("PL").discipline(Discipline.BOXING).salary(1000.0).build();
-
+        competition = Competition.builder().id(1L).name("Test Olympics").date(LocalDate.now()).discipline(Discipline.BOXING).build();
         coach = Coach.builder().id(2L).name("Mike").surname("Smith").country("US").discipline(Discipline.BOXING).salary(2000.0).build();
+    }
+
+    /**
+     * addCompetition() Tests
+     */
+    @Nested
+    class AddCompetitionTests {
+        @Test
+        void shouldAddCompetitionToCompetitor() {
+            when(competitorRepository.findById(1L)).thenReturn(Optional.of(competitor));
+            when(competitionService.findById(1L)).thenReturn(competition);
+
+            competitorService.addCompetition(1L, 1L);
+            assertThat(competitor.getCompetitions()).contains(competition);
+            verify(competitorRepository).save(competitor);
+        }
+
+        @Test
+        void shouldThrowWhenDifferentDisciplines() {
+            val newCompetition = Competition.builder().id(2L).name("Test Olympics").date(LocalDate.now()).discipline(Discipline.BASEBALL).build();
+            when(competitorRepository.findById(1L)).thenReturn(Optional.of(competitor));
+            when(competitionService.findById(2L)).thenReturn(newCompetition);
+
+            assertThatThrownBy(() -> competitorService.addCompetition(2L, 1L)).isInstanceOf(CrudException.NotFound.class);
+
+            verify(competitorRepository, never()).save(any());
+        }
+    }
+
+    /**
+     * removeCompetition() Tests
+     */
+    @Nested
+    class RemoveCompetitionTests {
+        @Test
+        void shouldRemoveCompetitionFromCompetitor() {
+            when(competitorRepository.findById(1L)).thenReturn(Optional.of(competitor));
+            when(competitionService.findById(1L)).thenReturn(competition);
+
+            competitorService.removeCompetition(1L, 1L);
+            assertThat(competitor.getCompetitions()).doesNotContain(competition);
+            assertThat(competition.getCompetitors()).doesNotContain(competitor);
+            verify(competitorRepository).save(competitor);
+        }
+
+        @Test
+        void shouldThrowWhenCompetitorNotFound() {
+            when(competitorRepository.findById(1L)).thenReturn(Optional.empty());
+
+            assertThatThrownBy(() -> competitorService.removeCompetition(1L, 1L)).isInstanceOf(CrudException.NotFound.class);
+
+            verify(competitorRepository, never()).save(any());
+        }
+
+        @Test
+        void shouldThrowWhenCompetitionNotFound() {
+            when(competitorRepository.findById(1L)).thenReturn(Optional.of(competitor));
+            when(competitionService.findById(1L)).thenThrow(new CrudException.NotFound("Competition not found"));
+
+            assertThatThrownBy(() -> competitorService.removeCompetition(1L, 1L)).isInstanceOf(CrudException.NotFound.class);
+            verify(competitorRepository, never()).save(any());
+        }
     }
 
     /**
@@ -51,7 +118,7 @@ public class DefaultCompetitorServiceTest {
         @Test
         void shouldAddCoachToCompetitor() {
             when(competitorRepository.findById(1L)).thenReturn(Optional.of(competitor));
-            when(coachRepository.findById(2L)).thenReturn(Optional.of(coach));
+            when(coachService.findById(2L)).thenReturn(coach);
 
             competitorService.addCoach(2L, 1L);
 
@@ -63,7 +130,7 @@ public class DefaultCompetitorServiceTest {
         void shouldThrowWhenDifferentDisciplines() {
             val newCoach = Coach.builder().id(3L).name("Mike").surname("Doe").country("US").discipline(Discipline.FOOTBALL).salary(2000.0).build();
             when(competitorRepository.findById(1L)).thenReturn(Optional.of(competitor));
-            when(coachRepository.findById(3L)).thenReturn(Optional.of(newCoach));
+            when(coachService.findById(3L)).thenReturn(newCoach);
             assertThatThrownBy(() -> competitorService.addCoach(3L, 1L)).isInstanceOf(CrudException.RelationRequirementsException.class);
             verify(competitorRepository, never()).save(any());
         }
@@ -72,7 +139,7 @@ public class DefaultCompetitorServiceTest {
         void shouldThrowWhenCompetitorNotFound() {
             when(competitorRepository.findById(1L)).thenReturn(Optional.empty());
 
-            assertThatThrownBy(() -> competitorService.addCoach(2L, 1L)).isInstanceOf(CrudException.InvalidEntityIdException.class).hasMessageContaining("competitor not found");
+            assertThatThrownBy(() -> competitorService.addCoach(2L, 1L)).isInstanceOf(CrudException.NotFound.class);
 
             verify(competitorRepository, never()).save(any());
         }
@@ -80,9 +147,9 @@ public class DefaultCompetitorServiceTest {
         @Test
         void shouldThrowWhenCoachNotFound() {
             when(competitorRepository.findById(1L)).thenReturn(Optional.of(competitor));
-            when(coachRepository.findById(2L)).thenReturn(Optional.empty());
+            when(coachService.findById(2L)).thenThrow(new CrudException.NotFound("Coach not found"));
 
-            assertThatThrownBy(() -> competitorService.addCoach(2L, 1L)).isInstanceOf(CrudException.InvalidEntityIdException.class).hasMessageContaining("coach not found");
+            assertThatThrownBy(() -> competitorService.addCoach(2L, 1L)).isInstanceOf(CrudException.NotFound.class);
 
             verify(competitorRepository, never()).save(any());
         }
@@ -97,7 +164,7 @@ public class DefaultCompetitorServiceTest {
         void shouldRemoveCoachFromCompetitor() {
             competitor.addCoach(coach);
             when(competitorRepository.findById(1L)).thenReturn(Optional.of(competitor));
-            when(coachRepository.findById(2L)).thenReturn(Optional.of(coach));
+            when(coachService.findById(2L)).thenReturn(coach);
 
             competitorService.removeCoach(2L, 1L);
 
@@ -110,7 +177,7 @@ public class DefaultCompetitorServiceTest {
         void shouldThrowWhenCompetitorNotFound() {
             when(competitorRepository.findById(1L)).thenReturn(Optional.empty());
 
-            assertThatThrownBy(() -> competitorService.removeCoach(2L, 1L)).isInstanceOf(CrudException.InvalidEntityIdException.class).hasMessageContaining("competitor not found");
+            assertThatThrownBy(() -> competitorService.removeCoach(2L, 1L)).isInstanceOf(CrudException.NotFound.class);
 
             verify(competitorRepository, never()).save(any());
         }
@@ -118,9 +185,9 @@ public class DefaultCompetitorServiceTest {
         @Test
         void shouldThrowWhenCoachNotFound() {
             when(competitorRepository.findById(1L)).thenReturn(Optional.of(competitor));
-            when(coachRepository.findById(2L)).thenReturn(Optional.empty());
+            when(coachService.findById(2L)).thenThrow(CrudException.NotFound.class);
 
-            assertThatThrownBy(() -> competitorService.removeCoach(2L, 1L)).isInstanceOf(CrudException.InvalidEntityIdException.class).hasMessageContaining("coach not found");
+            assertThatThrownBy(() -> competitorService.removeCoach(2L, 1L)).isInstanceOf(CrudException.NotFound.class);
 
             verify(competitorRepository, never()).save(any());
         }
@@ -145,7 +212,7 @@ public class DefaultCompetitorServiceTest {
         void shouldThrowWhenCompetitorNotFound() {
             when(competitorRepository.findById(1L)).thenReturn(Optional.empty());
 
-            assertThatThrownBy(() -> competitorService.findAllCoaches(1L)).isInstanceOf(CrudException.InvalidEntityIdException.class).hasMessageContaining("competitor not found");
+            assertThatThrownBy(() -> competitorService.findAllCoaches(1L)).isInstanceOf(CrudException.NotFound.class);
         }
     }
 
