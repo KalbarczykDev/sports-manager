@@ -1,7 +1,7 @@
 package dev.kalbarczyk.sportsmanager.person.validation;
 
 
-import dev.kalbarczyk.sportsmanager.common.service.DefaultCountryService;
+import dev.kalbarczyk.sportsmanager.common.service.CountryService;
 import dev.kalbarczyk.sportsmanager.person.model.Person;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +17,7 @@ import org.springframework.validation.Validator;
 @RequiredArgsConstructor
 public class PersonValidator implements Validator {
 
-    private final DefaultCountryService countryService;
+    private final CountryService countryService;
 
     @Override
     public boolean supports(@NonNull Class<?> clazz) {
