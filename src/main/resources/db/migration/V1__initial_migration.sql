@@ -44,6 +44,20 @@ create table coaches
     discipline varchar(255)   not null
 );
 
+create table competitors_competitions
+(
+    competitor_id  bigint not null,
+    competition_id bigint not null,
+    constraint competitors_competitions_pk
+        primary key (competitor_id, competition_id),
+    constraint competitors_competitions___competitor
+        foreign key (competitor_id) references competitors (id)
+            on DELETE cascade,
+    constraint competitors_competitions___competition
+        foreign key (competition_id) references competitions (id)
+            on DELETE cascade
+);
+
 create table competitors_coaches
 (
     competitor_id bigint not null,
