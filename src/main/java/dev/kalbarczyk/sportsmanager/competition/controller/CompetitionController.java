@@ -1,17 +1,19 @@
 package dev.kalbarczyk.sportsmanager.competition.controller;
 
-import dev.kalbarczyk.sportsmanager.common.controller.AbstractCrudController;
+import dev.kalbarczyk.sportsmanager.common.controller.CrudController;
 import dev.kalbarczyk.sportsmanager.common.service.CrudService;
 import dev.kalbarczyk.sportsmanager.competition.model.Competition;
 import dev.kalbarczyk.sportsmanager.competition.service.CompetitionService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+@Controller
 @RequestMapping("/competitions")
 @RequiredArgsConstructor
-public class CompetitionController extends AbstractCrudController<Competition> {
+public class CompetitionController extends CrudController<Competition> {
 
     final CompetitionService competitionService;
 

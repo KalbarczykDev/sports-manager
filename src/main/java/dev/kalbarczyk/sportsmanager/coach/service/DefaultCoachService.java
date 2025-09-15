@@ -2,7 +2,7 @@ package dev.kalbarczyk.sportsmanager.coach.service;
 
 import dev.kalbarczyk.sportsmanager.coach.model.Coach;
 import dev.kalbarczyk.sportsmanager.coach.repository.CoachRepository;
-import dev.kalbarczyk.sportsmanager.common.service.AbstractCrudService;
+import dev.kalbarczyk.sportsmanager.common.service.BaseCrudService;
 import dev.kalbarczyk.sportsmanager.person.enums.Discipline;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Primary;
@@ -14,7 +14,7 @@ import java.util.List;
 @Slf4j
 @Service
 @Primary
-public class DefaultCoachService extends AbstractCrudService<Coach> implements CoachService {
+public class DefaultCoachService extends BaseCrudService<Coach> implements CoachService {
 
     private final CoachRepository coachRepository;
 

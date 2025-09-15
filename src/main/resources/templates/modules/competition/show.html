@@ -1,0 +1,57 @@
+<div th:fragment="content" class="container my-5">
+    <!--/*@thymesVar id="competition" type="dev.kalbarczyk.sportsmanager.competition.model.Competition"*/-->
+
+    <!-- Header Section -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="fw-bold text-primary" th:text="${competition.name}">Competition Name</h1>
+        <a th:href="@{/competitions}" class="btn btn-secondary">
+            Back to Competitions
+        </a>
+    </div>
+
+    <!-- Competition Info -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <p class="mb-2"><strong>Discipline:</strong>
+                <span th:text="${competition.discipline.label}">Discipline</span>
+            </p>
+            <p class="mb-0"><strong>Date:</strong>
+                <span th:text="${#temporals.format(competition.date, 'yyyy-MM-dd')}">Date</span>
+            </p>
+        </div>
+    </div>
+
+    <!-- Competitors (read-only list) -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <h5 class="fw-bold mb-3">Competitors</h5>
+            <ul class="list-group">
+                <li class="list-group-item"
+                    th:each="competitor : ${competition.competitors}">
+                    <a class="text-decoration-none text-reset"
+                       th:href="@{/competitors/{id}(id=${competitor.id})}">
+                        <span th:text="${competitor.name + ' ' + competitor.surname}">Competitor Name</span>
+                    </a>
+                </li>
+                <li th:if="${#lists.isEmpty(competition.competitors)}" class="list-group-item text-muted">
+                    No competitors assigned.
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="d-flex gap-2">
+        <a class="btn btn-secondary btn-sm me-1"
+           th:href="@{/competitions/{id}/edit(id=${competition.id})}">
+            <i class="bi bi-pencil-square"></i>
+        </a>
+        <button class="btn btn-danger btn-sm me-1 delete-button"
+                th:attr="data-id=${competition.id}, data-entity='competitions'"
+                type="button">
+            <i class="bi bi-trash3"></i>
+        </button>
+    </div>
+
+    <div th:replace="~{fragments/delete-modal :: delete-modal}"></div>
+</div>

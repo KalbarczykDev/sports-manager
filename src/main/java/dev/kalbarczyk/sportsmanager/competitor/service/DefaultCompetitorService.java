@@ -3,7 +3,7 @@ package dev.kalbarczyk.sportsmanager.competitor.service;
 import dev.kalbarczyk.sportsmanager.coach.model.Coach;
 import dev.kalbarczyk.sportsmanager.coach.service.CoachService;
 import dev.kalbarczyk.sportsmanager.common.exception.CrudException;
-import dev.kalbarczyk.sportsmanager.common.service.AbstractCrudService;
+import dev.kalbarczyk.sportsmanager.common.service.BaseCrudService;
 import dev.kalbarczyk.sportsmanager.competition.service.CompetitionService;
 import dev.kalbarczyk.sportsmanager.competitor.model.Competitor;
 import dev.kalbarczyk.sportsmanager.competitor.repository.CompetitorRepository;
@@ -22,7 +22,7 @@ import java.util.Set;
 @Service
 @Primary
 @RequiredArgsConstructor
-public class DefaultCompetitorService extends AbstractCrudService<Competitor> implements CompetitorService {
+public class DefaultCompetitorService extends BaseCrudService<Competitor> implements CompetitorService {
     private final CompetitorRepository competitorRepository;
     private final CoachService coachService;
     private final CompetitionService competitionService;

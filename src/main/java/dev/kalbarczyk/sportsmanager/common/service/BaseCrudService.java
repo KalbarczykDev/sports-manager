@@ -11,7 +11,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.mapping.PropertyReferenceException;
 
 @Slf4j
-public abstract class AbstractCrudService<T extends BaseEntity> implements CrudService<T> {
+public abstract class BaseCrudService<T extends BaseEntity> implements CrudService<T> {
 
     protected abstract JpaRepository<T, Long> getRepository();
 

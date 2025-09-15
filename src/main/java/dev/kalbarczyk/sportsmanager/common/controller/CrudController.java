@@ -10,7 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
-public abstract class AbstractCrudController<T extends BaseEntity> {
+public abstract class CrudController<T extends BaseEntity> {
 
     protected abstract CrudService<T> getBaseService();
 

@@ -1,7 +1,7 @@
 package dev.kalbarczyk.sportsmanager.competitor.controller;
 
 import dev.kalbarczyk.sportsmanager.coach.service.CoachService;
-import dev.kalbarczyk.sportsmanager.common.controller.AbstractCrudController;
+import dev.kalbarczyk.sportsmanager.common.controller.CrudController;
 import dev.kalbarczyk.sportsmanager.common.service.CountryService;
 import dev.kalbarczyk.sportsmanager.common.service.CrudService;
 import dev.kalbarczyk.sportsmanager.competitor.model.Competitor;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/competitors")
 @Controller
 @RequiredArgsConstructor
-public class CompetitorController extends AbstractCrudController<Competitor> {
+public class CompetitorController extends CrudController<Competitor> {
 
     private final CompetitorService competitorService;
     private final PersonValidator personValidator;
