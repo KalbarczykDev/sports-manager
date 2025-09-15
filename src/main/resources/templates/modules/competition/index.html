@@ -34,8 +34,6 @@
                             <span th:if="${sortBy == 'date'}" th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span>
                         </a>
                     </th>
-
-                    <th>Competitors</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
@@ -43,16 +41,13 @@
                 <tr th:each="competition : ${competitions}">
                     <td th:text="${competition.name}">Competition Name</td>
                     <td th:text="${competition.discipline.label}">Discipline</td>
-                    <td th:text="${#temporals.format(competition.date, 'yyyy-MM-dd')}">Date</td>
-                    <td th:text="${#lists.size(competition.competitors)}">0</td>
-
+                    <td th:text="${#temporals.format(competition.date, 'EEEE, dd MMM yyyy')}">Date</td>
                     <td>
                         <button class="btn btn-danger btn-sm me-1 delete-button"
                                 th:attr="data-id=${competition.id}, data-entity='competitions'"
                                 type="button">
                             <i class="bi bi-trash3"></i>
                         </button>
-
                         <a class="btn btn-secondary btn-sm me-1"
                            th:href="@{/competitions/{id}/edit(id=${competition.id})}">
                             <i class="bi bi-pencil-square"></i>

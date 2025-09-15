@@ -22,7 +22,7 @@ import java.util.Set;
 @Service
 @Primary
 @RequiredArgsConstructor
-public class DefaultCompetitorService extends BaseCrudService<Competitor> implements CompetitorService {
+public class CompetitorServiceImpl extends BaseCrudService<Competitor> implements CompetitorService {
     private final CompetitorRepository competitorRepository;
     private final CoachService coachService;
     private final CompetitionService competitionService;

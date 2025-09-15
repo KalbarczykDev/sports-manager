@@ -20,13 +20,13 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-public class DefaultCoachServiceTest {
+public class CoachServiceImplTest {
 
     @Mock
     private CoachRepository coachRepository;
 
     @InjectMocks
-    private DefaultCoachService coachService;
+    private CoachServiceImpl coachService;
 
     private Coach coach;
 

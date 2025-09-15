@@ -25,7 +25,7 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-public class DefaultCompetitorServiceTest {
+public class CompetitorServiceImplTest {
     @Mock
     private CompetitorRepository competitorRepository;
     @Mock
@@ -34,7 +34,7 @@ public class DefaultCompetitorServiceTest {
     private CompetitionService competitionService;
 
     @InjectMocks
-    private DefaultCompetitorService competitorService;
+    private CompetitorServiceImpl competitorService;
 
     private Competitor competitor;
     private Coach coach;
@@ -265,7 +265,7 @@ public class DefaultCompetitorServiceTest {
             when(competitorRepository.existsById(1L)).thenReturn(false);
             val updated = Competitor.builder().name("Updated").surname("Doe").country("PL").discipline(Discipline.BOXING).salary(1500.0).build();
 
-            assertThatThrownBy(() -> competitorService.update(1L, competitor)).isInstanceOf(CrudException.NotFound.class).hasMessageContaining("Competitor not found");
+            assertThatThrownBy(() -> competitorService.update(1L, updated)).isInstanceOf(CrudException.NotFound.class).hasMessageContaining("Competitor not found");
 
             verify(competitorRepository, never()).save(any());
         }

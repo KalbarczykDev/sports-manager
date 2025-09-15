@@ -12,14 +12,14 @@ import java.util.stream.Collectors;
 
 @Service
 @Primary
-public class DefaultCountryService implements CountryService {
+public class CountryServiceImpl implements CountryService {
 
     private final List<String> countriesForForm;
 
     private final Set<String> validCountryNames;
 
 
-    public DefaultCountryService() {
+    public CountryServiceImpl() {
         val countryCodes = Arrays.stream(Locale.getISOCountries()).collect(Collectors.toSet());
 
         this.validCountryNames = countryCodes.stream()

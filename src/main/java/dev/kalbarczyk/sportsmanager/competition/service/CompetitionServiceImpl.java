@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 @Service
 @Primary
 @RequiredArgsConstructor
-public class DefaultCompetitionService extends BaseCrudService<Competition> implements CompetitionService {
+public class CompetitionServiceImpl extends BaseCrudService<Competition> implements CompetitionService {
 
     private final CompetitionRepository competitionRepository;
 

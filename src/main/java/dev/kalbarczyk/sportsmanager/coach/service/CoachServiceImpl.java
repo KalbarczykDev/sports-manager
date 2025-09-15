@@ -14,11 +14,11 @@ import java.util.List;
 @Slf4j
 @Service
 @Primary
-public class DefaultCoachService extends BaseCrudService<Coach> implements CoachService {
+public class CoachServiceImpl extends BaseCrudService<Coach> implements CoachService {
 
     private final CoachRepository coachRepository;
 
-    public DefaultCoachService(final CoachRepository coachRepository) {
+    public CoachServiceImpl(final CoachRepository coachRepository) {
         this.coachRepository = coachRepository;
     }
 
