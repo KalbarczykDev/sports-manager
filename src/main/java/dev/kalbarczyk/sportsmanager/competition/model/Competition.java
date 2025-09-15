@@ -27,12 +27,10 @@ public class Competition extends BaseEntity {
     @Column(nullable = false, name = "name")
     private String name;
 
-    @NonNull
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, name = "discipline")
     private Discipline discipline;
 
-    @NonNull
     @Column(nullable = false, name = "date")
     private LocalDate date;
 

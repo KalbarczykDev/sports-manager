@@ -55,20 +55,6 @@
                     <div class="text-danger small" th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></div>
                 </div>
 
-                <!-- Competitors (read-only list) -->
-                <div class="mb-3">
-                    <label class="form-label">Competitors</label>
-                    <ul class="list-group">
-                        <li th:each="competitor : ${competition.competitors}"
-                            th:text="${competitor.name + ' ' + competitor.surname + ' (' + competitor.country + ')'}"
-                            class="list-group-item">
-                            Competitor
-                        </li>
-                        <li th:if="${#lists.isEmpty(competition.competitors)}" class="list-group-item text-muted">
-                            No competitors assigned
-                        </li>
-                    </ul>
-                </div>
 
                 <!-- Submit -->
                 <button type="submit" class="btn btn-success"
