@@ -102,7 +102,7 @@ data-entity='competitors'"
         <!--/*@thymesVar id="currentPage" type="dev.kalbarczyk.sportsmanager.common"*/-->
         <!--/*@thymesVar id="totalPages" type="dev.kalbarczyk.sportsmanager.common"*/-->
         <div th:replace="~{fragments/list-pagination :: pagination(
-        ${currentPage}, ${totalPages}, ${sortBy}, ${sortDir})}"></div>
+        ${currentPage}, ${totalPages}, ${sortBy}, ${sortDir},'/competitors')}"></div>
 
 
     </div>

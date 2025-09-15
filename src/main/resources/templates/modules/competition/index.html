@@ -70,7 +70,7 @@
         <!--/*@thymesVar id="currentPage" type="java.lang.Integer"*/-->
         <!--/*@thymesVar id="totalPages" type="java.lang.Integer"*/-->
         <div th:replace="~{fragments/list-pagination :: pagination(
-            ${currentPage}, ${totalPages}, ${sortBy}, ${sortDir})}">
+            ${currentPage}, ${totalPages}, ${sortBy}, ${sortDir},'/competitions')}">
         </div>
     </div>
 </div>
