@@ -1,7 +1,7 @@
 package dev.kalbarczyk.sportsmanager.person.init;
 
 
-import dev.kalbarczyk.sportsmanager.common.init.AbstractEntitySeeder;
+import dev.kalbarczyk.sportsmanager.common.init.EntitySeeder;
 import dev.kalbarczyk.sportsmanager.person.enums.Discipline;
 import dev.kalbarczyk.sportsmanager.person.model.Person;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RequiredArgsConstructor
-public abstract class AbstractPersonSeeder<T extends Person> extends AbstractEntitySeeder<T> {
+public abstract class PersonSeeder<T extends Person> extends EntitySeeder<T> {
     protected abstract T createRandomPerson();
 
     @Override

@@ -3,7 +3,7 @@ package dev.kalbarczyk.sportsmanager.competitor.init;
 import dev.kalbarczyk.sportsmanager.coach.repository.CoachRepository;
 import dev.kalbarczyk.sportsmanager.competitor.model.Competitor;
 import dev.kalbarczyk.sportsmanager.competitor.repository.CompetitorRepository;
-import dev.kalbarczyk.sportsmanager.person.init.AbstractPersonSeeder;
+import dev.kalbarczyk.sportsmanager.person.init.PersonSeeder;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +18,7 @@ import java.util.Random;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class CompetitorSeeder extends AbstractPersonSeeder<Competitor> implements CommandLineRunner {
+public class CompetitorSeeder extends PersonSeeder<Competitor> implements CommandLineRunner {
     private final CompetitorRepository competitorRepository;
     private final CoachRepository coachRepository;
     private final Random random = new Random();

@@ -1,6 +1,6 @@
 package dev.kalbarczyk.sportsmanager.user.init;
 
-import dev.kalbarczyk.sportsmanager.common.init.AbstractEntitySeeder;
+import dev.kalbarczyk.sportsmanager.common.init.EntitySeeder;
 import dev.kalbarczyk.sportsmanager.user.model.User;
 import dev.kalbarczyk.sportsmanager.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class UserSeeder extends AbstractEntitySeeder<User> implements CommandLineRunner {
+public class UserSeeder extends EntitySeeder<User> implements CommandLineRunner {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 

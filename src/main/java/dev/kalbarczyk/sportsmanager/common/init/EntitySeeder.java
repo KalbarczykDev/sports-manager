@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.datafaker.Faker;
 
 @Slf4j
-public abstract class AbstractEntitySeeder<T extends BaseEntity> {
+public abstract class EntitySeeder<T extends BaseEntity> {
 
     protected Faker faker = new Faker();
 

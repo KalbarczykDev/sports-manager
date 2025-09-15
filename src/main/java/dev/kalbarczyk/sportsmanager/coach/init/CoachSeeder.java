@@ -2,7 +2,7 @@ package dev.kalbarczyk.sportsmanager.coach.init;
 
 import dev.kalbarczyk.sportsmanager.coach.model.Coach;
 import dev.kalbarczyk.sportsmanager.coach.repository.CoachRepository;
-import dev.kalbarczyk.sportsmanager.person.init.AbstractPersonSeeder;
+import dev.kalbarczyk.sportsmanager.person.init.PersonSeeder;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Order(1)
 @RequiredArgsConstructor
-public class CoachSeeder extends AbstractPersonSeeder<Coach> implements CommandLineRunner {
+public class CoachSeeder extends PersonSeeder<Coach> implements CommandLineRunner {
     private final CoachRepository coachRepository;
 
     @Value("${sportsmanager.seeder.coaches:100}")

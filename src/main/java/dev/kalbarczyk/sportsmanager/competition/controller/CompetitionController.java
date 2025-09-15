@@ -5,11 +5,11 @@ import dev.kalbarczyk.sportsmanager.common.service.CrudService;
 import dev.kalbarczyk.sportsmanager.competition.model.Competition;
 import dev.kalbarczyk.sportsmanager.competition.service.CompetitionService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-@Controller("/competitions")
+@RequestMapping("/competitions")
 @RequiredArgsConstructor
 public class CompetitionController extends AbstractCrudController<Competition> {
 
