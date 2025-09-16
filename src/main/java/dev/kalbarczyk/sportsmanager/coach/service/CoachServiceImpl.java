@@ -4,6 +4,7 @@ import dev.kalbarczyk.sportsmanager.coach.model.Coach;
 import dev.kalbarczyk.sportsmanager.coach.repository.CoachRepository;
 import dev.kalbarczyk.sportsmanager.common.service.BaseCrudService;
 import dev.kalbarczyk.sportsmanager.competitor.model.Competitor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.springframework.context.annotation.Primary;
@@ -12,17 +13,16 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Default implementation of the {@link CoachService} interface.
+ */
 @Slf4j
 @Service
 @Primary
+@RequiredArgsConstructor
 public class CoachServiceImpl extends BaseCrudService<Coach> implements CoachService {
 
     private final CoachRepository coachRepository;
-
-    public CoachServiceImpl(final CoachRepository coachRepository) {
-        this.coachRepository = coachRepository;
-    }
-
 
     @Override
     public List<Coach> findAllAvailableCoachesForCompetitor(final Competitor competitor) {

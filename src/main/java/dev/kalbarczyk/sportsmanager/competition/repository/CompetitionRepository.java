@@ -6,6 +6,15 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
+/**
+ * Repository interface for {@link Competition} entities.
+ */
 public interface CompetitionRepository extends JpaRepository<Competition, Long> {
-    List<Competition> findAllByDiscipline(Discipline discipline);
+    /**
+     * Finds all competitions by the specified discipline.
+     *
+     * @param discipline the discipline to filter by
+     * @return list of competitions in the given discipline
+     */
+    List<Competition> findAllByDiscipline(final Discipline discipline);
 }

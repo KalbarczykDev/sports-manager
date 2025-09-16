@@ -13,11 +13,15 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Implementation of {@link CompetitionService} using {@link CompetitionRepository}
+ * providing CRUD operations and additional methods for managing {@link Competition} entities.
+ */
 @Slf4j
 @Service
 @Primary
 @RequiredArgsConstructor
-public class CompetitionServiceImpl extends BaseCrudService<Competition> implements CompetitionService {
+public final class CompetitionServiceImpl extends BaseCrudService<Competition> implements CompetitionService {
 
     private final CompetitionRepository competitionRepository;
 

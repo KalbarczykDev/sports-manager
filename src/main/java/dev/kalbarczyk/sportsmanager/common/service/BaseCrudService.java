@@ -10,11 +10,26 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.mapping.PropertyReferenceException;
 
+/**
+ * Abstract base service providing standard CRUD operations for entities extending {@link BaseEntity}.
+ *
+ * @param <T> the type of entity
+ */
 @Slf4j
 public abstract class BaseCrudService<T extends BaseEntity> implements CrudService<T> {
 
+    /**
+     * Returns the JPA repository for the entity.
+     *
+     * @return repository instance
+     */
     protected abstract JpaRepository<T, Long> getRepository();
 
+    /**
+     * Returns the human-readable name of the entity, used in logs and exceptions.
+     *
+     * @return entity name
+     */
     protected abstract String getEntityName();
 
     @Override
@@ -29,7 +44,7 @@ public abstract class BaseCrudService<T extends BaseEntity> implements CrudServi
     }
 
     @Override
-    public T findById(Long id) {
+    public T findById(final Long id) {
         log.info("Fetching object of type {}", this.getEntityName());
         return getRepository().findById(id).orElseThrow(() -> {
             log.warn("Object {} not found with id {}", this.getEntityName(), id);
@@ -38,13 +53,13 @@ public abstract class BaseCrudService<T extends BaseEntity> implements CrudServi
     }
 
     @Override
-    public T save(T entity) {
+    public T save(final T entity) {
         log.info("Saving object of type {}", this.getEntityName());
         return getRepository().save(entity);
     }
 
     @Override
-    public T update(Long id, T entity) {
+    public T update(final Long id, final T entity) {
         log.info("Updating object of type {} and id {}", this.getEntityName(), id);
         if (!getRepository().existsById(id)) {
             log.warn("Cannot update. Object {} not found with ID: {}", this.getEntityName(), id);
@@ -55,7 +70,7 @@ public abstract class BaseCrudService<T extends BaseEntity> implements CrudServi
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(final Long id) {
         log.info("Deleting {} with ID: {}", this.getEntityName(), id);
         if (!getRepository().existsById(id)) {
             throw new CrudException.NotImplementedEntityException("Entity not found with id: " + id);

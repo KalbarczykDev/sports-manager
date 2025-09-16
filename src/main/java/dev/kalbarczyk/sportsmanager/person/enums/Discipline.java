@@ -4,6 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
 
+/**
+ * Enum representing different sports disciplines.
+ * Each discipline has a human-readable label.
+ */
 @Getter
 @ToString
 @AllArgsConstructor

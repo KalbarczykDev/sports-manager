@@ -11,10 +11,12 @@ import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 
+/**
+ * Base class for all JPA entities providing a generated ID.
+ */
 @MappedSuperclass
 @SuperBuilder
 @NoArgsConstructor
-
 @Getter
 @Setter
 public abstract class BaseEntity implements Serializable {

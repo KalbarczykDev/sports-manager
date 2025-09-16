@@ -17,6 +17,10 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Controller for managing {@link Competitor} entities, providing CRUD operations
+ * and endpoints for assigning/removing coaches and competitions.
+ */
 @Slf4j
 @RequestMapping("/competitors")
 @Controller
@@ -65,7 +69,11 @@ public class CompetitorController extends CrudController<Competitor> {
 
 
     @Override
-    protected void prepareFormModel(Model model, Competitor competitor, String formAction, String title) {
+    protected void prepareFormModel(
+            final Model model,
+            final Competitor competitor,
+            final String formAction,
+            final String title) {
         model.addAttribute("competitor", competitor);
         model.addAttribute("countries", countryService.getCountriesForForm());
         model.addAttribute("disciplines", Discipline.values());
@@ -81,7 +89,7 @@ public class CompetitorController extends CrudController<Competitor> {
     }
 
     @Override
-    protected void validateEntity(Competitor entity, BindingResult bindingResult) {
+    protected void validateEntity(final Competitor entity, final BindingResult bindingResult) {
         personValidator.validate(entity, bindingResult);
     }
 

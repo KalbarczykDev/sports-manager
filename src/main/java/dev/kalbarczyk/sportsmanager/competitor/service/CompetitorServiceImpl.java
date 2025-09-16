@@ -18,6 +18,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Default implementation of the Competitor Service
+ */
 @Slf4j
 @Service
 @Primary

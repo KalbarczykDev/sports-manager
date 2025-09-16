@@ -12,13 +12,16 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Represents a competition entity.
+ */
 @Getter
 @Setter
 @NoArgsConstructor
 @Entity
 @SuperBuilder
 @Table(name = "competitions")
-public class Competition extends BaseEntity {
+public final class Competition extends BaseEntity {
     @ManyToMany(mappedBy = "competitions")
     @Builder.Default
     @Getter(AccessLevel.NONE)
@@ -34,18 +37,33 @@ public class Competition extends BaseEntity {
     @Column(nullable = false, name = "date")
     private LocalDate date;
 
+    /**
+     * Adds a competitor to the competition.
+     *
+     * @param competitor the competitor to add
+     */
     public void addCompetitor(final Competitor competitor) {
         if (competitor == null || competitors.contains(competitor)) return;
         competitors.add(competitor);
         competitor.addCompetition(this);
     }
 
+    /**
+     * Removes a competitor from the competition.
+     *
+     * @param competitor the competitor to remove
+     */
     public void removeCompetitor(final Competitor competitor) {
         if (competitor == null || !competitors.contains(competitor)) return;
         competitors.remove(competitor);
         competitor.removeCompetition(this);
     }
 
+    /**
+     * Returns an unmodifiable set of competitors in this competition.
+     *
+     * @return set of competitors
+     */
     public Set<Competitor> getCompetitors() {
         return Collections.unmodifiableSet(competitors);
     }

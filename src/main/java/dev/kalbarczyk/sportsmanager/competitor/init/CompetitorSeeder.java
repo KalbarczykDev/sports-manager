@@ -17,6 +17,9 @@ import org.springframework.stereotype.Component;
 import java.util.Collections;
 import java.util.Random;
 
+/**
+ * Seeder for the {@link Competitor} class.
+ */
 @Slf4j
 @Component
 @Order(3)
@@ -41,7 +44,7 @@ public class CompetitorSeeder extends PersonSeeder<Competitor> implements Comman
     }
 
     @Override
-    protected void save(Competitor entity) {
+    protected void save(final Competitor entity) {
         competitorRepository.save(entity);
     }
 

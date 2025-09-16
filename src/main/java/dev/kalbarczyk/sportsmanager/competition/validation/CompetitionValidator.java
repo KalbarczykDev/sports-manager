@@ -11,16 +11,32 @@ import org.springframework.validation.Validator;
 
 import java.time.LocalDate;
 
+/**
+ * Validator for {@link Competition} entities, ensuring that name, discipline, and date
+ * are provided and that the date is not in the past.
+ */
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class CompetitionValidator implements Validator {
+public final class CompetitionValidator implements Validator {
 
+    /**
+     * Checks if the given class is supported by this validator.
+     *
+     * @param clazz the class to check
+     * @return true if clazz is assignable from {@link Competition}, false otherwise
+     */
     @Override
     public boolean supports(@NonNull Class<?> clazz) {
         return Competition.class.isAssignableFrom(clazz);
     }
 
+    /**
+     * Validates the given {@link Competition} object.
+     *
+     * @param target the object to validate
+     * @param errors the errors object to store validation errors
+     */
     @Override
     public void validate(@NonNull Object target, @NonNull Errors errors) {
         val competition = (Competition) target;

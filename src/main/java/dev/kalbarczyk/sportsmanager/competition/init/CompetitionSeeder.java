@@ -12,11 +12,14 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+/**
+ * Seeds initial {@link Competition} data into the database on application startup.
+ */
 @Slf4j
 @Component
 @Order(2)
 @RequiredArgsConstructor
-public class CompetitionSeeder extends EntitySeeder<Competition> implements CommandLineRunner {
+public final class CompetitionSeeder extends EntitySeeder<Competition> implements CommandLineRunner {
 
     private final CompetitionRepository competitionRepository;
 
@@ -34,7 +37,7 @@ public class CompetitionSeeder extends EntitySeeder<Competition> implements Comm
     }
 
     @Override
-    protected void save(Competition entity) {
+    protected void save(final Competition entity) {
         competitionRepository.save(entity);
     }
 
@@ -51,7 +54,7 @@ public class CompetitionSeeder extends EntitySeeder<Competition> implements Comm
     }
 
     @Override
-    public void run(String... args) {
+    public void run(final String... args) {
         seed();
     }
 }

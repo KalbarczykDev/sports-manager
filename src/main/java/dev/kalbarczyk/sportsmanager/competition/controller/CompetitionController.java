@@ -12,17 +12,20 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+/**
+ * Controller for managing {@link Competition} entities, providing CRUD operations.
+ */
 @Controller
 @RequestMapping("/competitions")
 @RequiredArgsConstructor
-public class CompetitionController extends CrudController<Competition> {
+public final class CompetitionController extends CrudController<Competition> {
 
     final private CompetitionService competitionService;
     final private CompetitionValidator competitionValidator;
 
 
     @Override
-    protected void prepareFormModel(Model model, Competition competition, String formAction, String title) {
+    protected void prepareFormModel(final Model model, final Competition competition, final String formAction, final String title) {
         model.addAttribute("competition", competition);
         model.addAttribute("disciplines", Discipline.values());
         model.addAttribute("formAction", formAction);
@@ -32,12 +35,12 @@ public class CompetitionController extends CrudController<Competition> {
 
 
     @Override
-    protected void addOptionalContentToModelInSHowView(Competition entity, Model model) {
+    protected void addOptionalContentToModelInSHowView(final Competition entity, final Model model) {
         model.addAttribute("competitors", entity.getCompetitors());
     }
 
     @Override
-    protected void validateEntity(Competition entity, BindingResult bindingResult) {
+    protected void validateEntity(final Competition entity, final BindingResult bindingResult) {
         competitionValidator.validate(entity, bindingResult);
     }
 

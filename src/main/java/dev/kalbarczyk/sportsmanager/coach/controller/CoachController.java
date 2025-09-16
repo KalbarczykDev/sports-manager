@@ -15,11 +15,14 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+/**
+ * Controller for managing {@link Coach} entities.
+ */
 @Slf4j
 @RequestMapping("/coaches")
 @Controller
 @RequiredArgsConstructor
-public class CoachController extends CrudController<Coach> {
+public final class CoachController extends CrudController<Coach> {
     private final CoachServiceImpl coachService;
     private final PersonValidator personValidator;
     private final CountryService countryService;
@@ -41,7 +44,7 @@ public class CoachController extends CrudController<Coach> {
     }
 
     @Override
-    protected void prepareFormModel(Model model, Coach coach, String formAction, String title) {
+    protected void prepareFormModel(final Model model, final Coach coach, final String formAction, final String title) {
         model.addAttribute("coach", coach);
         model.addAttribute("countries", countryService.getCountriesForForm());
         model.addAttribute("disciplines", Discipline.values());
@@ -51,12 +54,12 @@ public class CoachController extends CrudController<Coach> {
     }
 
     @Override
-    protected void addOptionalContentToModelInSHowView(Coach entity, Model model) {
+    protected void addOptionalContentToModelInSHowView(final Coach entity, final Model model) {
         model.addAttribute("availableCompetitors", competitorService.findAllCompetitorsByDiscipline(entity.getDiscipline()));
     }
 
     @Override
-    protected void validateEntity(Coach entity, BindingResult bindingResult) {
+    protected void validateEntity(final Coach entity, final BindingResult bindingResult) {
         personValidator.validate(entity, bindingResult);
     }
 

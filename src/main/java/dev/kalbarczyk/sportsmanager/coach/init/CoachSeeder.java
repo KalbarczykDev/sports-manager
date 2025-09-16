@@ -11,6 +11,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+/**
+ * Seeder for {@link Coach} entities.
+ */
 @Slf4j
 @Component
 @Order(1)
@@ -32,7 +35,7 @@ public class CoachSeeder extends PersonSeeder<Coach> implements CommandLineRunne
     }
 
     @Override
-    protected void save(Coach entity) {
+    protected void save(final Coach entity) {
         coachRepository.save(entity);
     }
 
@@ -50,7 +53,7 @@ public class CoachSeeder extends PersonSeeder<Coach> implements CommandLineRunne
 
     @Override
     @Transactional
-    public void run(String... args) {
+    public void run(final String... args) {
         seed();
     }
 }

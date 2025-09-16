@@ -10,6 +10,9 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * Implementation of {@link CountryService} that provides country names and validation.
+ */
 @Service
 @Primary
 public class CountryServiceImpl implements CountryService {
@@ -22,14 +25,10 @@ public class CountryServiceImpl implements CountryService {
     public CountryServiceImpl() {
         val countryCodes = Arrays.stream(Locale.getISOCountries()).collect(Collectors.toSet());
 
-        this.validCountryNames = countryCodes.stream()
-                .map(code -> new Locale.Builder().setRegion(code).build().getDisplayCountry(Locale.ENGLISH))
-                .collect(Collectors.toSet());
+        this.validCountryNames = countryCodes.stream().map(code -> new Locale.Builder().setRegion(code).build().getDisplayCountry(Locale.ENGLISH)).collect(Collectors.toSet());
 
 
-        this.countriesForForm = validCountryNames.stream()
-                .sorted()
-                .toList();
+        this.countriesForForm = validCountryNames.stream().sorted().toList();
     }
 
 

@@ -10,6 +10,9 @@ import lombok.NonNull;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+/**
+ * Base Class for entities extending person
+ */
 @Getter
 @Setter
 @NoArgsConstructor

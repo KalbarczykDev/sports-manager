@@ -20,7 +20,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-public class CoachServiceImplTest {
+
+public final class CoachServiceImplTest {
 
     @Mock
     private CoachRepository coachRepository;
@@ -53,7 +54,7 @@ public class CoachServiceImplTest {
         void shouldReturnAllCoaches() {
             when(coachRepository.findAll()).thenReturn(List.of(coach));
 
-            List<Coach> result = coachService.findAll();
+            val result = coachService.findAll();
 
             assertThat(result).containsExactly(coach);
             verify(coachRepository).findAll();
@@ -63,7 +64,7 @@ public class CoachServiceImplTest {
         void shouldReturnEmptyListWhenNoCoaches() {
             when(coachRepository.findAll()).thenReturn(List.of());
 
-            List<Coach> result = coachService.findAll();
+            val result = coachService.findAll();
 
             assertThat(result).isEmpty();
         }
@@ -78,7 +79,7 @@ public class CoachServiceImplTest {
         void shouldSaveCoach() {
             when(coachRepository.save(any())).thenReturn(coach);
 
-            Coach saved = coachService.save(coach);
+            val saved = coachService.save(coach);
 
             assertThat(saved).isEqualTo(coach);
             verify(coachRepository).save(coach);
@@ -103,7 +104,7 @@ public class CoachServiceImplTest {
                     .salary(2500.0)
                     .build();
 
-            Coach result = coachService.update(1L, updated);
+            val result = coachService.update(1L, updated);
 
             assertThat(result.getName()).isEqualTo("Updated");
             assertThat(result.getSalary()).isEqualTo(2500.0);
@@ -136,7 +137,7 @@ public class CoachServiceImplTest {
         void shouldFindCoachById() {
             when(coachRepository.findById(1L)).thenReturn(Optional.of(coach));
 
-            Coach found = coachService.findById(1L);
+            val found = coachService.findById(1L);
 
             assertThat(found).isEqualTo(coach);
         }

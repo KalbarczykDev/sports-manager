@@ -9,6 +9,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+/**
+ * Seeder for the {@link User} class
+ */
 @Slf4j
 @Component
 @RequiredArgsConstructor

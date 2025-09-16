@@ -12,6 +12,11 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
+/**
+ * Validator for {@link Person} entities.
+ * Ensures that fields are not empty and satisfy basic constraints,
+ * and validates the country using {@link CountryService}.
+ */
 @Component
 @Slf4j
 @RequiredArgsConstructor
@@ -19,11 +24,23 @@ public class PersonValidator implements Validator {
 
     private final CountryService countryService;
 
+    /**
+     * Checks if the validator supports the given class.
+     *
+     * @param clazz the class to check
+     * @return true if clazz is assignable from {@link Person}
+     */
     @Override
     public boolean supports(@NonNull Class<?> clazz) {
         return Person.class.isAssignableFrom(clazz);
     }
 
+    /**
+     * Validates the {@link Person} object.
+     *
+     * @param target the object to validate
+     * @param errors the errors object to store validation errors
+     */
     @Override
     public void validate(@NonNull Object target, @NonNull Errors errors) {
         val person = (Person) target;
