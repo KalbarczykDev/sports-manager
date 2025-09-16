@@ -53,7 +53,7 @@ public class CompetitorController extends CrudController<Competitor> {
         return ResponseEntity.status(201).build();
     }
 
-    @DeleteMapping("/{competitorId}/coaches/{competitionId}")
+    @DeleteMapping("/{competitorId}/competitions/{competitionId}")
     @ResponseBody
     public ResponseEntity<Void> removeCompetition(
             final @PathVariable Long competitorId,

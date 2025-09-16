@@ -69,7 +69,7 @@ public class CompetitorServiceImplTest {
             when(competitorRepository.findById(1L)).thenReturn(Optional.of(competitor));
             when(competitionService.findById(2L)).thenReturn(newCompetition);
 
-            assertThatThrownBy(() -> competitorService.addCompetition(2L, 1L)).isInstanceOf(CrudException.NotFound.class);
+            assertThatThrownBy(() -> competitorService.addCompetition(2L, 1L)).isInstanceOf(CrudException.RelationRequirementsException.class);
 
             verify(competitorRepository, never()).save(any());
         }

@@ -41,6 +41,13 @@ confirmDeleteBtn.addEventListener('click', () => {
 });
 
 document.addEventListener("DOMContentLoaded", function () {
+
+    //check if the route contains competitors
+
+    if (!window.location.pathname.includes("/competitors")) {
+        return
+    }
+
     const addBtn = document.getElementById("addCoachButton");
     if (addBtn) {
         addBtn.addEventListener("click", function () {
@@ -72,4 +79,38 @@ document.addEventListener("DOMContentLoaded", function () {
             }).catch(err => console.error(err));
         });
     });
+
+    const addCompetitionButton = document.getElementById("addCompetitionButton");
+    if (addCompetitionButton) {
+        addCompetitionButton.addEventListener("click", function () {
+            const competitorId = this.dataset.competitorId;
+            const select = document.getElementById("availableCompetitionsSelect");
+            const competitionId = select.value;
+
+            fetch(`/competitors/${competitorId}/competitions/${competitionId}`, {
+                method: "PUT"
+            }).then(res => {
+                if (res.status === 201) {
+                    location.reload();
+                }
+            }).catch(err => console.error(err));
+        })
+    } else {
+        console.error("No competitition button  assigned.")
+    }
+
+    document.querySelectorAll(".remove-competition-btn").forEach(button => {
+        button.addEventListener("click", function () {
+            const competitorId = this.dataset.competitorId;
+            const competitionId = this.dataset.competitionId;
+
+            fetch(`/competitors/${competitorId}/competitions/${competitionId}`, {
+                method: "DELETE"
+            }).then(res => {
+                if (res.status === 204) {
+                    location.reload();
+                }
+            }).catch(err => console.error(err));
+        })
+    })
 });

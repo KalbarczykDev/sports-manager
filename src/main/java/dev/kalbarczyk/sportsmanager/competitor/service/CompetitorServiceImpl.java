@@ -60,8 +60,8 @@ public class CompetitorServiceImpl extends BaseCrudService<Competitor> implement
 
     @Override
     public void addCompetition(Long competitionId, Long competitorId) {
-        val competitor = findById(competitionId);
-        val competition = competitionService.findById(competitorId);
+        val competitor = findById(competitorId);
+        val competition = competitionService.findById(competitionId);
 
         if (competitor.getDiscipline() != competition.getDiscipline()) {
             throw new CrudException.RelationRequirementsException("Discipline for competition and competitor must be the same");
@@ -73,8 +73,8 @@ public class CompetitorServiceImpl extends BaseCrudService<Competitor> implement
 
     @Override
     public void removeCompetition(Long competitionId, Long competitorId) {
-        val competitor = findById(competitionId);
-        val competition = competitionService.findById(competitorId);
+        val competitor = findById(competitorId);
+        val competition = competitionService.findById(competitionId);
         competitor.removeCompetition(competition);
         competitorRepository.save(competitor);
     }

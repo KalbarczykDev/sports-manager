@@ -89,81 +89,46 @@ data-entity='competitors'"
     <div class="card shadow-sm mb-4">
         <div class="card-body">
             <h5 class="fw-bold mb-3">Competitions</h5>
-        </div>
-        <!-- List of current competitions -->
-        <ul class="list-group mb-3">
-            <li class="list-group-item d-flex justify-content-between align-items-center"
-                th:each="competition : ${competitor.competitions}">
-                <a class="text-decoration-none text-reset" th:href="@{/competitions/{id}(id=${competition.id})}">
-                    <span th:text="${competition.name}">Competition Name</span>
-                </a>
-                <button type="button"
-                        class="btn btn-danger btn-sm remove-coach-btn"
-                        th:data-competitor-id="${competitor.id}"
-                        th:data-coach-id="${competition.id}">
-                    <i class="bi bi-trash3"></i>
-                </button>
-            </li>
-            <li th:if="${#lists.isEmpty(competitor.coaches)}" class="list-group-item text-muted">
-                No competitions assigned.
-            </li>
-        </ul>
 
-        <!-- Add new competition -->
-        <div class="input-group">
-            <label for="availableCompetitionsSelect"></label>
-            <select class="form-select" id="availableCompetitionsSelect">
-                <!--/*@thymesVar id="availableCompetitions" type="dev"*/-->
-                <option th:each="competition : ${availableCompetitions}"
-                        th:value="${competition.id}"
-                        th:text="${competition.name}">
-                </option>
-            </select>
-            <button id="addCompetitionButton"
-                    class="btn btn-primary"
-                    type="button"
-                    th:attr="data-competitor-id=${competitor.id}">
-                Add Competition
-            </button>
+            <!-- List of current competitions -->
+            <ul class="list-group mb-3">
+                <li class="list-group-item d-flex justify-content-between align-items-center"
+                    th:each="competition : ${competitor.competitions}">
+                    <a class="text-decoration-none text-reset"
+                       th:href="@{/competitions/{id}(id=${competition.id})}">
+                        <span th:text="${competition.name}">Competition Name</span>
+                    </a>
+                    <button type="button"
+                            class="btn btn-danger btn-sm remove-competition-btn"
+                            th:data-competitor-id="${competitor.id}"
+                            th:data-competition-id="${competition.id}">
+                        <i class="bi bi-trash3"></i>
+                    </button>
+                </li>
+                <li th:if="${#lists.isEmpty(competitor.competitions)}" class="list-group-item text-muted">
+                    No competitions assigned.
+                </li>
+            </ul>
+
+            <!-- Add new competition -->
+            <div class="input-group">
+                <label for="availableCompetitionsSelect"></label>
+                <select class="form-select" id="availableCompetitionsSelect">
+                    <option th:each="competition : ${availableCompetitions}"
+                            th:value="${competition.id}"
+                            th:text="${competition.name}">
+                    </option>
+                </select>
+                <button id="addCompetitionButton"
+                        class="btn btn-primary"
+                        type="button"
+                        th:attr="data-competitor-id=${competitor.id}">
+                    Add Competition
+                </button>
+            </div>
         </div>
     </div>
 
 
     <div th:replace="~{fragments/delete-modal :: delete-modal}"></div>
 </div>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const addBtn = document.getElementById("addCoachButton");
-        if (addBtn) {
-            addBtn.addEventListener("click", function () {
-                const competitorId = this.dataset.competitorId;
-                const select = document.getElementById("availableCoachSelect");
-                const coachId = select.value;
-
-                fetch(`/competitors/${competitorId}/coaches/${coachId}`, {
-                    method: "PUT"
-                }).then(res => {
-                    if (res.status === 201) {
-                        location.reload();
-                    }
-                }).catch(err => console.error(err));
-            });
-        }
-    });
-
-    document.querySelectorAll(".remove-coach-btn").forEach(button => {
-        button.addEventListener("click", function () {
-            const competitorId = this.dataset.competitorId;
-            const coachId = this.dataset.coachId;
-
-            fetch(`/competitors/${competitorId}/coaches/${coachId}`, {
-                method: "DELETE"
-            }).then(res => {
-                if (res.status === 204) {
-                    location.reload();
-                }
-            }).catch(err => console.error(err));
-        });
-    });
-</script>
