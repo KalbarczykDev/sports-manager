@@ -69,19 +69,49 @@ sportsmanager:
 
 ### Example Workflows
 
-* **Add a Competitor**
+**Add a Competitor**
 
-- Navigate to the "Competitors" section.
-- Click **Add Competitor** and fill in details such as name, age, and assigned coach.
-- Save to persist the competitor in the database.
+- Navigate to the "Competitors" section (`/competitors`).
+- Click **Add Competitor** and fill in Name, Surname, Country, Discipline, and Salary.
+- Click **Save** to persist the competitor in the database.
+
+**Assign a Coach to a Competitor**
+
+- Open a competitor’s detail page (`/competitors/{id}`).
+- Select an available coach from the **Add Coach** dropdown.
+- Click **Add Coach**.
+- The coach will appear in the competitor’s **Coaches** list. Already assigned coaches are excluded from the dropdown.
+
+**Assign a Competition to a Competitor**
+
+- Open a competitor’s detail page (`/competitors/{id}`).
+- Select an available competition from the **Add Competition** dropdown.
+- Click **Add Competition**.
+- The competition will appear in the competitor’s **Competitions** list. Already assigned competitions are excluded.
+
+**Remove a Coach or Competition**
+
+- On a competitor’s detail page, click the **Remove** button next to listed coach or competition.
+- The selected relation is removed from the competitor.
+
+**Delete Coach, Competitor or Competition**
+
+- Navigate to the list view (`/coaches`, `/competitors` or `/competitions`).
+- Click the **Delete** button next to an entity.
+- Confirm deletion in the modal.
+- The entity is permanently removed from the system.
 
 ## Documentation
 
 ### UI
 
-* Home Screen
+* Home View
 
-  ![Home Screen](images/home.png)
+  ![Home View](images/home.png)
+
+* Login View
+
+  ![Login View](images/login.png)
 
 * Entity List View
 
