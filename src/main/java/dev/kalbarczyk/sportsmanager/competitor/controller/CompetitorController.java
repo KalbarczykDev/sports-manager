@@ -4,6 +4,7 @@ import dev.kalbarczyk.sportsmanager.coach.service.CoachService;
 import dev.kalbarczyk.sportsmanager.common.controller.CrudController;
 import dev.kalbarczyk.sportsmanager.common.service.CountryService;
 import dev.kalbarczyk.sportsmanager.common.service.CrudService;
+import dev.kalbarczyk.sportsmanager.competition.service.CompetitionService;
 import dev.kalbarczyk.sportsmanager.competitor.model.Competitor;
 import dev.kalbarczyk.sportsmanager.competitor.service.CompetitorService;
 import dev.kalbarczyk.sportsmanager.person.enums.Discipline;
@@ -26,6 +27,7 @@ public class CompetitorController extends CrudController<Competitor> {
     private final PersonValidator personValidator;
     private final CountryService countryService;
     private final CoachService coachService;
+    private final CompetitionService competitionService;
 
     @PutMapping("/{competitorId}/coaches/{coachId}")
     @ResponseBody
@@ -75,6 +77,7 @@ public class CompetitorController extends CrudController<Competitor> {
     @Override
     protected void addOptionalContentToModelInSHowView(final Competitor competitor, final Model model) {
         model.addAttribute("availableCoaches", coachService.findAllCoachesByDiscipline(competitor.getDiscipline()));
+        model.addAttribute("availableCompetitions", competitionService.findAllCompetitionsByDiscipline(competitor.getDiscipline()));
     }
 
     @Override
