@@ -76,8 +76,8 @@ public class CompetitorController extends CrudController<Competitor> {
 
     @Override
     protected void addOptionalContentToModelInSHowView(final Competitor competitor, final Model model) {
-        model.addAttribute("availableCoaches", coachService.findAllCoachesByDiscipline(competitor.getDiscipline()));
-        model.addAttribute("availableCompetitions", competitionService.findAllCompetitionsByDiscipline(competitor.getDiscipline()));
+        model.addAttribute("availableCoaches", coachService.findAllAvailableCoachesForCompetitor(competitor));
+        model.addAttribute("availableCompetitions", competitionService.findAvailableCompetitionsForCompetitor(competitor));
     }
 
     @Override

@@ -3,8 +3,9 @@ package dev.kalbarczyk.sportsmanager.coach.service;
 import dev.kalbarczyk.sportsmanager.coach.model.Coach;
 import dev.kalbarczyk.sportsmanager.coach.repository.CoachRepository;
 import dev.kalbarczyk.sportsmanager.common.service.BaseCrudService;
-import dev.kalbarczyk.sportsmanager.person.enums.Discipline;
+import dev.kalbarczyk.sportsmanager.competitor.model.Competitor;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
@@ -24,9 +25,11 @@ public class CoachServiceImpl extends BaseCrudService<Coach> implements CoachSer
 
 
     @Override
-    public List<Coach> findAllCoachesByDiscipline(final Discipline discipline) {
-        log.info("Fetching coaches by  discipline {}", discipline);
-        return coachRepository.findAllByDiscipline(discipline);
+    public List<Coach> findAllAvailableCoachesForCompetitor(final Competitor competitor) {
+
+        val available = coachRepository.findAllByDiscipline(competitor.getDiscipline());
+        available.removeAll(competitor.getCoaches());
+        return available;
     }
 
     @Override

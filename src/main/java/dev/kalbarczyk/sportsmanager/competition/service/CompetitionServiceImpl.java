@@ -3,9 +3,10 @@ package dev.kalbarczyk.sportsmanager.competition.service;
 import dev.kalbarczyk.sportsmanager.common.service.BaseCrudService;
 import dev.kalbarczyk.sportsmanager.competition.model.Competition;
 import dev.kalbarczyk.sportsmanager.competition.repository.CompetitionRepository;
-import dev.kalbarczyk.sportsmanager.person.enums.Discipline;
+import dev.kalbarczyk.sportsmanager.competitor.model.Competitor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
@@ -21,9 +22,11 @@ public class CompetitionServiceImpl extends BaseCrudService<Competition> impleme
     private final CompetitionRepository competitionRepository;
 
     @Override
-    public List<Competition> findAllCompetitionsByDiscipline(final Discipline discipline) {
-        log.info("Fetching competitions by  discipline {}", discipline);
-        return competitionRepository.findAllByDiscipline(discipline);
+    public List<Competition> findAvailableCompetitionsForCompetitor(final Competitor competitor) {
+        log.info("Fetching available competitions for  competitor {}", competitor);
+        val available = competitionRepository.findAllByDiscipline(competitor.getDiscipline());
+        available.removeAll(competitor.getCompetitions());
+        return available;
     }
 
     @Override

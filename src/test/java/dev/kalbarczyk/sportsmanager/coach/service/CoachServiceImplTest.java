@@ -43,30 +43,6 @@ public class CoachServiceImplTest {
                 .build();
     }
 
-    /**
-     * findAllCoachesByDiscipline() Tests
-     */
-    @Nested
-    class FindAllByDisciplineTests {
-        @Test
-        void shouldReturnCoachesByDiscipline() {
-            when(coachRepository.findAllByDiscipline(Discipline.BOXING)).thenReturn(List.of(coach));
-
-            List<Coach> result = coachService.findAllCoachesByDiscipline(Discipline.BOXING);
-
-            assertThat(result).containsExactly(coach);
-            verify(coachRepository).findAllByDiscipline(Discipline.BOXING);
-        }
-
-        @Test
-        void shouldReturnEmptyListWhenNoCoachesForDiscipline() {
-            when(coachRepository.findAllByDiscipline(Discipline.BOXING)).thenReturn(List.of());
-
-            List<Coach> result = coachService.findAllCoachesByDiscipline(Discipline.BOXING);
-
-            assertThat(result).isEmpty();
-        }
-    }
 
     /**
      * findAll() Tests
