@@ -22,8 +22,8 @@ public class CompetitionController extends CrudController<Competition> {
 
 
     @Override
-    protected void prepareFormModel(Model model, Competition entity, String formAction, String title) {
-        model.addAttribute("competition", entity);
+    protected void prepareFormModel(Model model, Competition competition, String formAction, String title) {
+        model.addAttribute("competition", competition);
         model.addAttribute("disciplines", Discipline.values());
         model.addAttribute("formAction", formAction);
         model.addAttribute("title", title);
