@@ -18,6 +18,18 @@
             <p class="mb-0"><strong>Date:</strong>
                 <span th:text="${#temporals.format(competition.date, 'yyyy-MM-dd')}">Date</span>
             </p>
+            <!-- Actions -->
+            <div class="d-flex gap-2 mt-3">
+                <a class="btn btn-secondary btn-sm me-1"
+                   th:href="@{/competitions/{id}/edit(id=${competition.id})}">
+                    <i class="bi bi-pencil-square"></i>
+                </a>
+                <button class="btn btn-danger btn-sm me-1 delete-button"
+                        th:attr="data-id=${competition.id}, data-entity='competitions'"
+                        type="button">
+                    <i class="bi bi-trash3"></i>
+                </button>
+            </div>
         </div>
     </div>
 
@@ -40,18 +52,6 @@
         </div>
     </div>
 
-    <!-- Actions -->
-    <div class="d-flex gap-2">
-        <a class="btn btn-secondary btn-sm me-1"
-           th:href="@{/competitions/{id}/edit(id=${competition.id})}">
-            <i class="bi bi-pencil-square"></i>
-        </a>
-        <button class="btn btn-danger btn-sm me-1 delete-button"
-                th:attr="data-id=${competition.id}, data-entity='competitions'"
-                type="button">
-            <i class="bi bi-trash3"></i>
-        </button>
-    </div>
 
     <div th:replace="~{fragments/delete-modal :: delete-modal}"></div>
 </div>

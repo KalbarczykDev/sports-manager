@@ -5,6 +5,7 @@
     <!--/*@thymesVar id="competitor" type="dev.kalbarczyk.sportsmanager.competitor.model.Competitor"*/-->
     <!--/*@thymesVar id="discipline" type="dev.kalbarczyk.sportsmanager.person.enums.Discipline"*/-->
 
+
     <!-- Header Section -->
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="fw-bold text-primary" th:text="${competitor.name + ' ' + competitor.surname}">Competitor Name</h1>
@@ -12,6 +13,7 @@
             Back to Competitors
         </a>
     </div>
+
 
     <!-- Competitor Info -->
     <div class="card shadow-sm mb-4">
@@ -23,7 +25,22 @@
                 <span th:text="${competitor.discipline.label}">Discipline</span>
             </p>
             <p class="mb-0"><strong>Salary:</strong> $<span th:text="${competitor.salary}">Salary</span></p>
+            <!-- Actions -->
+            <div class="d-flex gap-2 mt-3">
+                <a class="btn btn-secondary btn-sm me-1"
+                   th:href="@{/competitors/{id}/edit(id=${competitor.id})}"
+                >
+                    <i class="bi bi-pencil-square"></i>
+                </a>
+                <button class="btn btn-danger btn-sm me-1 delete-button" th:attr="data-id=${competitor.id},
+data-entity='competitors'"
+                        type="button">
+                    <i class="bi bi-trash3"></i>
+                </button>
+            </div>
         </div>
+
+
     </div>
 
     <div class="card shadow-sm mb-4">
@@ -69,20 +86,12 @@
         </div>
     </div>
 
-
-    <!-- Actions -->
-    <div class="d-flex gap-2">
-        <a class="btn btn-secondary btn-sm me-1"
-           th:href="@{/competitors/{id}/edit(id=${competitor.id})}"
-        >
-            <i class="bi bi-pencil-square"></i>
-        </a>
-        <button class="btn btn-danger btn-sm me-1 delete-button" th:attr="data-id=${competitor.id},
-data-entity='competitors'"
-                type="button">
-            <i class="bi bi-trash3"></i>
-        </button>
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <h5 class="fw-bold mb-3">Coaches</h5>
+        </div>
     </div>
+
 
     <div th:replace="~{fragments/delete-modal :: delete-modal}"></div>
 </div>
